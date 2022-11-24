@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.nonvrtab = new System.Windows.Forms.TabPage();
+            this.Bt_Install_Ed_Engineer = new System.Windows.Forms.Button();
             this.Bt_Launch = new System.Windows.Forms.Button();
             this.Bt_Elite_Dangerous_Launcher = new System.Windows.Forms.Button();
             this.Bt_AussieDroid_Warthog_Script = new System.Windows.Forms.Button();
@@ -69,6 +70,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Bt_Install_Ed_Market_Connector = new System.Windows.Forms.Button();
+            this.Bt_Install_Ed_Discovery = new System.Windows.Forms.Button();
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.nonvrtab.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -87,6 +91,10 @@
             // 
             // nonvrtab
             // 
+            this.nonvrtab.Controls.Add(this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper);
+            this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Discovery);
+            this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Market_Connector);
+            this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Engineer);
             this.nonvrtab.Controls.Add(this.Bt_Launch);
             this.nonvrtab.Controls.Add(this.Bt_Elite_Dangerous_Launcher);
             this.nonvrtab.Controls.Add(this.Bt_AussieDroid_Warthog_Script);
@@ -122,6 +130,16 @@
             this.nonvrtab.TabIndex = 0;
             this.nonvrtab.Text = "Non VR Profile";
             this.nonvrtab.UseVisualStyleBackColor = true;
+            // 
+            // Bt_Install_Ed_Engineer
+            // 
+            this.Bt_Install_Ed_Engineer.Location = new System.Drawing.Point(804, 56);
+            this.Bt_Install_Ed_Engineer.Name = "Bt_Install_Ed_Engineer";
+            this.Bt_Install_Ed_Engineer.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Ed_Engineer.TabIndex = 36;
+            this.Bt_Install_Ed_Engineer.Text = "Install..";
+            this.Bt_Install_Ed_Engineer.UseVisualStyleBackColor = true;
+            this.Bt_Install_Ed_Engineer.Click += new System.EventHandler(this.Bt_Install_Ed_Engineer_Click);
             // 
             // Bt_Launch
             // 
@@ -459,6 +477,36 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             // 
+            // Bt_Install_Ed_Market_Connector
+            // 
+            this.Bt_Install_Ed_Market_Connector.Location = new System.Drawing.Point(804, 88);
+            this.Bt_Install_Ed_Market_Connector.Name = "Bt_Install_Ed_Market_Connector";
+            this.Bt_Install_Ed_Market_Connector.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Ed_Market_Connector.TabIndex = 37;
+            this.Bt_Install_Ed_Market_Connector.Text = "Install..";
+            this.Bt_Install_Ed_Market_Connector.UseVisualStyleBackColor = true;
+            this.Bt_Install_Ed_Market_Connector.Click += new System.EventHandler(this.Bt_Install_Ed_Market_Connector_Click);
+            // 
+            // Bt_Install_Ed_Discovery
+            // 
+            this.Bt_Install_Ed_Discovery.Location = new System.Drawing.Point(804, 120);
+            this.Bt_Install_Ed_Discovery.Name = "Bt_Install_Ed_Discovery";
+            this.Bt_Install_Ed_Discovery.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Ed_Discovery.TabIndex = 38;
+            this.Bt_Install_Ed_Discovery.Text = "Install..";
+            this.Bt_Install_Ed_Discovery.UseVisualStyleBackColor = true;
+            this.Bt_Install_Ed_Discovery.Click += new System.EventHandler(this.Bt_Install_Ed_Discovery_Click);
+            // 
+            // Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper
+            // 
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Location = new System.Drawing.Point(804, 178);
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Name = "Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper";
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.TabIndex = 39;
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Text = "Install..";
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.UseVisualStyleBackColor = true;
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Click += new System.EventHandler(this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -526,5 +574,9 @@
         private Button Bt_Ed_Market_Connector;
         private Button Bt_Ed_Engineer;
         private Button Bt_Launch;
+        private Button Bt_Install_Ed_Engineer;
+        private Button Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper;
+        private Button Bt_Install_Ed_Discovery;
+        private Button Bt_Install_Ed_Market_Connector;
     }
 }

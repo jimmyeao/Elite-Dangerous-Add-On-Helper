@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Net.Http;
 
 
 // TODO LIST!
@@ -23,11 +25,15 @@ namespace Elite_Dangerous_Add_On_Helper
         // setup a folder for settings
         static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static readonly string settingsFilePath = directory + "/Elite Add On Helper/";
+        static readonly HttpClient client = new HttpClient();
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","Elite Dangerous Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
         /// <summary>
         /// List of all addons
         /// </summary>
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
+
+        public static CancellationToken WebCommsTimeout { get; private set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -156,9 +162,26 @@ namespace Elite_Dangerous_Add_On_Helper
 
         static void DownloadFileAndExecute(string link)
         {
-            WebClient wc = new WebClient();
+            // where are we going to save it?
             string filename = Path.GetFileName(link);
-            wc.DownloadFile(link, filename);
+           // new code
+            string requestString = link;
+            var GetTask = client.GetAsync(requestString);
+            GetTask.Wait(WebCommsTimeout); // WebCommsTimeout is in milliseconds
+            if (!GetTask.Result.IsSuccessStatusCode)
+            {
+                // write an error
+                return;
+            }
+
+            using (var fs = new FileStream(filename, FileMode.CreateNew))
+            {
+                var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
+                ResponseTask.Wait(WebCommsTimeout);
+            }
+
+            // end new code
+
             Process.Start(filename);
         }
         private void updatestatus(string status)
@@ -245,36 +268,11 @@ namespace Elite_Dangerous_Add_On_Helper
         //try to detect paths for the applications
         // TODO get path and exe names to make launching a simple loop operation.
   
-        # region installs
-        private void Btn_install_EdEngineer_Click(object sender, EventArgs e)
-        {
-            updatestatus("Installing Ed Engineer");
-            DownloadFileAndExecute("https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe");
-            updatestatus("Ready");
-        }
+       
 
-        private void Btn_install_edmc_Click(object sender, EventArgs e)
-        {
-            updatestatus("Installing EDMC");
-            DownloadFileAndExecute("https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi");
-            updatestatus("Ready");
-        }
 
-        private void Btn_install_EDDiscovery_Click(object sender, EventArgs e)
-        {
-            updatestatus("Installing ED Discovery");
-            DownloadFileAndExecute("https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe");
-            updatestatus("Ready");
-        }
 
-        private void Btn_install_edomhl_Click(object sender, EventArgs e)
-        {
-            updatestatus("Installing ED Odyysesy Materials Helper");
-            DownloadFileAndExecute("https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.100/Elite.Dangerous.Odyssey.Materials.Helper-1.100.msi");
-            updatestatus("Ready");
-        }
-
-        #endregion installs      
+    
         // autodetect function
         private void btn_autodetect_Click_1(object sender, EventArgs e)
         {
@@ -584,5 +582,35 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
         #endregion
+        # region installs
+    private void Bt_Install_Ed_Engineer_Click(object sender, EventArgs e)
+    {
+        updatestatus("Installing Ed Engineer");
+        DownloadFileAndExecute("https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe");
+        updatestatus("Ready");
+    }
+
+    private void Bt_Install_Ed_Market_Connector_Click(object sender, EventArgs e)
+    {
+        updatestatus("Installing EDMC");
+        DownloadFileAndExecute("https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi");
+        updatestatus("Ready");
+    }
+
+    private void Bt_Install_Ed_Discovery_Click(object sender, EventArgs e)
+    {
+        updatestatus("Installing ED Discovery");
+        DownloadFileAndExecute("https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe");
+        updatestatus("Ready");
+
+    }
+
+    private void Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click(object sender, EventArgs e)
+    {
+        updatestatus("Installing ED Odyysesy Materials Helper");
+        DownloadFileAndExecute("https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.100/Elite.Dangerous.Odyssey.Materials.Helper-1.100.msi");
+        updatestatus("Ready");
+    }
+    #endregion installs  
     }
 }
