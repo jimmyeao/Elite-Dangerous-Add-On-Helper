@@ -241,7 +241,7 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
 
-            return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json,new JsonSerializerSettings
+            return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Objects,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
