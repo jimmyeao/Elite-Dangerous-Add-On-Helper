@@ -83,7 +83,7 @@ namespace Elite_Dangerous_Add_On_Helper
             checkBox.AutoSize = true;
             //Data binding, super useful. If the box is checked, it updates the model, if you update the model in code, the box changes too!
             //this is basically saying "The box being checked on screen is linked to this specific addon object, and more specifically the enabled property"
-            checkBox.DataBindings.Add("Checked", addOn, "Enabled");
+            checkBox.DataBindings.Add("Checked", addOn, "Enabled", true, DataSourceUpdateMode.OnPropertyChanged);
             //Set the location on screen, this can be a bit trial and error
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
@@ -102,7 +102,7 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Location = new System.Drawing.Point(360, yPosition);
             textBox.Size = new System.Drawing.Size(230, 25);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory");
+            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
             Controls.Add(textBox);
 
@@ -113,17 +113,14 @@ namespace Elite_Dangerous_Add_On_Helper
                 installButton.Location = new System.Drawing.Point(600, yPosition);
                 installButton.Size = new System.Drawing.Size(80, 25);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
-                installButton.Click += (sender, e) => HandleInstallButton(addOn.FriendlyName);
+                installButton.Click += (sender, e) => DoInstall(addOn);
                 Controls.Add(installButton);
             }
 
 
             currentControlRow++;
         }
-        private void HandleInstallButton(string dictKey)
-        {
-            //TODO handle install button
-        }
+       
         private void InitialAddonsSetup()
         {
             //Test data below, dictionary key should match friendly name
@@ -132,12 +129,13 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOns.TryAdd("Ed Engineer", new AddOn
                 {
                     Enabled = false,
-                    Installable = false,
+                    Installable = true,
                     ProgramDirectory = "",
                     FriendlyName = "Ed Engineer",
                     ExecutableName = "EDEngineer.exe",
                     AutoDiscoverPath = "",
-                    Scripts = ""
+                    Scripts = "",
+                    Url = "https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe"
                 });
             }
             if (!addOns.ContainsKey("Ed Market Connector"))
@@ -150,7 +148,9 @@ namespace Elite_Dangerous_Add_On_Helper
                     FriendlyName = "Ed Market Connector",
                     ExecutableName = "EDMarketConnector.exe",
                     AutoDiscoverPath = "C:\\Program Files (x86)\\EDMarketConnector",
-                    Scripts = ""
+                    Scripts = "",
+                    Url = "https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi"
+
                 });
             }
             if (!addOns.ContainsKey("VoiceAttack"))
@@ -158,7 +158,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOns.Add("VoiceAttack", new AddOn
                 {
                     Enabled = false,
-                    Installable = true,
+                    Installable = false,
                     ProgramDirectory = "",
                     FriendlyName = "VoiceAttack",
                     ExecutableName = "VoiceAttack.exe",
@@ -176,7 +176,8 @@ namespace Elite_Dangerous_Add_On_Helper
                     FriendlyName = "ED Discovery",
                     ExecutableName = "EDDiscovery.exe",
                     AutoDiscoverPath = "C:\\Program Files\\EDDiscovery",
-                    Scripts = ""
+                    Scripts = "",
+                    Url = "https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe"
                 });
             }
             if (!addOns.ContainsKey("ED Odyysey Materials Helper"))
@@ -197,7 +198,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOns.Add("T.A.R.G.E.T.", new AddOn
                 {
                     Enabled = false,
-                    Installable = true,
+                    Installable = false,
                     ProgramDirectory = "",
                     FriendlyName = "T.A.R.G.E.T.",
                     ExecutableName = "TARGETGUI.exe",
@@ -210,7 +211,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOns.Add("Elite", new AddOn
                 {
                     Enabled = false,
-                    Installable = true,
+                    Installable = false,
                     ProgramDirectory = "",
                     FriendlyName = "Elite",
                     ExecutableName = "EDLaunch.exe",
@@ -236,43 +237,52 @@ namespace Elite_Dangerous_Add_On_Helper
             string filename = Path.GetFileName(link);
             // new code
             //string requestString = link;
-            updatemystatus("Downloading..");
-            var GetTask = client.GetAsync(link);
-            GetTask.Wait(WebCommsTimeout); // WebCommsTimeout is in milliseconds
-            if (!GetTask.Result.IsSuccessStatusCode)
+            if (link != string.Empty)
             {
-                // write an error
-                updatemystatus("There was an error, please install manually");
-                return;
-            }
-            if (!File.Exists(filename))
-            {
-                using (var fs = new FileStream(filename, FileMode.CreateNew))
+                updatemystatus("Downloading..");
+                var GetTask = client.GetAsync(link);
+                GetTask.Wait(WebCommsTimeout); // WebCommsTimeout is in milliseconds
+                if (!GetTask.Result.IsSuccessStatusCode)
                 {
-                    var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
-                    ResponseTask.Wait(WebCommsTimeout);
-                    updatemystatus("Installing..");
-                    Process.Start(filename);
+                    // write an error
+                    updatemystatus("There was an error, please install manually");
+                    return;
                 }
-            }else
-            {
-                updatemystatus("File already Downloaded!");
-                const string message = "File already downloaded, are you sure you want to install?";
-                const string caption = "Already Installed?";
-                var result = MessageBox.Show(message, caption,
-                                             MessageBoxButtons.YesNo,
-                                             MessageBoxIcon.Question);
-
-                // If the no button was pressed ...
-                if (result == DialogResult.Yes)
+                if (!File.Exists(filename))
                 {
-                    // cancel the closure of the form.
-                    updatemystatus("Installing..");
-                    Process.Start(filename);
+                    using (var fs = new FileStream(filename, FileMode.CreateNew))
+                    {
+                        var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
+                        ResponseTask.Wait(WebCommsTimeout);
+                        updatemystatus("Installing..");
+                        Process.Start(filename);
+                    }
                 }
-            }
-            // end new code
+                else
+                {
+                    updatemystatus("File already Downloaded!");
+                    const string message = "File already downloaded, are you sure you want to install?";
+                    const string caption = "Already Installed?";
+                    var result = MessageBox.Show(message, caption,
+                                                 MessageBoxButtons.YesNo,
+                                                 MessageBoxIcon.Question);
 
+                    // If the no button was pressed ...
+                    if (result == DialogResult.Yes)
+                    {
+                        // cancel the closure of the form.
+                        updatemystatus("Installing..");
+                        var p = new Process();
+                        p.StartInfo = new ProcessStartInfo(filename)
+                        {
+                            UseShellExecute = true
+                        };
+                        p.Start();
+                        //Process.Start(filename);
+                    }
+                }
+                // end new code
+            }
             
         }
 
@@ -684,10 +694,10 @@ namespace Elite_Dangerous_Add_On_Helper
 
     }
 
-    private void Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click(object sender, EventArgs e)
+    private void DoInstall(AddOn addOn)
     {
-        updatemystatus("Installing ED Odyysesy Materials Helper");
-        DownloadFileAndExecute("https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.100/Elite.Dangerous.Odyssey.Materials.Helper-1.100.msi");
+        updatemystatus($"Installing {addOn.FriendlyName}");
+        DownloadFileAndExecute(addOn.Url);
         updatemystatus("Ready");
     }
     #endregion installs  

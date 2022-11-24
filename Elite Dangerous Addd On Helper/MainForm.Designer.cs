@@ -139,7 +139,6 @@
             this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.TabIndex = 39;
             this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Text = "Install..";
             this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.UseVisualStyleBackColor = true;
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Click += new System.EventHandler(this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click);
             // 
             // Bt_Install_Ed_Discovery
             // 

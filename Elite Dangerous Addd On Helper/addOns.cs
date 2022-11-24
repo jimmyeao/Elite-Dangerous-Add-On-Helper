@@ -49,6 +49,11 @@ namespace Elite_Dangerous_Add_On_Helper.Model
         /// </summary>
         public string Scripts { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Path for extras e.g. TARGET scripts.
+        /// </summary>
+        public string Url { get; set; } = string.Empty;
+
 #pragma warning disable 67 
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore 67
