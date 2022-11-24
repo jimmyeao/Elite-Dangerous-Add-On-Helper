@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 
@@ -41,14 +40,10 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                
                 addOns = DeserializeAddOns();
-                foreach(string app in appnames)
-                {
-
-                    string cb = "Cb_" + app.Replace(" ", "_");
-                    
-                    addOns[app] = new AddOn();
-
-                }
+                //foreach (FriendlyName name in addOns.GetType().GetProperties())
+                //{
+                //    Console.WriteLine(name);
+                //}
             }
             else
             {
