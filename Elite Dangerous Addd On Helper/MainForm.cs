@@ -37,15 +37,23 @@ namespace Elite_Dangerous_Add_On_Helper
 
         public MainForm()
         {
+           
             InitializeComponent();
-            Load_prefs();   
+            Load_prefs();
+            updatemystatus("Ready");
         }
+
+
+
+        // My Functions
+        #region functions
         private void Load_prefs()
         {
             // load all the textboxes with values from settings file
+            updatemystatus("Checking file exists");
             if (File.Exists(settingsFilePath + "AddOns.json"))
             {
-               
+                updatemystatus("Loading Settings");
                 addOns = DeserializeAddOns();
                 //foreach (FriendlyName name in addOns.GetType().GetProperties())
                 //{
@@ -54,6 +62,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
+                updatemystatus("Settings not found");
                 InitialAddonsSetup();
             }
 
@@ -156,10 +165,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
         }
-
-
-        // My Functions
-        #region functions
         private void updatemystatus(string status)
         {
             // function to update the status bar
@@ -170,6 +175,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void DownloadFileAndExecute(string link)
         {
+            // download and install function
             // where are we going to save it?
             string filename = Path.GetFileName(link);
             // new code
@@ -253,7 +259,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        private string Folderpath()
+        static string Folderpath()
         {
             FolderBrowserDialog diag = new FolderBrowserDialog
             {
@@ -266,7 +272,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else { return null; }
         }
-        #endregion
+        
         private void HandleSelectPath(string dictKey)
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
@@ -287,16 +293,7 @@ namespace Elite_Dangerous_Add_On_Helper
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-        //try to detect paths for the applications
-        // TODO get path and exe names to make launching a simple loop operation.
-  
-       
-
-
-
-    
-        // autodetect function
-        private void btn_autodetect_Click_1(object sender, EventArgs e)
+         private void btn_autodetect_Click_1(object sender, EventArgs e)
         {
             // Display the ProgressBar control.
             progressBar1.Visible = true;
@@ -499,6 +496,7 @@ namespace Elite_Dangerous_Add_On_Helper
             progressBar1.Refresh();
             updatemystatus("Ready");
         }
+        #endregion
         #region browse functions
         private void Bt_Ed_Engineer_Click(object sender, EventArgs e)
         {
@@ -584,16 +582,20 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+                updatemystatus("Saving Prefs");
              SerializeAddons(addOns);
         }
         #endregion menuitems
         #region launch items
         private void Bt_Launch_Click(object sender, EventArgs e)
         {
+            
             foreach (var addOn in addOns.Values)
             {
+                updatemystatus(addOn.ToString());
                 if (addOn.Enabled)
                 {
+                    updatemystatus(addOn.ToString());
                     LaunchAddon(addOn);
                 }
             }
