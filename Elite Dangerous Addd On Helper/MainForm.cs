@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Data;
+using System.IO.Pipes;
 
 
 // TODO LIST!
@@ -190,7 +191,8 @@ namespace Elite_Dangerous_Add_On_Helper
                     FriendlyName = "ED Odyysey Materials Helper",
                     ExecutableName = "Elite Dangerous Odyssey Materials Helper Launcher.exe",
                     AutoDiscoverPath = "",
-                    Scripts = ""
+                    Scripts = "",
+                    Url = "https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.101/Elite.Dangerous.Odyssey.Materials.Helper-1.101.msi"
                 });
             }
             if (!addOns.ContainsKey("T.A.R.G.E.T."))
@@ -254,8 +256,14 @@ namespace Elite_Dangerous_Add_On_Helper
                     {
                         var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
                         ResponseTask.Wait(WebCommsTimeout);
+                        fs.Close();
                         updatemystatus("Installing..");
-                        Process.Start(filename);
+                        var p = new Process();
+                        p.StartInfo = new ProcessStartInfo(filename)
+                        {
+                            UseShellExecute = true
+                        };
+                        p.Start();
                     }
                 }
                 else
@@ -293,7 +301,20 @@ namespace Elite_Dangerous_Add_On_Helper
             if (File.Exists(path))
             {
                 updatemystatus($"Launching {addOn.FriendlyName}..");
-                Process.Start(path);
+                try
+                {
+                    var p = new Process();
+                    p.StartInfo = new ProcessStartInfo(path)
+                    {
+                        UseShellExecute = true
+                    };
+                    p.Start();
+                    //Process.Start(path);
+                }
+                catch
+                {
+                    updatemystatus($"An Error occured trying to launch {addOn.FriendlyName}..");
+                }
             }
             else
             {
@@ -358,7 +379,7 @@ namespace Elite_Dangerous_Add_On_Helper
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-         private void btn_autodetect_Click_1(object sender, EventArgs e)
+        private void btn_autodetect_Click_1(object sender, EventArgs e)
         {
             // Display the ProgressBar control.
             progressBar1.Visible = true;
@@ -556,65 +577,12 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 updatemystatus("Elite launcher not found");
             }
-            
+
             progressBar1.Value = 1;
             progressBar1.Refresh();
             updatemystatus("Ready");
         }
-        #endregion
-        #region browse functions
-        private void Bt_Ed_Engineer_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Ed_Engineer.Text = mypath;
-            }
-        }
-
-        private void Bt_Ed_Market_Connector_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Ed_Market_Connector.Text = mypath;
-            }
-        }
-        private void Bt_Ed_Discovery_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Ed_Discovery.Text = mypath;
-            }
-        }
-
-        private void Bt_Voiceattack_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Voiceattack.Text = mypath;
-            }
-        }
-
-        private void Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Text = mypath;
-            }
-        }
-
-        private void Bt_T_A_R_G_E_T__Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_T_A_R_G_E_T_.Text = mypath;
-            }
-        }
+ 
 
         private void Bt_AussieDroid_Warthog_Script_Click(object sender, EventArgs e)
         {
@@ -630,14 +598,6 @@ namespace Elite_Dangerous_Add_On_Helper
             }
         }
 
-        private void Bt_Elite_Dangerous_Launcher_Click(object sender, EventArgs e)
-        {
-            string mypath = Folderpath();
-            if (mypath != null)
-            {
-                Tb_Elite_Dangerous_Launcher.Text = mypath;
-            }
-        }
         #endregion
         #region menuitems
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)

@@ -98,7 +98,6 @@
             this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Discovery);
             this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Market_Connector);
             this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Engineer);
-            this.nonvrtab.Controls.Add(this.Bt_Launch);
             this.nonvrtab.Controls.Add(this.Bt_Elite_Dangerous_Launcher);
             this.nonvrtab.Controls.Add(this.btn_autodetect);
             this.nonvrtab.Controls.Add(this.Bt_AussieDroid_Warthog_Script);
@@ -172,7 +171,7 @@
             // 
             // Bt_Launch
             // 
-            this.Bt_Launch.Location = new System.Drawing.Point(567, 311);
+            this.Bt_Launch.Location = new System.Drawing.Point(412, 81);
             this.Bt_Launch.Name = "Bt_Launch";
             this.Bt_Launch.Size = new System.Drawing.Size(94, 29);
             this.Bt_Launch.TabIndex = 35;
@@ -188,7 +187,6 @@
             this.Bt_Elite_Dangerous_Launcher.TabIndex = 34;
             this.Bt_Elite_Dangerous_Launcher.Text = "...";
             this.Bt_Elite_Dangerous_Launcher.UseVisualStyleBackColor = true;
-            this.Bt_Elite_Dangerous_Launcher.Click += new System.EventHandler(this.Bt_Elite_Dangerous_Launcher_Click);
             // 
             // btn_autodetect
             // 
@@ -218,7 +216,6 @@
             this.Bt_T_A_R_G_E_T_.TabIndex = 32;
             this.Bt_T_A_R_G_E_T_.Text = "...";
             this.Bt_T_A_R_G_E_T_.UseVisualStyleBackColor = true;
-            this.Bt_T_A_R_G_E_T_.Click += new System.EventHandler(this.Bt_T_A_R_G_E_T__Click);
             // 
             // Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher
             // 
@@ -228,7 +225,6 @@
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.TabIndex = 31;
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Text = "...";
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.UseVisualStyleBackColor = true;
-            this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Click += new System.EventHandler(this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher_Click);
             // 
             // Bt_Voiceattack
             // 
@@ -238,7 +234,6 @@
             this.Bt_Voiceattack.TabIndex = 30;
             this.Bt_Voiceattack.Text = "...";
             this.Bt_Voiceattack.UseVisualStyleBackColor = true;
-            this.Bt_Voiceattack.Click += new System.EventHandler(this.Bt_Voiceattack_Click);
             // 
             // Bt_Ed_Discovery
             // 
@@ -248,7 +243,6 @@
             this.Bt_Ed_Discovery.TabIndex = 29;
             this.Bt_Ed_Discovery.Text = "...";
             this.Bt_Ed_Discovery.UseVisualStyleBackColor = true;
-            this.Bt_Ed_Discovery.Click += new System.EventHandler(this.Bt_Ed_Discovery_Click);
             // 
             // Bt_Ed_Market_Connector
             // 
@@ -258,7 +252,6 @@
             this.Bt_Ed_Market_Connector.TabIndex = 28;
             this.Bt_Ed_Market_Connector.Text = "...";
             this.Bt_Ed_Market_Connector.UseVisualStyleBackColor = true;
-            this.Bt_Ed_Market_Connector.Click += new System.EventHandler(this.Bt_Ed_Market_Connector_Click);
             // 
             // Bt_Ed_Engineer
             // 
@@ -268,7 +261,6 @@
             this.Bt_Ed_Engineer.TabIndex = 27;
             this.Bt_Ed_Engineer.Text = "...";
             this.Bt_Ed_Engineer.UseVisualStyleBackColor = true;
-            this.Bt_Ed_Engineer.Click += new System.EventHandler(this.Bt_Ed_Engineer_Click);
             // 
             // Tb_Elite_Dangerous_Launcher
             // 
@@ -535,6 +527,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.Bt_Launch);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
