@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.nonvrtab = new System.Windows.Forms.TabPage();
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper = new System.Windows.Forms.Button();
+            this.Bt_Install_Ed_Discovery = new System.Windows.Forms.Button();
+            this.Bt_Install_Ed_Market_Connector = new System.Windows.Forms.Button();
             this.Bt_Install_Ed_Engineer = new System.Windows.Forms.Button();
             this.Bt_Launch = new System.Windows.Forms.Button();
             this.Bt_Elite_Dangerous_Launcher = new System.Windows.Forms.Button();
@@ -70,9 +73,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Bt_Install_Ed_Market_Connector = new System.Windows.Forms.Button();
-            this.Bt_Install_Ed_Discovery = new System.Windows.Forms.Button();
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.nonvrtab.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -83,10 +83,10 @@
             // 
             this.tabControl1.Controls.Add(this.nonvrtab);
             this.tabControl1.Controls.Add(this.vrtab);
-            this.tabControl1.Location = new System.Drawing.Point(2, 46);
+            this.tabControl1.Location = new System.Drawing.Point(780, 46);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(916, 453);
+            this.tabControl1.Size = new System.Drawing.Size(807, 453);
             this.tabControl1.TabIndex = 0;
             // 
             // nonvrtab
@@ -126,10 +126,40 @@
             this.nonvrtab.Location = new System.Drawing.Point(4, 29);
             this.nonvrtab.Name = "nonvrtab";
             this.nonvrtab.Padding = new System.Windows.Forms.Padding(3);
-            this.nonvrtab.Size = new System.Drawing.Size(908, 420);
+            this.nonvrtab.Size = new System.Drawing.Size(799, 420);
             this.nonvrtab.TabIndex = 0;
             this.nonvrtab.Text = "Non VR Profile";
             this.nonvrtab.UseVisualStyleBackColor = true;
+            // 
+            // Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper
+            // 
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Location = new System.Drawing.Point(804, 178);
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Name = "Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper";
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.TabIndex = 39;
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Text = "Install..";
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.UseVisualStyleBackColor = true;
+            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Click += new System.EventHandler(this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click);
+            // 
+            // Bt_Install_Ed_Discovery
+            // 
+            this.Bt_Install_Ed_Discovery.Location = new System.Drawing.Point(804, 120);
+            this.Bt_Install_Ed_Discovery.Name = "Bt_Install_Ed_Discovery";
+            this.Bt_Install_Ed_Discovery.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Ed_Discovery.TabIndex = 38;
+            this.Bt_Install_Ed_Discovery.Text = "Install..";
+            this.Bt_Install_Ed_Discovery.UseVisualStyleBackColor = true;
+            this.Bt_Install_Ed_Discovery.Click += new System.EventHandler(this.Bt_Install_Ed_Discovery_Click);
+            // 
+            // Bt_Install_Ed_Market_Connector
+            // 
+            this.Bt_Install_Ed_Market_Connector.Location = new System.Drawing.Point(804, 88);
+            this.Bt_Install_Ed_Market_Connector.Name = "Bt_Install_Ed_Market_Connector";
+            this.Bt_Install_Ed_Market_Connector.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Install_Ed_Market_Connector.TabIndex = 37;
+            this.Bt_Install_Ed_Market_Connector.Text = "Install..";
+            this.Bt_Install_Ed_Market_Connector.UseVisualStyleBackColor = true;
+            this.Bt_Install_Ed_Market_Connector.Click += new System.EventHandler(this.Bt_Install_Ed_Market_Connector_Click);
             // 
             // Bt_Install_Ed_Engineer
             // 
@@ -399,7 +429,7 @@
             this.vrtab.Location = new System.Drawing.Point(4, 29);
             this.vrtab.Name = "vrtab";
             this.vrtab.Padding = new System.Windows.Forms.Padding(3);
-            this.vrtab.Size = new System.Drawing.Size(908, 420);
+            this.vrtab.Size = new System.Drawing.Size(130, 420);
             this.vrtab.TabIndex = 1;
             this.vrtab.Text = "VR Profile";
             this.vrtab.UseVisualStyleBackColor = true;
@@ -418,7 +448,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 537);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(930, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(1587, 26);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -436,7 +466,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(930, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1587, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -477,41 +507,11 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             // 
-            // Bt_Install_Ed_Market_Connector
-            // 
-            this.Bt_Install_Ed_Market_Connector.Location = new System.Drawing.Point(804, 88);
-            this.Bt_Install_Ed_Market_Connector.Name = "Bt_Install_Ed_Market_Connector";
-            this.Bt_Install_Ed_Market_Connector.Size = new System.Drawing.Size(94, 29);
-            this.Bt_Install_Ed_Market_Connector.TabIndex = 37;
-            this.Bt_Install_Ed_Market_Connector.Text = "Install..";
-            this.Bt_Install_Ed_Market_Connector.UseVisualStyleBackColor = true;
-            this.Bt_Install_Ed_Market_Connector.Click += new System.EventHandler(this.Bt_Install_Ed_Market_Connector_Click);
-            // 
-            // Bt_Install_Ed_Discovery
-            // 
-            this.Bt_Install_Ed_Discovery.Location = new System.Drawing.Point(804, 120);
-            this.Bt_Install_Ed_Discovery.Name = "Bt_Install_Ed_Discovery";
-            this.Bt_Install_Ed_Discovery.Size = new System.Drawing.Size(94, 29);
-            this.Bt_Install_Ed_Discovery.TabIndex = 38;
-            this.Bt_Install_Ed_Discovery.Text = "Install..";
-            this.Bt_Install_Ed_Discovery.UseVisualStyleBackColor = true;
-            this.Bt_Install_Ed_Discovery.Click += new System.EventHandler(this.Bt_Install_Ed_Discovery_Click);
-            // 
-            // Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper
-            // 
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Location = new System.Drawing.Point(804, 178);
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Name = "Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper";
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Size = new System.Drawing.Size(94, 29);
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.TabIndex = 39;
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Text = "Install..";
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.UseVisualStyleBackColor = true;
-            this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper.Click += new System.EventHandler(this.Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 563);
+            this.ClientSize = new System.Drawing.Size(1587, 563);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.progressBar1);

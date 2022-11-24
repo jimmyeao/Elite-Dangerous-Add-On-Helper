@@ -27,7 +27,7 @@ namespace Elite_Dangerous_Add_On_Helper
         // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Elite Add On Helper/";
         static readonly HttpClient client = new HttpClient();
-        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","Elite Dangerous Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
+        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","ED Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
         /// <summary>
         /// List of all addons
         /// </summary>
@@ -55,18 +55,74 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 updatemystatus("Loading Settings");
                 addOns = DeserializeAddOns();
-                //foreach (FriendlyName name in addOns.GetType().GetProperties())
-                //{
-                //    Console.WriteLine(name);
-                //}
+               
             }
             else
             {
                 updatemystatus("Settings not found");
                 InitialAddonsSetup();
             }
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
 
 
+        }
+        private int currentControlRow = 0;
+        private void CreateControls(AddOn addOn)
+        {
+            //Sets the y position of the controls based on how many rows (addons) there are
+            var yPosition = ((currentControlRow) * 22) + 150;
+
+            //Create checkbox
+            CheckBox checkBox = new CheckBox();
+            //Set the text to the friendly (human readable) addon name
+            checkBox.Text = addOn.FriendlyName;
+            //Autosize on
+            checkBox.AutoSize = true;
+            //Data binding, super useful. If the box is checked, it updates the model, if you update the model in code, the box changes too!
+            //this is basically saying "The box being checked on screen is linked to this specific addon object, and more specifically the enabled property"
+            checkBox.DataBindings.Add("Checked", addOn, "Enabled");
+            //Set the location on screen, this can be a bit trial and error
+            checkBox.Location = new System.Drawing.Point(15, yPosition);
+            //Add the checkbox to the controls for this form1 form
+            Controls.Add(checkBox);
+
+            Button button = new Button();
+            button.Text = "Select Path...";
+            button.Location = new System.Drawing.Point(277, yPosition);
+            button.Size = new System.Drawing.Size(80, 25);
+            //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
+            button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
+            Controls.Add(button);
+
+            TextBox textBox = new TextBox();
+            textBox.Name = addOn.FriendlyName;
+            textBox.Location = new System.Drawing.Point(360, yPosition);
+            textBox.Size = new System.Drawing.Size(230, 25);
+            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory");
+            textBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            Controls.Add(textBox);
+
+            if (addOn.Installable)
+            {
+                Button installButton = new Button();
+                installButton.Text = "Install?";
+                installButton.Location = new System.Drawing.Point(600, yPosition);
+                installButton.Size = new System.Drawing.Size(80, 25);
+                //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
+                installButton.Click += (sender, e) => HandleInstallButton(addOn.FriendlyName);
+                Controls.Add(installButton);
+            }
+
+
+            currentControlRow++;
+        }
+        private void HandleInstallButton(string dictKey)
+        {
+            //TODO handle install button
         }
         private void InitialAddonsSetup()
         {
@@ -123,14 +179,14 @@ namespace Elite_Dangerous_Add_On_Helper
                     Scripts = ""
                 });
             }
-            if (!addOns.ContainsKey("Elite Dangerous Odyysey Materials Helper"))
+            if (!addOns.ContainsKey("ED Odyysey Materials Helper"))
             {
-                addOns.Add("Elite Dangerous Odyysey Materials Helper", new AddOn
+                addOns.Add("ED Odyysey Materials Helper", new AddOn
                 {
                     Enabled = false,
                     Installable = true,
                     ProgramDirectory = "",
-                    FriendlyName = "Elite Dangerous Odyysey Materials Helper",
+                    FriendlyName = "ED Odyysey Materials Helper",
                     ExecutableName = "Elite Dangerous Odyssey Materials Helper Launcher.exe",
                     AutoDiscoverPath = "",
                     Scripts = ""
