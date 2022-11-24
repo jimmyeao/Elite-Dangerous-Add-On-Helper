@@ -61,7 +61,7 @@ namespace Elite_Dangerous_Add_On_Helper
             else
             {
                 // lets copy the default addons.json to the settings path..
-
+                // probably want to remove this and do the file copy in an installer
                 string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
                 string startupPath = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
                 string sourceFile = startupPath;
