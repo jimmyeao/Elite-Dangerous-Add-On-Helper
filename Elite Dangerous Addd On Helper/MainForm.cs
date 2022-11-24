@@ -73,7 +73,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
-            var yPosition = ((currentControlRow) * 22) + 150;
+            var yPosition = ((currentControlRow) * 30) + 150;
 
             //Create checkbox
             CheckBox checkBox = new CheckBox();
@@ -103,7 +103,7 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Size = new System.Drawing.Size(230, 25);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
-            textBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             Controls.Add(textBox);
 
             if (addOn.Installable)
@@ -672,27 +672,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         #endregion
         # region installs
-    private void Bt_Install_Ed_Engineer_Click(object sender, EventArgs e)
-    {
-        updatemystatus("Installing Ed Engineer");
-        DownloadFileAndExecute("https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe");
-        updatemystatus("Ready");
-    }
 
-    private void Bt_Install_Ed_Market_Connector_Click(object sender, EventArgs e)
-    {
-        updatemystatus("Installing EDMC");
-        DownloadFileAndExecute("https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi");
-        updatemystatus("Ready");
-    }
-
-    private void Bt_Install_Ed_Discovery_Click(object sender, EventArgs e)
-    {
-        updatemystatus("Installing ED Discovery");
-        DownloadFileAndExecute("https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe");
-        updatemystatus("Ready");
-
-    }
 
     private void DoInstall(AddOn addOn)
     {
@@ -700,6 +680,12 @@ namespace Elite_Dangerous_Add_On_Helper
         DownloadFileAndExecute(addOn.Url);
         updatemystatus("Ready");
     }
-    #endregion installs  
+        #endregion installs  
+
+        private void Bt_AddApp_Click(object sender, EventArgs e)
+        {
+            var AddApp = new AddApp();
+            AddApp.Show();  
+        }
     }
 }

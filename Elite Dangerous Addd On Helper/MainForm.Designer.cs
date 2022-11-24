@@ -37,6 +37,7 @@
             this.Bt_Install_Ed_Engineer = new System.Windows.Forms.Button();
             this.Bt_Launch = new System.Windows.Forms.Button();
             this.Bt_Elite_Dangerous_Launcher = new System.Windows.Forms.Button();
+            this.btn_autodetect = new System.Windows.Forms.Button();
             this.Bt_AussieDroid_Warthog_Script = new System.Windows.Forms.Button();
             this.Bt_T_A_R_G_E_T_ = new System.Windows.Forms.Button();
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher = new System.Windows.Forms.Button();
@@ -52,7 +53,6 @@
             this.Tb_Ed_Discovery = new System.Windows.Forms.TextBox();
             this.Tb_Ed_Market_Connector = new System.Windows.Forms.TextBox();
             this.Tb_Ed_Engineer = new System.Windows.Forms.TextBox();
-            this.btn_autodetect = new System.Windows.Forms.Button();
             this.Cb_Elite_Dangerous_Launcher = new System.Windows.Forms.CheckBox();
             this.Cb_AussieDroid_Warthog_Script = new System.Windows.Forms.CheckBox();
             this.Cb_TARGET = new System.Windows.Forms.CheckBox();
@@ -65,18 +65,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.vrtab = new System.Windows.Forms.TabPage();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Bt_AddApp = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.nonvrtab.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -97,6 +100,7 @@
             this.nonvrtab.Controls.Add(this.Bt_Install_Ed_Engineer);
             this.nonvrtab.Controls.Add(this.Bt_Launch);
             this.nonvrtab.Controls.Add(this.Bt_Elite_Dangerous_Launcher);
+            this.nonvrtab.Controls.Add(this.btn_autodetect);
             this.nonvrtab.Controls.Add(this.Bt_AussieDroid_Warthog_Script);
             this.nonvrtab.Controls.Add(this.Bt_T_A_R_G_E_T_);
             this.nonvrtab.Controls.Add(this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher);
@@ -112,7 +116,6 @@
             this.nonvrtab.Controls.Add(this.Tb_Ed_Discovery);
             this.nonvrtab.Controls.Add(this.Tb_Ed_Market_Connector);
             this.nonvrtab.Controls.Add(this.Tb_Ed_Engineer);
-            this.nonvrtab.Controls.Add(this.btn_autodetect);
             this.nonvrtab.Controls.Add(this.Cb_Elite_Dangerous_Launcher);
             this.nonvrtab.Controls.Add(this.Cb_AussieDroid_Warthog_Script);
             this.nonvrtab.Controls.Add(this.Cb_TARGET);
@@ -148,7 +151,6 @@
             this.Bt_Install_Ed_Discovery.TabIndex = 38;
             this.Bt_Install_Ed_Discovery.Text = "Install..";
             this.Bt_Install_Ed_Discovery.UseVisualStyleBackColor = true;
-            this.Bt_Install_Ed_Discovery.Click += new System.EventHandler(this.Bt_Install_Ed_Discovery_Click);
             // 
             // Bt_Install_Ed_Market_Connector
             // 
@@ -158,7 +160,6 @@
             this.Bt_Install_Ed_Market_Connector.TabIndex = 37;
             this.Bt_Install_Ed_Market_Connector.Text = "Install..";
             this.Bt_Install_Ed_Market_Connector.UseVisualStyleBackColor = true;
-            this.Bt_Install_Ed_Market_Connector.Click += new System.EventHandler(this.Bt_Install_Ed_Market_Connector_Click);
             // 
             // Bt_Install_Ed_Engineer
             // 
@@ -168,7 +169,6 @@
             this.Bt_Install_Ed_Engineer.TabIndex = 36;
             this.Bt_Install_Ed_Engineer.Text = "Install..";
             this.Bt_Install_Ed_Engineer.UseVisualStyleBackColor = true;
-            this.Bt_Install_Ed_Engineer.Click += new System.EventHandler(this.Bt_Install_Ed_Engineer_Click);
             // 
             // Bt_Launch
             // 
@@ -189,6 +189,16 @@
             this.Bt_Elite_Dangerous_Launcher.Text = "...";
             this.Bt_Elite_Dangerous_Launcher.UseVisualStyleBackColor = true;
             this.Bt_Elite_Dangerous_Launcher.Click += new System.EventHandler(this.Bt_Elite_Dangerous_Launcher_Click);
+            // 
+            // btn_autodetect
+            // 
+            this.btn_autodetect.Location = new System.Drawing.Point(402, 6);
+            this.btn_autodetect.Name = "btn_autodetect";
+            this.btn_autodetect.Size = new System.Drawing.Size(154, 29);
+            this.btn_autodetect.TabIndex = 18;
+            this.btn_autodetect.Text = "AutoDetect Paths";
+            this.btn_autodetect.UseVisualStyleBackColor = true;
+            this.btn_autodetect.Click += new System.EventHandler(this.btn_autodetect_Click_1);
             // 
             // Bt_AussieDroid_Warthog_Script
             // 
@@ -316,16 +326,6 @@
             this.Tb_Ed_Engineer.Size = new System.Drawing.Size(305, 27);
             this.Tb_Ed_Engineer.TabIndex = 19;
             // 
-            // btn_autodetect
-            // 
-            this.btn_autodetect.Location = new System.Drawing.Point(418, 8);
-            this.btn_autodetect.Name = "btn_autodetect";
-            this.btn_autodetect.Size = new System.Drawing.Size(154, 29);
-            this.btn_autodetect.TabIndex = 18;
-            this.btn_autodetect.Text = "AutoDetect Paths";
-            this.btn_autodetect.UseVisualStyleBackColor = true;
-            this.btn_autodetect.Click += new System.EventHandler(this.btn_autodetect_Click_1);
-            // 
             // Cb_Elite_Dangerous_Launcher
             // 
             this.Cb_Elite_Dangerous_Launcher.AutoSize = true;
@@ -428,7 +428,7 @@
             this.vrtab.Location = new System.Drawing.Point(4, 29);
             this.vrtab.Name = "vrtab";
             this.vrtab.Padding = new System.Windows.Forms.Padding(3);
-            this.vrtab.Size = new System.Drawing.Size(130, 420);
+            this.vrtab.Size = new System.Drawing.Size(799, 420);
             this.vrtab.TabIndex = 1;
             this.vrtab.Text = "VR Profile";
             this.vrtab.UseVisualStyleBackColor = true;
@@ -439,23 +439,6 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(928, 29);
             this.progressBar1.TabIndex = 1;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 537);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1587, 26);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 20);
-            this.toolStripStatusLabel1.Text = "Ready";
             // 
             // menuStrip1
             // 
@@ -506,11 +489,50 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 20);
+            this.toolStripStatusLabel1.Text = "Ready";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 537);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1587, 26);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(547, 31);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(121, 112);
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
+            // 
+            // Bt_AddApp
+            // 
+            this.Bt_AddApp.Location = new System.Drawing.Point(24, 75);
+            this.Bt_AddApp.Name = "Bt_AddApp";
+            this.Bt_AddApp.Size = new System.Drawing.Size(138, 29);
+            this.Bt_AddApp.TabIndex = 20;
+            this.Bt_AddApp.Text = "Add Application";
+            this.Bt_AddApp.UseVisualStyleBackColor = true;
+            this.Bt_AddApp.Click += new System.EventHandler(this.Bt_AddApp_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1587, 563);
+            this.Controls.Add(this.Bt_AddApp);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.progressBar1);
@@ -522,10 +544,11 @@
             this.tabControl1.ResumeLayout(false);
             this.nonvrtab.ResumeLayout(false);
             this.nonvrtab.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,8 +561,6 @@
         private Label label1;
         private TabPage vrtab;
         private ProgressBar progressBar1;
-        private StatusStrip statusStrip1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
         private CheckBox Cb_Elite_Dangerous_Launcher;
         private CheckBox Cb_AussieDroid_Warthog_Script;
         private CheckBox Cb_TARGET;
@@ -557,7 +578,6 @@
         private TextBox Tb_Ed_Discovery;
         private TextBox Tb_Ed_Market_Connector;
         private TextBox Tb_Ed_Engineer;
-        private Button btn_autodetect;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem savePreferencesToolStripMenuItem;
@@ -577,5 +597,10 @@
         private Button Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper;
         private Button Bt_Install_Ed_Discovery;
         private Button Bt_Install_Ed_Market_Connector;
+        private Button btn_autodetect;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private StatusStrip statusStrip1;
+        private PictureBox pictureBox1;
+        private Button Bt_AddApp;
     }
 }
