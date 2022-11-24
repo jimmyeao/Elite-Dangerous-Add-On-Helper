@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
+using System.Data;
 
 
 // TODO LIST!
@@ -159,32 +160,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
         // My Functions
         #region functions
-
-        static void DownloadFileAndExecute(string link)
-        {
-            // where are we going to save it?
-            string filename = Path.GetFileName(link);
-           // new code
-            string requestString = link;
-            var GetTask = client.GetAsync(requestString);
-            GetTask.Wait(WebCommsTimeout); // WebCommsTimeout is in milliseconds
-            if (!GetTask.Result.IsSuccessStatusCode)
-            {
-                // write an error
-                return;
-            }
-
-            using (var fs = new FileStream(filename, FileMode.CreateNew))
-            {
-                var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
-                ResponseTask.Wait(WebCommsTimeout);
-            }
-
-            // end new code
-
-            Process.Start(filename);
-        }
-        private void updatestatus(string status)
+        private void updatemystatus(string status)
         {
             // function to update the status bar
             toolStripStatusLabel1.Text = status;
@@ -192,18 +168,64 @@ namespace Elite_Dangerous_Add_On_Helper
             statusStrip1.Invalidate();
             statusStrip1.Refresh();
         }
+        private void DownloadFileAndExecute(string link)
+        {
+            // where are we going to save it?
+            string filename = Path.GetFileName(link);
+            // new code
+            //string requestString = link;
+            updatemystatus("Downloading..");
+            var GetTask = client.GetAsync(link);
+            GetTask.Wait(WebCommsTimeout); // WebCommsTimeout is in milliseconds
+            if (!GetTask.Result.IsSuccessStatusCode)
+            {
+                // write an error
+                updatemystatus("There was an error, please install manually");
+                return;
+            }
+            if (!File.Exists(filename))
+            {
+                using (var fs = new FileStream(filename, FileMode.CreateNew))
+                {
+                    var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
+                    ResponseTask.Wait(WebCommsTimeout);
+                    updatemystatus("Installing..");
+                    Process.Start(filename);
+                }
+            }else
+            {
+                updatemystatus("File already Downloaded!");
+                const string message = "File already downloaded, are you sure you want to install?";
+                const string caption = "Already Installed?";
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                // If the no button was pressed ...
+                if (result == DialogResult.Yes)
+                {
+                    // cancel the closure of the form.
+                    updatemystatus("Installing..");
+                    Process.Start(filename);
+                }
+            }
+            // end new code
+
+            
+        }
+
         private void LaunchAddon(AddOn addOn)
         {
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
 
             if (File.Exists(path))
             {
-                updatestatus($"Launching {addOn.FriendlyName}..");
+                updatemystatus($"Launching {addOn.FriendlyName}..");
                 Process.Start(path);
             }
             else
             {
-                updatestatus($"Unable to launch {addOn.FriendlyName}..");
+                updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
             System.Threading.Thread.Sleep(2000);
@@ -302,7 +324,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
             }
             string pathtocheck;
-            updatestatus("This may take a while.. Searching for EDMC");
+            updatemystatus("This may take a while.. Searching for EDMC");
             // lets check the default path
             // 
             progressBar1.PerformStep();
@@ -318,12 +340,12 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
-                updatestatus("EDMC Not found");
+                updatemystatus("EDMC Not found");
 
             }
             progressBar1.PerformStep();
             progressBar1.Refresh();
-            updatestatus("This may take a while.. Searching for Ed Engineer");
+            updatemystatus("This may take a while.. Searching for Ed Engineer");
             // lets get the users appdata/local folder...
             string Foldertosearch = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\apps";
             //now we need an array to hold the search result (Edengineer leases stuff behind when it updates resulting in mulitple copies)
@@ -344,9 +366,9 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
-                updatestatus("Ed Engineer Not found");
+                updatemystatus("Ed Engineer Not found");
             }
-            updatestatus("This may take a while.. Searching for Voice Attack");
+            updatemystatus("This may take a while.. Searching for Voice Attack");
             progressBar1.PerformStep();
             progressBar1.Refresh();
             // lets check the default path
@@ -374,14 +396,14 @@ namespace Elite_Dangerous_Add_On_Helper
                     }
                     else
                     {
-                        updatestatus("Voice Attack Not found");
+                        updatemystatus("Voice Attack Not found");
 
                     }
                 }
             }
             progressBar1.PerformStep();
             progressBar1.Refresh();
-            updatestatus("This may take a while.. Searching for ED Discovery");
+            updatemystatus("This may take a while.. Searching for ED Discovery");
             // lets check the default path
             // 
             pathtocheck = @"C:\Program Files\EDDiscovery";
@@ -394,12 +416,12 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
-                updatestatus("ED Discovery Not found");
+                updatemystatus("ED Discovery Not found");
 
             }
             progressBar1.PerformStep();
             progressBar1.Refresh();
-            updatestatus("This may take a while.. Searching for ED Odyysey Materials Helper");
+            updatemystatus("This may take a while.. Searching for ED Odyysey Materials Helper");
 
             // lets check the default path
             // 
@@ -415,12 +437,12 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
-                updatestatus(" ED Odyysey Materials Helper not found");
+                updatemystatus(" ED Odyysey Materials Helper not found");
             }
 
             progressBar1.PerformStep();
             progressBar1.Refresh();
-            updatestatus("This may take a while.. Searching for T.A.R.G.E.T");
+            updatemystatus("This may take a while.. Searching for T.A.R.G.E.T");
             // lets check the default path
             // 
             pathtocheck = @"c:\program files (x86)\Thrustmaster\TARGET\x64";
@@ -433,12 +455,12 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else
             {
-                updatestatus(" ED Odyysey Materials Helper not found");
+                updatemystatus(" ED Odyysey Materials Helper not found");
             }
 
             progressBar1.PerformStep();
             progressBar1.Refresh();
-            updatestatus("This may take a while.. Searching for Elite Dangerous");
+            updatemystatus("This may take a while.. Searching for Elite Dangerous");
 
             // lets check the default path
             // 
@@ -470,12 +492,12 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             if (Tb_Elite_Dangerous_Launcher.Text == null)
             {
-                updatestatus("Elite launcher not found");
+                updatemystatus("Elite launcher not found");
             }
             
             progressBar1.Value = 1;
             progressBar1.Refresh();
-            updatestatus("Ready");
+            updatemystatus("Ready");
         }
         #region browse functions
         private void Bt_Ed_Engineer_Click(object sender, EventArgs e)
@@ -576,7 +598,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
             }
             System.Threading.Thread.Sleep(2000);
-            updatestatus("Ready");
+            updatemystatus("Ready");
             // for ref how to open a webpage in default browser
             //Process.Start("https://www.google.com/");
 
@@ -585,31 +607,31 @@ namespace Elite_Dangerous_Add_On_Helper
         # region installs
     private void Bt_Install_Ed_Engineer_Click(object sender, EventArgs e)
     {
-        updatestatus("Installing Ed Engineer");
+        updatemystatus("Installing Ed Engineer");
         DownloadFileAndExecute("https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe");
-        updatestatus("Ready");
+        updatemystatus("Ready");
     }
 
     private void Bt_Install_Ed_Market_Connector_Click(object sender, EventArgs e)
     {
-        updatestatus("Installing EDMC");
+        updatemystatus("Installing EDMC");
         DownloadFileAndExecute("https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi");
-        updatestatus("Ready");
+        updatemystatus("Ready");
     }
 
     private void Bt_Install_Ed_Discovery_Click(object sender, EventArgs e)
     {
-        updatestatus("Installing ED Discovery");
+        updatemystatus("Installing ED Discovery");
         DownloadFileAndExecute("https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe");
-        updatestatus("Ready");
+        updatemystatus("Ready");
 
     }
 
     private void Bt_Install_Elite_Dangerous_Odyysesy_Materials_Helper_Click(object sender, EventArgs e)
     {
-        updatestatus("Installing ED Odyysesy Materials Helper");
+        updatemystatus("Installing ED Odyysesy Materials Helper");
         DownloadFileAndExecute("https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.100/Elite.Dangerous.Odyssey.Materials.Helper-1.100.msi");
-        updatestatus("Ready");
+        updatemystatus("Ready");
     }
     #endregion installs  
     }
