@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.nonvrtab = new System.Windows.Forms.TabPage();
+            this.Bt_Launch = new System.Windows.Forms.Button();
             this.Bt_Elite_Dangerous_Launcher = new System.Windows.Forms.Button();
             this.Bt_AussieDroid_Warthog_Script = new System.Windows.Forms.Button();
             this.Bt_T_A_R_G_E_T_ = new System.Windows.Forms.Button();
@@ -50,7 +51,7 @@
             this.btn_autodetect = new System.Windows.Forms.Button();
             this.Cb_Elite_Dangerous_Launcher = new System.Windows.Forms.CheckBox();
             this.Cb_AussieDroid_Warthog_Script = new System.Windows.Forms.CheckBox();
-            this.Cb_T_A_R_G_E_T_ = new System.Windows.Forms.CheckBox();
+            this.Cb_TARGET = new System.Windows.Forms.CheckBox();
             this.Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher = new System.Windows.Forms.CheckBox();
             this.Cb_Voiceattack = new System.Windows.Forms.CheckBox();
             this.Cb_Ed_Discovery = new System.Windows.Forms.CheckBox();
@@ -68,7 +69,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Bt_Launch = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.nonvrtab.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -82,7 +82,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 46);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(802, 390);
+            this.tabControl1.Size = new System.Drawing.Size(916, 453);
             this.tabControl1.TabIndex = 0;
             // 
             // nonvrtab
@@ -107,7 +107,7 @@
             this.nonvrtab.Controls.Add(this.btn_autodetect);
             this.nonvrtab.Controls.Add(this.Cb_Elite_Dangerous_Launcher);
             this.nonvrtab.Controls.Add(this.Cb_AussieDroid_Warthog_Script);
-            this.nonvrtab.Controls.Add(this.Cb_T_A_R_G_E_T_);
+            this.nonvrtab.Controls.Add(this.Cb_TARGET);
             this.nonvrtab.Controls.Add(this.Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher);
             this.nonvrtab.Controls.Add(this.Cb_Voiceattack);
             this.nonvrtab.Controls.Add(this.Cb_Ed_Discovery);
@@ -118,14 +118,24 @@
             this.nonvrtab.Location = new System.Drawing.Point(4, 29);
             this.nonvrtab.Name = "nonvrtab";
             this.nonvrtab.Padding = new System.Windows.Forms.Padding(3);
-            this.nonvrtab.Size = new System.Drawing.Size(794, 357);
+            this.nonvrtab.Size = new System.Drawing.Size(908, 420);
             this.nonvrtab.TabIndex = 0;
             this.nonvrtab.Text = "Non VR Profile";
             this.nonvrtab.UseVisualStyleBackColor = true;
             // 
+            // Bt_Launch
+            // 
+            this.Bt_Launch.Location = new System.Drawing.Point(567, 311);
+            this.Bt_Launch.Name = "Bt_Launch";
+            this.Bt_Launch.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Launch.TabIndex = 35;
+            this.Bt_Launch.Text = "Launch!";
+            this.Bt_Launch.UseVisualStyleBackColor = true;
+            this.Bt_Launch.Click += new System.EventHandler(this.Bt_Launch_Click);
+            // 
             // Bt_Elite_Dangerous_Launcher
             // 
-            this.Bt_Elite_Dangerous_Launcher.Location = new System.Drawing.Point(707, 272);
+            this.Bt_Elite_Dangerous_Launcher.Location = new System.Drawing.Point(754, 272);
             this.Bt_Elite_Dangerous_Launcher.Name = "Bt_Elite_Dangerous_Launcher";
             this.Bt_Elite_Dangerous_Launcher.Size = new System.Drawing.Size(44, 29);
             this.Bt_Elite_Dangerous_Launcher.TabIndex = 34;
@@ -135,7 +145,7 @@
             // 
             // Bt_AussieDroid_Warthog_Script
             // 
-            this.Bt_AussieDroid_Warthog_Script.Location = new System.Drawing.Point(707, 241);
+            this.Bt_AussieDroid_Warthog_Script.Location = new System.Drawing.Point(754, 241);
             this.Bt_AussieDroid_Warthog_Script.Name = "Bt_AussieDroid_Warthog_Script";
             this.Bt_AussieDroid_Warthog_Script.Size = new System.Drawing.Size(44, 29);
             this.Bt_AussieDroid_Warthog_Script.TabIndex = 33;
@@ -145,7 +155,7 @@
             // 
             // Bt_T_A_R_G_E_T_
             // 
-            this.Bt_T_A_R_G_E_T_.Location = new System.Drawing.Point(707, 210);
+            this.Bt_T_A_R_G_E_T_.Location = new System.Drawing.Point(754, 210);
             this.Bt_T_A_R_G_E_T_.Name = "Bt_T_A_R_G_E_T_";
             this.Bt_T_A_R_G_E_T_.Size = new System.Drawing.Size(44, 29);
             this.Bt_T_A_R_G_E_T_.TabIndex = 32;
@@ -155,7 +165,7 @@
             // 
             // Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher
             // 
-            this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Location = new System.Drawing.Point(707, 179);
+            this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Location = new System.Drawing.Point(754, 179);
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Name = "Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher";
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Size = new System.Drawing.Size(44, 29);
             this.Bt_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.TabIndex = 31;
@@ -165,7 +175,7 @@
             // 
             // Bt_Voiceattack
             // 
-            this.Bt_Voiceattack.Location = new System.Drawing.Point(707, 148);
+            this.Bt_Voiceattack.Location = new System.Drawing.Point(754, 148);
             this.Bt_Voiceattack.Name = "Bt_Voiceattack";
             this.Bt_Voiceattack.Size = new System.Drawing.Size(44, 29);
             this.Bt_Voiceattack.TabIndex = 30;
@@ -175,7 +185,7 @@
             // 
             // Bt_Ed_Discovery
             // 
-            this.Bt_Ed_Discovery.Location = new System.Drawing.Point(707, 117);
+            this.Bt_Ed_Discovery.Location = new System.Drawing.Point(754, 117);
             this.Bt_Ed_Discovery.Name = "Bt_Ed_Discovery";
             this.Bt_Ed_Discovery.Size = new System.Drawing.Size(44, 29);
             this.Bt_Ed_Discovery.TabIndex = 29;
@@ -185,7 +195,7 @@
             // 
             // Bt_Ed_Market_Connector
             // 
-            this.Bt_Ed_Market_Connector.Location = new System.Drawing.Point(707, 86);
+            this.Bt_Ed_Market_Connector.Location = new System.Drawing.Point(754, 86);
             this.Bt_Ed_Market_Connector.Name = "Bt_Ed_Market_Connector";
             this.Bt_Ed_Market_Connector.Size = new System.Drawing.Size(44, 29);
             this.Bt_Ed_Market_Connector.TabIndex = 28;
@@ -195,7 +205,7 @@
             // 
             // Bt_Ed_Engineer
             // 
-            this.Bt_Ed_Engineer.Location = new System.Drawing.Point(707, 55);
+            this.Bt_Ed_Engineer.Location = new System.Drawing.Point(754, 55);
             this.Bt_Ed_Engineer.Name = "Bt_Ed_Engineer";
             this.Bt_Ed_Engineer.Size = new System.Drawing.Size(44, 29);
             this.Bt_Ed_Engineer.TabIndex = 27;
@@ -282,22 +292,22 @@
             // Cb_AussieDroid_Warthog_Script
             // 
             this.Cb_AussieDroid_Warthog_Script.AutoSize = true;
-            this.Cb_AussieDroid_Warthog_Script.Location = new System.Drawing.Point(17, 248);
+            this.Cb_AussieDroid_Warthog_Script.Location = new System.Drawing.Point(53, 248);
             this.Cb_AussieDroid_Warthog_Script.Name = "Cb_AussieDroid_Warthog_Script";
-            this.Cb_AussieDroid_Warthog_Script.Size = new System.Drawing.Size(214, 24);
+            this.Cb_AussieDroid_Warthog_Script.Size = new System.Drawing.Size(130, 24);
             this.Cb_AussieDroid_Warthog_Script.TabIndex = 15;
-            this.Cb_AussieDroid_Warthog_Script.Text = "AussieDroid Warthog Script";
+            this.Cb_AussieDroid_Warthog_Script.Text = "Warthog Script";
             this.Cb_AussieDroid_Warthog_Script.UseVisualStyleBackColor = true;
             // 
-            // Cb_T_A_R_G_E_T_
+            // Cb_TARGET
             // 
-            this.Cb_T_A_R_G_E_T_.AutoSize = true;
-            this.Cb_T_A_R_G_E_T_.Location = new System.Drawing.Point(17, 216);
-            this.Cb_T_A_R_G_E_T_.Name = "Cb_T_A_R_G_E_T_";
-            this.Cb_T_A_R_G_E_T_.Size = new System.Drawing.Size(102, 24);
-            this.Cb_T_A_R_G_E_T_.TabIndex = 14;
-            this.Cb_T_A_R_G_E_T_.Text = "T.A.R.G.E.T.";
-            this.Cb_T_A_R_G_E_T_.UseVisualStyleBackColor = true;
+            this.Cb_TARGET.AutoSize = true;
+            this.Cb_TARGET.Location = new System.Drawing.Point(17, 216);
+            this.Cb_TARGET.Name = "Cb_TARGET";
+            this.Cb_TARGET.Size = new System.Drawing.Size(102, 24);
+            this.Cb_TARGET.TabIndex = 14;
+            this.Cb_TARGET.Text = "T.A.R.G.E.T.";
+            this.Cb_TARGET.UseVisualStyleBackColor = true;
             // 
             // Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher
             // 
@@ -371,16 +381,16 @@
             this.vrtab.Location = new System.Drawing.Point(4, 29);
             this.vrtab.Name = "vrtab";
             this.vrtab.Padding = new System.Windows.Forms.Padding(3);
-            this.vrtab.Size = new System.Drawing.Size(794, 357);
+            this.vrtab.Size = new System.Drawing.Size(908, 420);
             this.vrtab.TabIndex = 1;
             this.vrtab.Text = "VR Profile";
             this.vrtab.UseVisualStyleBackColor = true;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(2, 442);
+            this.progressBar1.Location = new System.Drawing.Point(2, 505);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(793, 29);
+            this.progressBar1.Size = new System.Drawing.Size(928, 29);
             this.progressBar1.TabIndex = 1;
             // 
             // statusStrip1
@@ -388,9 +398,9 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 474);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 537);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(930, 26);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -408,7 +418,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(930, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -424,14 +434,14 @@
             // savePreferencesToolStripMenuItem
             // 
             this.savePreferencesToolStripMenuItem.Name = "savePreferencesToolStripMenuItem";
-            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.savePreferencesToolStripMenuItem.Text = "Save Preferences";
             this.savePreferencesToolStripMenuItem.Click += new System.EventHandler(this.savePreferencesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click_1);
             // 
@@ -449,21 +459,11 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             // 
-            // Bt_Launch
-            // 
-            this.Bt_Launch.Location = new System.Drawing.Point(567, 311);
-            this.Bt_Launch.Name = "Bt_Launch";
-            this.Bt_Launch.Size = new System.Drawing.Size(94, 29);
-            this.Bt_Launch.TabIndex = 35;
-            this.Bt_Launch.Text = "Launch!";
-            this.Bt_Launch.UseVisualStyleBackColor = true;
-            this.Bt_Launch.Click += new System.EventHandler(this.Bt_Launch_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 500);
+            this.ClientSize = new System.Drawing.Size(930, 563);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.progressBar1);
@@ -495,7 +495,7 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private CheckBox Cb_Elite_Dangerous_Launcher;
         private CheckBox Cb_AussieDroid_Warthog_Script;
-        private CheckBox Cb_T_A_R_G_E_T_;
+        private CheckBox Cb_TARGET;
         private CheckBox Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher;
         private CheckBox Cb_Voiceattack;
         private CheckBox Cb_Ed_Discovery;

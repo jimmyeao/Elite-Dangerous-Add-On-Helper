@@ -7,6 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
+
+
+// TODO LIST!
+// Make a dependanciy between warthog being enabled and requiring a script to be specified
+// Load prefs populates fields
+// deal with arguments in launch apps
+// ....
+
 
 namespace Elite_Dangerous_Add_On_Helper
 {
@@ -30,7 +39,16 @@ namespace Elite_Dangerous_Add_On_Helper
             // load all the textboxes with values from settings file
             if (File.Exists(settingsFilePath + "AddOns.json"))
             {
+               
                 addOns = DeserializeAddOns();
+                foreach(string app in appnames)
+                {
+
+                    string cb = "Cb_" + app.Replace(" ", "_");
+                    
+                    addOns[app] = new AddOn();
+
+                }
             }
             else
             {
@@ -418,7 +436,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 // found it!
                 Tb_T_A_R_G_E_T_.Text = pathtocheck;
                 Tb_T_A_R_G_E_T_.Refresh();
-                Cb_T_A_R_G_E_T_.Checked = true;
+                Cb_TARGET.Checked = true;
             }
             else
             {
