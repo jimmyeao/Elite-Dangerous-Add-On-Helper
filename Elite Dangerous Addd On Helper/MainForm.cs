@@ -268,6 +268,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
                 else
                 {
+                    //looks like the filealready exists - is it installed? Should we continue?
                     updatemystatus("File already Downloaded!");
                     const string message = "File already downloaded, are you sure you want to install?";
                     const string caption = "Already Installed?";
@@ -275,7 +276,7 @@ namespace Elite_Dangerous_Add_On_Helper
                                                  MessageBoxButtons.YesNo,
                                                  MessageBoxIcon.Question);
 
-                    // If the no button was pressed ...
+                    // If the yes button was pressed ...
                     if (result == DialogResult.Yes)
                     {
                         // cancel the closure of the form.
@@ -286,7 +287,7 @@ namespace Elite_Dangerous_Add_On_Helper
                             UseShellExecute = true
                         };
                         p.Start();
-                        //Process.Start(filename);
+                        
                     }
                 }
                 // end new code
@@ -379,224 +380,224 @@ namespace Elite_Dangerous_Add_On_Helper
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-        private void btn_autodetect_Click_1(object sender, EventArgs e)
-        {
-            // Display the ProgressBar control.
-            progressBar1.Visible = true;
-            // Set Minimum to 1 to represent the first file being copied.
-            progressBar1.Minimum = 1;
-            // Set Maximum to the total number of files to copy.
-            int Totalchecked = nonvrtab.Controls.OfType<System.Windows.Forms.CheckBox>().Count();
-            progressBar1.Maximum = Totalchecked;
-            Console.WriteLine(Totalchecked);
-            // Set the initial value of the ProgressBar.
-            progressBar1.Value = 1;
-            // Set the Step property to a value of 1 to represent each step.
-            progressBar1.Step = 1;
-            List<String> Driveletter = new List<string>();                                  //who has more than 10 local drives???
-            DriveInfo[] allDrives = DriveInfo.GetDrives();
-            foreach (DriveInfo d in allDrives)
-            {
-                if (d.IsReady && d.DriveType == DriveType.Fixed)
-                {
-                    // Store Drives in list..
-                    // Drives;
+        //private void btn_autodetect_Click_1(object sender, EventArgs e)
+        //{
+        //    // Display the ProgressBar control.
+        //    progressBar1.Visible = true;
+        //    // Set Minimum to 1 to represent the first file being copied.
+        //    progressBar1.Minimum = 1;
+        //    // Set Maximum to the total number of files to copy.
+        //    int Totalchecked = nonvrtab.Controls.OfType<System.Windows.Forms.CheckBox>().Count();
+        //    progressBar1.Maximum = Totalchecked;
+        //    Console.WriteLine(Totalchecked);
+        //    // Set the initial value of the ProgressBar.
+        //    progressBar1.Value = 1;
+        //    // Set the Step property to a value of 1 to represent each step.
+        //    progressBar1.Step = 1;
+        //    List<String> Driveletter = new List<string>();                                  //who has more than 10 local drives???
+        //    DriveInfo[] allDrives = DriveInfo.GetDrives();
+        //    foreach (DriveInfo d in allDrives)
+        //    {
+        //        if (d.IsReady && d.DriveType == DriveType.Fixed)
+        //        {
+        //            // Store Drives in list..
+        //            // Drives;
 
-                    Driveletter.Add(d.ToString());
+        //            Driveletter.Add(d.ToString());
 
-                }
-            }
-            string pathtocheck;
-            updatemystatus("This may take a while.. Searching for EDMC");
-            // lets check the default path
-            // 
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
+        //        }
+        //    }
+        //    string pathtocheck;
+        //    updatemystatus("This may take a while.. Searching for EDMC");
+        //    // lets check the default path
+        //    // 
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
 
-            pathtocheck = @"C:\Program Files (x86)\EDMarketConnector";
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_Ed_Market_Connector.Text = pathtocheck;
-                Tb_Ed_Market_Connector.Refresh();
-                Cb_Ed_Market_Connector.Checked = true;
-            }
-            else
-            {
-                updatemystatus("EDMC Not found");
+        //    pathtocheck = @"C:\Program Files (x86)\EDMarketConnector";
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_Ed_Market_Connector.Text = pathtocheck;
+        //        Tb_Ed_Market_Connector.Refresh();
+        //        Cb_Ed_Market_Connector.Checked = true;
+        //    }
+        //    else
+        //    {
+        //        updatemystatus("EDMC Not found");
 
-            }
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            updatemystatus("This may take a while.. Searching for Ed Engineer");
-            // lets get the users appdata/local folder...
-            string Foldertosearch = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\apps";
-            //now we need an array to hold the search result (Edengineer leases stuff behind when it updates resulting in mulitple copies)
-            string[] result;
-            // now lets search app data for EdEngineer..           
-            result = Directory.GetFiles(Foldertosearch, "EDEngineer.exe", SearchOption.AllDirectories);
+        //    }
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    updatemystatus("This may take a while.. Searching for Ed Engineer");
+        //    // lets get the users appdata/local folder...
+        //    string Foldertosearch = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\apps";
+        //    //now we need an array to hold the search result (Edengineer leases stuff behind when it updates resulting in mulitple copies)
+        //    string[] result;
+        //    // now lets search app data for EdEngineer..           
+        //    result = Directory.GetFiles(Foldertosearch, "EDEngineer.exe", SearchOption.AllDirectories);
 
-            //ok so we have a list of possible candidates, lets get the last one..
+        //    //ok so we have a list of possible candidates, lets get the last one..
 
-            if (File.Exists(result.Last()))
-            {
-                // found it!
-                string edeng = result.Last();                       //get the last (usually most recent, meh) version of the file.
-                edeng = edeng.Replace(@"\EDEngineer.exe", "");      //take of the exe name so we jjust have the path
-                Tb_Ed_Engineer.Text = edeng;                         //update the textbox
-                Tb_Ed_Engineer.Refresh();                            // refresh the textbox
-                Cb_Ed_Engineer.Checked = true;                       // enable the app by checking the checkbox
-            }
-            else
-            {
-                updatemystatus("Ed Engineer Not found");
-            }
-            updatemystatus("This may take a while.. Searching for Voice Attack");
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            // lets check the default path
-            // lets also search well known locations on all local fixed drives
-            pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\commonVoiceAttack";
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_Voiceattack.Text = pathtocheck;
-                Tb_Voiceattack.Refresh();
-                Cb_Voiceattack.Checked = true;
-            }
-            else                                    // not found in default? lets search all local drives for steam apps
-            {
-                foreach (string d in Driveletter)
-                {
-                    pathtocheck = d + @"SteamLibrary\steamapps\common\VoiceAttack";
+        //    if (File.Exists(result.Last()))
+        //    {
+        //        // found it!
+        //        string edeng = result.Last();                       //get the last (usually most recent, meh) version of the file.
+        //        edeng = edeng.Replace(@"\EDEngineer.exe", "");      //take of the exe name so we jjust have the path
+        //        Tb_Ed_Engineer.Text = edeng;                         //update the textbox
+        //        Tb_Ed_Engineer.Refresh();                            // refresh the textbox
+        //        Cb_Ed_Engineer.Checked = true;                       // enable the app by checking the checkbox
+        //    }
+        //    else
+        //    {
+        //        updatemystatus("Ed Engineer Not found");
+        //    }
+        //    updatemystatus("This may take a while.. Searching for Voice Attack");
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    // lets check the default path
+        //    // lets also search well known locations on all local fixed drives
+        //    pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\commonVoiceAttack";
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_Voiceattack.Text = pathtocheck;
+        //        Tb_Voiceattack.Refresh();
+        //        Cb_Voiceattack.Checked = true;
+        //    }
+        //    else                                    // not found in default? lets search all local drives for steam apps
+        //    {
+        //        foreach (string d in Driveletter)
+        //        {
+        //            pathtocheck = d + @"SteamLibrary\steamapps\common\VoiceAttack";
 
-                    if (Directory.Exists(pathtocheck))
-                    {
-                        // found it!
-                        Tb_Voiceattack.Text = pathtocheck;
-                        Tb_Voiceattack.Refresh();
-                        Cb_Voiceattack.Checked = true;
-                    }
-                    else
-                    {
-                        updatemystatus("Voice Attack Not found");
+        //            if (Directory.Exists(pathtocheck))
+        //            {
+        //                // found it!
+        //                Tb_Voiceattack.Text = pathtocheck;
+        //                Tb_Voiceattack.Refresh();
+        //                Cb_Voiceattack.Checked = true;
+        //            }
+        //            else
+        //            {
+        //                updatemystatus("Voice Attack Not found");
 
-                    }
-                }
-            }
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            updatemystatus("This may take a while.. Searching for ED Discovery");
-            // lets check the default path
-            // 
-            pathtocheck = @"C:\Program Files\EDDiscovery";
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_Ed_Discovery.Text = pathtocheck;
-                Tb_Ed_Discovery.Refresh();
-                Cb_Ed_Discovery.Checked = true;
-            }
-            else
-            {
-                updatemystatus("ED Discovery Not found");
+        //            }
+        //        }
+        //    }
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    updatemystatus("This may take a while.. Searching for ED Discovery");
+        //    // lets check the default path
+        //    // 
+        //    pathtocheck = @"C:\Program Files\EDDiscovery";
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_Ed_Discovery.Text = pathtocheck;
+        //        Tb_Ed_Discovery.Refresh();
+        //        Cb_Ed_Discovery.Checked = true;
+        //    }
+        //    else
+        //    {
+        //        updatemystatus("ED Discovery Not found");
 
-            }
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            updatemystatus("This may take a while.. Searching for ED Odyysey Materials Helper");
+        //    }
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    updatemystatus("This may take a while.. Searching for ED Odyysey Materials Helper");
 
-            // lets check the default path
-            // 
+        //    // lets check the default path
+        //    // 
 
-            pathtocheck = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Elite Dangerous Odyssey Materials Helper Launcher";
+        //    pathtocheck = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Elite Dangerous Odyssey Materials Helper Launcher";
 
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Text = pathtocheck;
-                Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Refresh();
-                Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Checked = true;
-            }
-            else
-            {
-                updatemystatus(" ED Odyysey Materials Helper not found");
-            }
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Text = pathtocheck;
+        //        Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Refresh();
+        //        Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Checked = true;
+        //    }
+        //    else
+        //    {
+        //        updatemystatus(" ED Odyysey Materials Helper not found");
+        //    }
 
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            updatemystatus("This may take a while.. Searching for T.A.R.G.E.T");
-            // lets check the default path
-            // 
-            pathtocheck = @"c:\program files (x86)\Thrustmaster\TARGET\x64";
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_T_A_R_G_E_T_.Text = pathtocheck;
-                Tb_T_A_R_G_E_T_.Refresh();
-                Cb_TARGET.Checked = true;
-            }
-            else
-            {
-                updatemystatus(" ED Odyysey Materials Helper not found");
-            }
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    updatemystatus("This may take a while.. Searching for T.A.R.G.E.T");
+        //    // lets check the default path
+        //    // 
+        //    pathtocheck = @"c:\program files (x86)\Thrustmaster\TARGET\x64";
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_T_A_R_G_E_T_.Text = pathtocheck;
+        //        Tb_T_A_R_G_E_T_.Refresh();
+        //        Cb_TARGET.Checked = true;
+        //    }
+        //    else
+        //    {
+        //        updatemystatus(" ED Odyysey Materials Helper not found");
+        //    }
 
-            progressBar1.PerformStep();
-            progressBar1.Refresh();
-            updatemystatus("This may take a while.. Searching for Elite Dangerous");
+        //    progressBar1.PerformStep();
+        //    progressBar1.Refresh();
+        //    updatemystatus("This may take a while.. Searching for Elite Dangerous");
 
-            // lets check the default path
-            // 
-            pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\common\Elite Dangerous\";
+        //    // lets check the default path
+        //    // 
+        //    pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\common\Elite Dangerous\";
 
-            if (Directory.Exists(pathtocheck))
-            {
-                // found it!
-                Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
-                Tb_Elite_Dangerous_Launcher.Refresh();
-                Cb_Elite_Dangerous_Launcher.Checked = true;
-            }
-            else                                    // not found in default? lets search all local drives for steam apps
-            {
-                foreach (string d in Driveletter)
-                {
+        //    if (Directory.Exists(pathtocheck))
+        //    {
+        //        // found it!
+        //        Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
+        //        Tb_Elite_Dangerous_Launcher.Refresh();
+        //        Cb_Elite_Dangerous_Launcher.Checked = true;
+        //    }
+        //    else                                    // not found in default? lets search all local drives for steam apps
+        //    {
+        //        foreach (string d in Driveletter)
+        //        {
 
 
-                    pathtocheck = d + @"SteamLibrary\steamapps\common\Elite Dangerous";
+        //            pathtocheck = d + @"SteamLibrary\steamapps\common\Elite Dangerous";
 
-                    if (Directory.Exists(pathtocheck))
-                    {
-                        // found it!
-                        Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
-                        Tb_Elite_Dangerous_Launcher.Refresh();
-                        Cb_Elite_Dangerous_Launcher.Checked = true;
-                    }
-                }
-            }
-            if (Tb_Elite_Dangerous_Launcher.Text == null)
-            {
-                updatemystatus("Elite launcher not found");
-            }
+        //            if (Directory.Exists(pathtocheck))
+        //            {
+        //                // found it!
+        //                Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
+        //                Tb_Elite_Dangerous_Launcher.Refresh();
+        //                Cb_Elite_Dangerous_Launcher.Checked = true;
+        //            }
+        //        }
+        //    }
+        //    if (Tb_Elite_Dangerous_Launcher.Text == null)
+        //    {
+        //        updatemystatus("Elite launcher not found");
+        //    }
 
-            progressBar1.Value = 1;
-            progressBar1.Refresh();
-            updatemystatus("Ready");
-        }
+        //    progressBar1.Value = 1;
+        //    progressBar1.Refresh();
+        //    updatemystatus("Ready");
+        //}
  
 
-        private void Bt_AussieDroid_Warthog_Script_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openDialog = new OpenFileDialog
-            {
-                Title = "Select A File",
-                Filter = "Thrustmaster Files (*.tmc)|*.tmc"
-            };
-            if (openDialog.ShowDialog() == DialogResult.OK)
-            {
-                string file = openDialog.FileName;
-                Tb_AussieDroid_Warthog_Script.Text = file;
-            }
-        }
+        //private void Bt_AussieDroid_Warthog_Script_Click(object sender, EventArgs e)
+        //{
+        //    OpenFileDialog openDialog = new OpenFileDialog
+        //    {
+        //        Title = "Select A File",
+        //        Filter = "Thrustmaster Files (*.tmc)|*.tmc"
+        //    };
+        //    if (openDialog.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string file = openDialog.FileName;
+        //        Tb_AussieDroid_Warthog_Script.Text = file;
+        //    }
+        //}
 
         #endregion
         #region menuitems
@@ -646,6 +647,11 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             var AddApp = new AddApp();
             AddApp.Show();  
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
