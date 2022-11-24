@@ -26,9 +26,9 @@ namespace Elite_Dangerous_Add_On_Helper
     {
         // setup a folder for settings0
         // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Elite Add On Helper/";
+        static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         static readonly HttpClient client = new HttpClient();
-        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","ED Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
+        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         /// <summary>
         /// List of all addons
         /// </summary>
@@ -38,7 +38,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
         public MainForm()
         {
-           
+
             InitializeComponent();
             Load_prefs();
             updatemystatus("Ready");
@@ -56,12 +56,30 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 updatemystatus("Loading Settings");
                 addOns = DeserializeAddOns();
-               
+
             }
             else
             {
-                updatemystatus("Settings not found");
-                InitialAddonsSetup();
+                // lets copy the default addons.json to the settings path..
+
+                string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
+                string startupPath = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
+                string sourceFile = startupPath;
+                string destinationFile = settingsFilePath + "AddOns.json";
+                try
+                {
+                    File.Copy(sourceFile, destinationFile, true);
+                    updatemystatus("Settings copied");
+                    updatemystatus("Loading Settings");
+                    addOns = DeserializeAddOns();
+                }
+                catch (IOException iox)
+                {
+                    Console.WriteLine(iox.Message);
+                    updatemystatus("Settings error");
+                }
+
+                //InitialAddonsSetup();
             }
             foreach (var addon in addOns.Values)
             {
@@ -121,7 +139,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             currentControlRow++;
         }
-       
+
         private void InitialAddonsSetup()
         {
             //Test data below, dictionary key should match friendly name
@@ -287,12 +305,12 @@ namespace Elite_Dangerous_Add_On_Helper
                             UseShellExecute = true
                         };
                         p.Start();
-                        
+
                     }
                 }
                 // end new code
             }
-            
+
         }
 
         private void LaunchAddon(AddOn addOn)
@@ -330,10 +348,10 @@ namespace Elite_Dangerous_Add_On_Helper
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
 
             return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Objects,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-                });
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            });
         }
 
         internal static void SerializeAddons(object addOns)
@@ -359,7 +377,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else { return null; }
         }
-        
+
         private void HandleSelectPath(string dictKey)
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
@@ -583,7 +601,7 @@ namespace Elite_Dangerous_Add_On_Helper
         //    progressBar1.Refresh();
         //    updatemystatus("Ready");
         //}
- 
+
 
         //private void Bt_AussieDroid_Warthog_Script_Click(object sender, EventArgs e)
         //{
@@ -608,14 +626,14 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                updatemystatus("Saving Prefs");
-             SerializeAddons(addOns);
+            updatemystatus("Saving Prefs");
+            SerializeAddons(addOns);
         }
         #endregion menuitems
         #region launch items
         private void Bt_Launch_Click(object sender, EventArgs e)
         {
-            
+
             foreach (var addOn in addOns.Values)
             {
                 updatemystatus(addOn.ToString());
@@ -632,21 +650,21 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
         #endregion
-        # region installs
+        #region installs
 
 
-    private void DoInstall(AddOn addOn)
-    {
-        updatemystatus($"Installing {addOn.FriendlyName}");
-        DownloadFileAndExecute(addOn.Url);
-        updatemystatus("Ready");
-    }
+        private void DoInstall(AddOn addOn)
+        {
+            updatemystatus($"Installing {addOn.FriendlyName}");
+            DownloadFileAndExecute(addOn.Url);
+            updatemystatus("Ready");
+        }
         #endregion installs  
 
         private void Bt_AddApp_Click(object sender, EventArgs e)
         {
             var AddApp = new AddApp();
-            AddApp.Show();  
+            AddApp.Show();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

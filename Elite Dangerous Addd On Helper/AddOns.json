@@ -1,0 +1,80 @@
+{
+  "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper]], System.Private.CoreLib",
+  "Ed Engineer": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "Ed Engineer",
+    "ExecutableName": "EDEngineer.exe",
+    "Installable": true,
+    "AutoDiscoverPath": "",
+    "Scripts": "",
+    "Url": "https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe"
+  },
+  "Ed Market Connector": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "Ed Market Connector",
+    "ExecutableName": "EDMarketConnector.exe",
+    "Installable": true,
+    "AutoDiscoverPath": "C:\\Program Files (x86)\\EDMarketConnector",
+    "Scripts": "",
+    "Url": "https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi"
+  },
+  "VoiceAttack": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "VoiceAttack",
+    "ExecutableName": "VoiceAttack.exe",
+    "Installable": false,
+    "AutoDiscoverPath": "",
+    "Scripts": "",
+    "Url": ""
+  },
+  "Ed Discovery": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "ED Discovery",
+    "ExecutableName": "EDDiscovery.exe",
+    "Installable": true,
+    "AutoDiscoverPath": "C:\\Program Files\\EDDiscovery",
+    "Scripts": "",
+    "Url": "https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe"
+  },
+  "ED Odyysey Materials Helper": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "ED Odyysey Materials Helper",
+    "ExecutableName": "Elite Dangerous Odyssey Materials Helper Launcher.exe",
+    "Installable": true,
+    "AutoDiscoverPath": "",
+    "Scripts": "",
+    "Url": "https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.101/Elite.Dangerous.Odyssey.Materials.Helper-1.101.msi"
+  },
+  "T.A.R.G.E.T.": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "T.A.R.G.E.T.",
+    "ExecutableName": "TARGETGUI.exe",
+    "Installable": false,
+    "AutoDiscoverPath": "",
+    "Scripts": "",
+    "Url": ""
+  },
+  "Elite": {
+    "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
+    "Enabled": false,
+    "ProgramDirectory": "",
+    "FriendlyName": "Elite",
+    "ExecutableName": "EDLaunch.exe",
+    "Installable": false,
+    "AutoDiscoverPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Elite Dangerous\\",
+    "Scripts": "",
+    "Url": ""
+  }
+}
