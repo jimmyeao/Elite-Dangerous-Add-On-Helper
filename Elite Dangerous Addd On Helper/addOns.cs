@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Elite_Dangerous_Add_On_Helper.Model
     [Serializable]
     public class AddOn : INotifyPropertyChanged
     {
+        [DebuggerDisplay("ProgramDirectory = {ProgramDirectory} - FriendlyName = {FriendlyName}")]
         /// <summary>
         /// Add on for if enabled (box checked)
         /// </summary>
@@ -46,6 +48,11 @@ namespace Elite_Dangerous_Add_On_Helper.Model
         /// Path for extras e.g. TARGET scripts.
         /// </summary>
         public string Scripts { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Path for extras e.g. TARGET scripts.
+        /// </summary>
+        public string Url { get; set; } = string.Empty;
 
 #pragma warning disable 67 
         public event PropertyChangedEventHandler PropertyChanged;
