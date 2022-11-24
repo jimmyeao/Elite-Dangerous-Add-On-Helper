@@ -23,9 +23,9 @@ namespace Elite_Dangerous_Add_On_Helper
 {
     public partial class MainForm : Form
     {
-        // setup a folder for settings
-        static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        static readonly string settingsFilePath = directory + "/Elite Add On Helper/";
+        // setup a folder for settings0
+        // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Elite Add On Helper/";
         static readonly HttpClient client = new HttpClient();
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","Elite Dangerous Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
         /// <summary>
@@ -73,7 +73,7 @@ namespace Elite_Dangerous_Add_On_Helper
             //Test data below, dictionary key should match friendly name
             if (!addOns.ContainsKey("Ed Engineer"))
             {
-                addOns.Add("Ed Engineer", new AddOn
+                addOns.TryAdd("Ed Engineer", new AddOn
                 {
                     Enabled = false,
                     Installable = false,
@@ -241,8 +241,7 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
 
-            return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json,
-                new JsonSerializerSettings
+            return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json,new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Objects,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
