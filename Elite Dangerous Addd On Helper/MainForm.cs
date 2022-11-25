@@ -265,13 +265,31 @@ namespace Elite_Dangerous_Add_On_Helper
                 updatemystatus($"Launching {addOn.FriendlyName}..");
                 try
                 {
-                    var p = new Process();
-                    p.StartInfo = new ProcessStartInfo(path)
-                    {
-                        UseShellExecute = true
-                    };
-                    p.Start();
+                    //var p = new Process();
+                    //p.StartInfo.Arguments = addOn.Scripts;
+                    //p.StartInfo = new ProcessStartInfo(path)
+                    //{
+                    //    UseShellExecute = true
+                    //};
+                    //p.StartInfo.Arguments = addOn.Scripts;
+                    //p.Start();
                     //Process.Start(path);
+                    using (Process compiler = new Process())
+                    {
+                        compiler.StartInfo.FileName = path;
+                        compiler.StartInfo.Arguments = addOn.Scripts;
+                        compiler.StartInfo.UseShellExecute = false;
+                        compiler.StartInfo.RedirectStandardOutput = true;
+                        compiler.Start();
+
+                        //Console.WriteLine(compiler.StandardOutput.ReadToEnd());
+
+                        //compiler.WaitForExit();
+                    }
+
+
+
+
                 }
                 catch
                 {
