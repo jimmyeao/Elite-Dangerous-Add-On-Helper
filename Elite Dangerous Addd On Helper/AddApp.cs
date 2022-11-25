@@ -114,6 +114,11 @@ namespace Elite_Dangerous_Add_On_Helper
                 {
                     Tb_AppExeName.Text = openDialog.SafeFileName;
                     Tb_AppPath.Text = Path.GetDirectoryName(file);
+                    // if user hant filled in an app name, lets generate it from the exe.
+                    if (Tb_App_Name.Text == string.Empty)
+                    {
+                        Tb_App_Name.Text = Tb_AppExeName.Text.Replace(".exe", "");
+                    }
                 }
 
             }
