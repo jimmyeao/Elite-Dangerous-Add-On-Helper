@@ -46,7 +46,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 56);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 20);
             this.label1.TabIndex = 0;
@@ -55,7 +55,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 103);
+            this.label2.Location = new System.Drawing.Point(12, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 20);
             this.label2.TabIndex = 1;
@@ -64,7 +64,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 150);
+            this.label3.Location = new System.Drawing.Point(12, 103);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(162, 20);
             this.label3.TabIndex = 2;
@@ -73,7 +73,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 197);
+            this.label4.Location = new System.Drawing.Point(12, 150);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 20);
             this.label4.TabIndex = 3;
@@ -81,35 +81,35 @@
             // 
             // Tb_App_Name
             // 
-            this.Tb_App_Name.Location = new System.Drawing.Point(204, 53);
+            this.Tb_App_Name.Location = new System.Drawing.Point(190, 6);
             this.Tb_App_Name.Name = "Tb_App_Name";
             this.Tb_App_Name.Size = new System.Drawing.Size(278, 27);
             this.Tb_App_Name.TabIndex = 4;
             // 
             // Tb_AppPath
             // 
-            this.Tb_AppPath.Location = new System.Drawing.Point(204, 100);
+            this.Tb_AppPath.Location = new System.Drawing.Point(190, 53);
             this.Tb_AppPath.Name = "Tb_AppPath";
             this.Tb_AppPath.Size = new System.Drawing.Size(278, 27);
             this.Tb_AppPath.TabIndex = 5;
             // 
             // Tb_App_Args
             // 
-            this.Tb_App_Args.Location = new System.Drawing.Point(204, 147);
+            this.Tb_App_Args.Location = new System.Drawing.Point(190, 100);
             this.Tb_App_Args.Name = "Tb_App_Args";
             this.Tb_App_Args.Size = new System.Drawing.Size(278, 27);
             this.Tb_App_Args.TabIndex = 6;
             // 
             // Tb_InstallationURL
             // 
-            this.Tb_InstallationURL.Location = new System.Drawing.Point(204, 194);
+            this.Tb_InstallationURL.Location = new System.Drawing.Point(190, 147);
             this.Tb_InstallationURL.Name = "Tb_InstallationURL";
             this.Tb_InstallationURL.Size = new System.Drawing.Size(278, 27);
             this.Tb_InstallationURL.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(204, 246);
+            this.button1.Location = new System.Drawing.Point(190, 199);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 8;
@@ -119,7 +119,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(304, 246);
+            this.button2.Location = new System.Drawing.Point(290, 199);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 9;
@@ -130,7 +130,7 @@
             // Cb_Enable
             // 
             this.Cb_Enable.AutoSize = true;
-            this.Cb_Enable.Location = new System.Drawing.Point(26, 231);
+            this.Cb_Enable.Location = new System.Drawing.Point(12, 184);
             this.Cb_Enable.Name = "Cb_Enable";
             this.Cb_Enable.Size = new System.Drawing.Size(83, 24);
             this.Cb_Enable.TabIndex = 10;
@@ -141,7 +141,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(557, 12);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(231, 263);
+            this.richTextBox1.Size = new System.Drawing.Size(231, 222);
             this.richTextBox1.TabIndex = 11;
             this.richTextBox1.Text = "";
             // 
@@ -149,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 287);
+            this.ClientSize = new System.Drawing.Size(800, 244);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.Cb_Enable);
             this.Controls.Add(this.button2);

@@ -48,7 +48,7 @@ namespace Elite_Dangerous_Add_On_Helper
             // user forgot to fill in a field, lets show a friendly reminder
             MessageBox.Show("You must enter a value for " + field, "Missing Info",
             MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return null;
+            return "";
         }
         private void listaddons(AddOn addOn)
         {
@@ -80,14 +80,14 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 addOns.Add(Tb_App_Name.Text, new AddOn
                 {
-                    Enabled = Cb_Enable.Checked,
-                    Installable = caninstall,
-                    ProgramDirectory = Tb_AppPath.Text,
-                    FriendlyName = Tb_App_Name.Text,
-                    ExecutableName = Tb_App_Name.Text,
-                    AutoDiscoverPath = "",
-                    Scripts = Tb_App_Args.Text,
-                    Url = Tb_InstallationURL.Text
+                    Enabled = Cb_Enable.Checked,            // this will always have a bool state of checked or unchecked
+                    Installable = caninstall,               // bool caninstall set to true if an installation URL exists. Note, validity of url not yet checked
+                    ProgramDirectory = Tb_AppPath.Text,     // mandatory field
+                    FriendlyName = Tb_App_Name.Text,        // mandatory field
+                    ExecutableName = Tb_App_Name.Text,      // mandatory field
+                    AutoDiscoverPath = "",                  // not implimented
+                    Scripts = Tb_App_Args.Text,             // not implimented, required for TARGET scripts
+                    Url = Tb_InstallationURL.Text           // non mandatory
                 });
                 SerializeAddons(addOns);
                 this.Dispose();

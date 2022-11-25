@@ -37,7 +37,7 @@
     "$type": "Elite_Dangerous_Add_On_Helper.Model.AddOn, Elite_Dangerous_Add_On_Helper",
     "Enabled": false,
     "ProgramDirectory": "",
-    "FriendlyName": "ED Discovery",
+    "FriendlyName": "Ed Discovery",
     "ExecutableName": "EDDiscovery.exe",
     "Installable": true,
     "AutoDiscoverPath": "C:\\Program Files\\EDDiscovery",
