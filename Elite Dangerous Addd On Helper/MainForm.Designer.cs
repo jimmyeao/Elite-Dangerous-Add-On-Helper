@@ -36,8 +36,6 @@
             this.editApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPrefsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.areYouSureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,58 +76,49 @@
             this.editApplicationToolStripMenuItem,
             this.openPrefsFolderToolStripMenuItem,
             this.savePreferencesToolStripMenuItem,
-            this.resetPreferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // addApplicationToolStripMenuItem
             // 
             this.addApplicationToolStripMenuItem.Name = "addApplicationToolStripMenuItem";
-            this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.addApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
+            this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.addApplicationToolStripMenuItem.Text = "Add Application";
             this.addApplicationToolStripMenuItem.Click += new System.EventHandler(this.addApplicationToolStripMenuItem_Click);
             // 
             // editApplicationToolStripMenuItem
             // 
             this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
-            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.editApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.editApplicationToolStripMenuItem.Text = "Edit Application";
             // 
             // openPrefsFolderToolStripMenuItem
             // 
             this.openPrefsFolderToolStripMenuItem.Name = "openPrefsFolderToolStripMenuItem";
-            this.openPrefsFolderToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.openPrefsFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.openPrefsFolderToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.openPrefsFolderToolStripMenuItem.Text = "Open Prefs Folder";
             this.openPrefsFolderToolStripMenuItem.Click += new System.EventHandler(this.openPrefsFolderToolStripMenuItem_Click);
             // 
             // savePreferencesToolStripMenuItem
             // 
             this.savePreferencesToolStripMenuItem.Name = "savePreferencesToolStripMenuItem";
-            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.savePreferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
+            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.savePreferencesToolStripMenuItem.Text = "Save Preferences";
             this.savePreferencesToolStripMenuItem.Click += new System.EventHandler(this.savePreferencesToolStripMenuItem_Click);
-            // 
-            // resetPreferencesToolStripMenuItem
-            // 
-            this.resetPreferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.areYouSureToolStripMenuItem});
-            this.resetPreferencesToolStripMenuItem.Name = "resetPreferencesToolStripMenuItem";
-            this.resetPreferencesToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
-            this.resetPreferencesToolStripMenuItem.Text = "Reset Preferences";
-            // 
-            // areYouSureToolStripMenuItem
-            // 
-            this.areYouSureToolStripMenuItem.Name = "areYouSureToolStripMenuItem";
-            this.areYouSureToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
-            this.areYouSureToolStripMenuItem.Text = "Are You Sure?";
-            this.areYouSureToolStripMenuItem.Click += new System.EventHandler(this.areYouSureToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click_1);
             // 
@@ -216,7 +205,5 @@
         private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
         private ToolStripMenuItem addApplicationToolStripMenuItem;
         private ToolStripMenuItem editApplicationToolStripMenuItem;
-        private ToolStripMenuItem resetPreferencesToolStripMenuItem;
-        private ToolStripMenuItem areYouSureToolStripMenuItem;
     }
 }

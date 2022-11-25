@@ -434,5 +434,10 @@ namespace Elite_Dangerous_Add_On_Helper
             // this proc resets prefs to default
 
         }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
