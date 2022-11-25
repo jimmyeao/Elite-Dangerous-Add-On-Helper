@@ -42,6 +42,8 @@
             this.Cb_Enable = new System.Windows.Forms.CheckBox();
             this.Bt_BrowsePath = new System.Windows.Forms.Button();
             this.Bt_BrowseArgs = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Tb_AppExeName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 56);
+            this.label2.Location = new System.Drawing.Point(12, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 20);
             this.label2.TabIndex = 1;
@@ -65,7 +67,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 103);
+            this.label3.Location = new System.Drawing.Point(12, 159);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(162, 20);
             this.label3.TabIndex = 2;
@@ -74,7 +76,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 150);
+            this.label4.Location = new System.Drawing.Point(12, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 20);
             this.label4.TabIndex = 3;
@@ -89,28 +91,28 @@
             // 
             // Tb_AppPath
             // 
-            this.Tb_AppPath.Location = new System.Drawing.Point(190, 53);
+            this.Tb_AppPath.Location = new System.Drawing.Point(190, 56);
             this.Tb_AppPath.Name = "Tb_AppPath";
             this.Tb_AppPath.Size = new System.Drawing.Size(278, 27);
             this.Tb_AppPath.TabIndex = 5;
             // 
             // Tb_App_Args
             // 
-            this.Tb_App_Args.Location = new System.Drawing.Point(190, 100);
+            this.Tb_App_Args.Location = new System.Drawing.Point(190, 156);
             this.Tb_App_Args.Name = "Tb_App_Args";
             this.Tb_App_Args.Size = new System.Drawing.Size(278, 27);
             this.Tb_App_Args.TabIndex = 6;
             // 
             // Tb_InstallationURL
             // 
-            this.Tb_InstallationURL.Location = new System.Drawing.Point(190, 147);
+            this.Tb_InstallationURL.Location = new System.Drawing.Point(190, 206);
             this.Tb_InstallationURL.Name = "Tb_InstallationURL";
             this.Tb_InstallationURL.Size = new System.Drawing.Size(278, 27);
             this.Tb_InstallationURL.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(190, 199);
+            this.button1.Location = new System.Drawing.Point(190, 258);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 8;
@@ -120,7 +122,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(290, 199);
+            this.button2.Location = new System.Drawing.Point(290, 258);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 9;
@@ -131,7 +133,7 @@
             // Cb_Enable
             // 
             this.Cb_Enable.AutoSize = true;
-            this.Cb_Enable.Location = new System.Drawing.Point(12, 184);
+            this.Cb_Enable.Location = new System.Drawing.Point(12, 243);
             this.Cb_Enable.Name = "Cb_Enable";
             this.Cb_Enable.Size = new System.Drawing.Size(83, 24);
             this.Cb_Enable.TabIndex = 10;
@@ -146,21 +148,40 @@
             this.Bt_BrowsePath.TabIndex = 12;
             this.Bt_BrowsePath.Text = "Browse";
             this.Bt_BrowsePath.UseVisualStyleBackColor = true;
+            this.Bt_BrowsePath.Click += new System.EventHandler(this.Bt_BrowsePath_Click);
             // 
             // Bt_BrowseArgs
             // 
-            this.Bt_BrowseArgs.Location = new System.Drawing.Point(474, 99);
+            this.Bt_BrowseArgs.Location = new System.Drawing.Point(474, 155);
             this.Bt_BrowseArgs.Name = "Bt_BrowseArgs";
             this.Bt_BrowseArgs.Size = new System.Drawing.Size(77, 29);
             this.Bt_BrowseArgs.TabIndex = 13;
             this.Bt_BrowseArgs.Text = "Browse";
             this.Bt_BrowseArgs.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 109);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(125, 20);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Executable Name";
+            // 
+            // Tb_AppExeName
+            // 
+            this.Tb_AppExeName.Location = new System.Drawing.Point(190, 106);
+            this.Tb_AppExeName.Name = "Tb_AppExeName";
+            this.Tb_AppExeName.Size = new System.Drawing.Size(278, 27);
+            this.Tb_AppExeName.TabIndex = 15;
+            // 
             // AddApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 244);
+            this.ClientSize = new System.Drawing.Size(566, 311);
+            this.Controls.Add(this.Tb_AppExeName);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.Bt_BrowseArgs);
             this.Controls.Add(this.Bt_BrowsePath);
             this.Controls.Add(this.Cb_Enable);
@@ -198,5 +219,7 @@
         private CheckBox Cb_Enable;
         private Button Bt_BrowsePath;
         private Button Bt_BrowseArgs;
+        private Label label5;
+        private TextBox Tb_AppExeName;
     }
 }

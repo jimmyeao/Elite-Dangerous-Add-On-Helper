@@ -14,6 +14,7 @@ using System.IO.Pipes;
 
 
 
+
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
 // Load prefs populates fields
@@ -86,6 +87,8 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 CreateControls(addon);
             }
+            this.Refresh();
+            this.Size = new Size(this.Width, this.Height+25);
 
 
         }
@@ -93,7 +96,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
-            var yPosition = ((currentControlRow) * 30) + 150;
+            var yPosition = ((currentControlRow) * 30) + 100;
 
             //Create checkbox
             CheckBox checkBox = new CheckBox();
@@ -115,8 +118,8 @@ namespace Elite_Dangerous_Add_On_Helper
             button.Location = new System.Drawing.Point(277, yPosition);
             button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
-            button.Click += (sender, e) => Folderpath(addOn.FriendlyName);
-            addOn.SelectPathButton= button; 
+            button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
+            addOn.SelectPathButton= button;
             Controls.Add(button);
 
             TextBox textBox = new TextBox();
@@ -126,6 +129,13 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            if (addOn.AutoDiscoverPath != string.Empty)
+            {
+                if (Directory.Exists(addOn.AutoDiscoverPath))
+                {
+                    textBox.Text = addOn.AutoDiscoverPath;
+                }
+            }
             addOn.AppDirectorytextbox= textBox;
             Controls.Add(textBox);
 
@@ -137,10 +147,11 @@ namespace Elite_Dangerous_Add_On_Helper
                 installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
-                addOn.InstallButton= installButton; 
+                addOn.InstallButton= installButton;
                 Controls.Add(installButton);
             }
-            
+
+
 
             currentControlRow++;
         }
@@ -156,11 +167,11 @@ namespace Elite_Dangerous_Add_On_Helper
 
             if (addOn.InstallButton != null)
             {
-                   Controls.Remove(addOn.InstallButton );
+                Controls.Remove(addOn.InstallButton);
             }
-            
 
-         
+
+
         }
 
         private void updatemystatus(string status)
@@ -285,12 +296,21 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        static string Folderpath()
+        static string Folderpath(string path)
         {
+            string mypath;
+            if (path == string.Empty)
+            {
+                mypath = Environment.SpecialFolder.MyComputer.ToString();
+            }
+            else
+            {
+                mypath = path;
+            }
             FolderBrowserDialog diag = new FolderBrowserDialog
             {
                 // set the root folder or it defaults to desktop
-                RootFolder = Environment.SpecialFolder.MyComputer
+                SelectedPath = mypath
             };
             if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -313,13 +333,16 @@ namespace Elite_Dangerous_Add_On_Helper
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string file = openDialog.FileName;
-                addOn.ProgramDirectory = file;
+                // need to get just the path element here, but store filename as well
+                addOn.ProgramDirectory = Path.GetDirectoryName(file);
+                addOn.ExecutableName = openDialog.SafeFileName;
+                //addOn.ProgramDirectory = file;
             }
 
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-       
+
 
         #endregion
         #region menuitems
@@ -365,11 +388,26 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         #endregion installs  
 
-        private void Bt_AddApp_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = settingsFilePath,
+                UseShellExecute = true,
+                Verb = "open"
+            });
+        }
+
+        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var AddApp = new AddApp(addOns);
             AddApp.ShowDialog();
-            
+
             foreach (var addon in addOns.Values)
             {
                 DeleteControls(addon);
@@ -378,11 +416,11 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 CreateControls(addon);
             }
-           
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // this proc resets prefs to default
 
         }
     }

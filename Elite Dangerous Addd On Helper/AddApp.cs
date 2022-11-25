@@ -19,7 +19,7 @@ namespace Elite_Dangerous_Add_On_Helper
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
         public bool caninstall;
         public AddApp(Dictionary<string, AddOn> addonDictionary)
-            
+
         {
             addOns = addonDictionary;
             InitializeComponent();
@@ -54,7 +54,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void listaddons(AddOn addOn)
         {
-        
+
 
         }
 
@@ -86,7 +86,7 @@ namespace Elite_Dangerous_Add_On_Helper
                     Installable = caninstall,               // bool caninstall set to true if an installation URL exists. Note, validity of url not yet checked
                     ProgramDirectory = Tb_AppPath.Text,     // mandatory field
                     FriendlyName = Tb_App_Name.Text,        // mandatory field
-                    ExecutableName = Tb_App_Name.Text,      // mandatory field
+                    ExecutableName = Tb_AppExeName.Text,      // mandatory field
                     AutoDiscoverPath = "",                  // not implimented
                     Scripts = Tb_App_Args.Text,             // not implimented, required for TARGET scripts
                     Url = Tb_InstallationURL.Text           // non mandatory
@@ -96,5 +96,39 @@ namespace Elite_Dangerous_Add_On_Helper
             }
 
         }
+        private string FindSelectPath()
+        {
+
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Title = "Select A File";
+            openDialog.Filter = "Executable files (*.exe)|*.exe";
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                string file = openDialog.FileName;
+
+                if (file == string.Empty)
+                {
+
+                }
+                else
+                {
+                    Tb_AppExeName.Text = openDialog.SafeFileName;
+                    Tb_AppPath.Text = Path.GetDirectoryName(file);
+                }
+
+            }
+
+            return null;
+
+        }
+
+        private void Bt_BrowsePath_Click(object sender, EventArgs e)
+        {
+            string result = FindSelectPath();
+
+
+        }
+
+
     }
 }
