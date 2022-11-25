@@ -11,6 +11,7 @@ using System;
 using System.Net.Http;
 using System.Data;
 using System.IO.Pipes;
+using System.Web;
 
 
 
@@ -31,6 +32,7 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         static readonly HttpClient client = new HttpClient();
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
+        static string[] launched;
         /// <summary>
         /// List of all addons
         /// </summary>
@@ -265,31 +267,18 @@ namespace Elite_Dangerous_Add_On_Helper
                 updatemystatus($"Launching {addOn.FriendlyName}..");
                 try
                 {
-                    //var p = new Process();
-                    //p.StartInfo.Arguments = addOn.Scripts;
-                    //p.StartInfo = new ProcessStartInfo(path)
-                    //{
-                    //    UseShellExecute = true
-                    //};
-                    //p.StartInfo.Arguments = addOn.Scripts;
-                    //p.Start();
-                    //Process.Start(path);
-                    using (Process compiler = new Process())
+                    //need to check this works for elevated programs
+
+                    using (Process apptolaunch = new Process())
                     {
-                        compiler.StartInfo.FileName = path;
-                        compiler.StartInfo.Arguments = addOn.Scripts;
-                        compiler.StartInfo.UseShellExecute = false;
-                        compiler.StartInfo.RedirectStandardOutput = true;
-                        compiler.Start();
+                        apptolaunch.StartInfo.FileName = path;
+                        apptolaunch.StartInfo.Arguments = addOn.Scripts;
+                        apptolaunch.StartInfo.UseShellExecute = false;
+                        apptolaunch.StartInfo.RedirectStandardOutput = true;
+                        apptolaunch.Start();
 
-                        //Console.WriteLine(compiler.StandardOutput.ReadToEnd());
 
-                        //compiler.WaitForExit();
                     }
-
-
-
-
                 }
                 catch
                 {
