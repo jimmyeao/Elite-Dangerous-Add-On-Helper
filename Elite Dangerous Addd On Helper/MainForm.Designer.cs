@@ -41,6 +41,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Bt_AddApp = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -150,11 +151,20 @@
             this.Bt_AddApp.UseVisualStyleBackColor = true;
             this.Bt_AddApp.Click += new System.EventHandler(this.Bt_AddApp_Click);
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(725, 212);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(185, 263);
+            this.richTextBox1.TabIndex = 36;
+            this.richTextBox1.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 563);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.Bt_AddApp);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
@@ -188,5 +198,6 @@
         private StatusStrip statusStrip1;
         private PictureBox pictureBox1;
         private Button Bt_AddApp;
+        private RichTextBox richTextBox1;
     }
 }
