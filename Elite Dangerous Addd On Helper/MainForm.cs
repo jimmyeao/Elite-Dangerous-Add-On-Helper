@@ -107,6 +107,7 @@ namespace Elite_Dangerous_Add_On_Helper
             //Set the location on screen, this can be a bit trial and error
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
+            addOn.EnableCheckbox = checkBox;
             Controls.Add(checkBox);
 
             Button button = new Button();
@@ -115,6 +116,7 @@ namespace Elite_Dangerous_Add_On_Helper
             button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
+            addOn.SelectPathButton= button; 
             Controls.Add(button);
 
             TextBox textBox = new TextBox();
@@ -124,6 +126,7 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            addOn.AppDirectorytextbox= textBox;
             Controls.Add(textBox);
 
             if (addOn.Installable)
@@ -134,61 +137,30 @@ namespace Elite_Dangerous_Add_On_Helper
                 installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
+                addOn.InstallButton= installButton; 
                 Controls.Add(installButton);
             }
-            richTextBox1.Text += addOn.FriendlyName + "\r\n";
+            
 
             currentControlRow++;
         }
         private void DeleteControls(AddOn addOn)
         {
-            //Sets the y position of the controls based on how many rows (addons) there are
-            var yPosition = ((currentControlRow) * 30) + 150;
+            currentControlRow = 0;
+            Controls.Remove(addOn.EnableCheckbox);
+            Controls.Remove(addOn.AppDirectorytextbox);
 
-            //Create checkbox
-            CheckBox checkBox = new CheckBox();
-            //Set the text to the friendly (human readable) addon name
-            checkBox.Text = addOn.FriendlyName;
-            //Autosize on
-            checkBox.AutoSize = true;
-            //Data binding, super useful. If the box is checked, it updates the model, if you update the model in code, the box changes too!
-            //this is basically saying "The box being checked on screen is linked to this specific addon object, and more specifically the enabled property"
-            checkBox.DataBindings.Add("Checked", addOn, "Enabled", true, DataSourceUpdateMode.OnPropertyChanged);
-            //Set the location on screen, this can be a bit trial and error
-            checkBox.Location = new System.Drawing.Point(15, yPosition);
-            //Add the checkbox to the controls for this form1 form
-            Controls.Remove(checkBox);
+            Controls.Remove(addOn.SelectPathButton);
 
-            Button button = new Button();
-            button.Text = "Select Path...";
-            button.Location = new System.Drawing.Point(277, yPosition);
-            button.Size = new System.Drawing.Size(80, 25);
-            //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
-            button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
-            Controls.Remove(button);
+            Controls.Remove(addOn.InstallButton);
 
-            TextBox textBox = new TextBox();
-            textBox.Name = addOn.FriendlyName;
-            textBox.Location = new System.Drawing.Point(360, yPosition);
-            textBox.Size = new System.Drawing.Size(230, 25);
-            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
-            textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            Controls.Remove(textBox);
-
-            if (addOn.Installable)
+            if (addOn.InstallButton != null)
             {
-                Button installButton = new Button();
-                installButton.Text = "Install?";
-                installButton.Location = new System.Drawing.Point(600, yPosition);
-                installButton.Size = new System.Drawing.Size(80, 25);
-                //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
-                installButton.Click += (sender, e) => DoInstall(addOn);
-                Controls.Remove(installButton);
+                   Controls.Remove(addOn.InstallButton );
             }
-            richTextBox1.Text = "";
+            
 
-            currentControlRow++;
+         
         }
 
         private void updatemystatus(string status)
@@ -395,8 +367,9 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void Bt_AddApp_Click(object sender, EventArgs e)
         {
-            var AddApp = new AddApp();
+            var AddApp = new AddApp(addOns);
             AddApp.ShowDialog();
+            
             foreach (var addon in addOns.Values)
             {
                 DeleteControls(addon);

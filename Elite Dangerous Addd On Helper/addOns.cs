@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -53,6 +54,17 @@ namespace Elite_Dangerous_Add_On_Helper.Model
         /// Path for extras e.g. TARGET scripts.
         /// </summary>
         public string Url { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public Button SelectPathButton { get; set; }
+        [JsonIgnore]
+        public Button InstallButton { get; set; }
+        [JsonIgnore]
+        public CheckBox EnableCheckbox { get; set; }
+        [JsonIgnore]
+        public TextBox AppDirectorytextbox { get; set; }
+
+
 
 #pragma warning disable 67 
         public event PropertyChangedEventHandler PropertyChanged;

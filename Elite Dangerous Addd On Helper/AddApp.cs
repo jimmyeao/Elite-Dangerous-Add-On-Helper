@@ -18,8 +18,10 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
         public bool caninstall;
-        public AddApp()
+        public AddApp(Dictionary<string, AddOn> addonDictionary)
+            
         {
+            addOns = addonDictionary;
             InitializeComponent();
             foreach (var addon in addOns.Values)
             {
@@ -52,7 +54,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void listaddons(AddOn addOn)
         {
-            richTextBox1.Text += addOn.FriendlyName;
+        
 
         }
 

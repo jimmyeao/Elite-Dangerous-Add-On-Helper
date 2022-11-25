@@ -40,7 +40,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Cb_Enable = new System.Windows.Forms.CheckBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.Bt_BrowsePath = new System.Windows.Forms.Button();
+            this.Bt_BrowseArgs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -137,20 +138,31 @@
             this.Cb_Enable.Text = "Enable?";
             this.Cb_Enable.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // Bt_BrowsePath
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(557, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(231, 222);
-            this.richTextBox1.TabIndex = 11;
-            this.richTextBox1.Text = "";
+            this.Bt_BrowsePath.Location = new System.Drawing.Point(474, 52);
+            this.Bt_BrowsePath.Name = "Bt_BrowsePath";
+            this.Bt_BrowsePath.Size = new System.Drawing.Size(77, 29);
+            this.Bt_BrowsePath.TabIndex = 12;
+            this.Bt_BrowsePath.Text = "Browse";
+            this.Bt_BrowsePath.UseVisualStyleBackColor = true;
+            // 
+            // Bt_BrowseArgs
+            // 
+            this.Bt_BrowseArgs.Location = new System.Drawing.Point(474, 99);
+            this.Bt_BrowseArgs.Name = "Bt_BrowseArgs";
+            this.Bt_BrowseArgs.Size = new System.Drawing.Size(77, 29);
+            this.Bt_BrowseArgs.TabIndex = 13;
+            this.Bt_BrowseArgs.Text = "Browse";
+            this.Bt_BrowseArgs.UseVisualStyleBackColor = true;
             // 
             // AddApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 244);
-            this.Controls.Add(this.richTextBox1);
+            this.ClientSize = new System.Drawing.Size(566, 244);
+            this.Controls.Add(this.Bt_BrowseArgs);
+            this.Controls.Add(this.Bt_BrowsePath);
             this.Controls.Add(this.Cb_Enable);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -164,6 +176,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddApp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddApp";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -183,6 +196,7 @@
         private Button button1;
         private Button button2;
         private CheckBox Cb_Enable;
-        private RichTextBox richTextBox1;
+        private Button Bt_BrowsePath;
+        private Button Bt_BrowseArgs;
     }
 }
