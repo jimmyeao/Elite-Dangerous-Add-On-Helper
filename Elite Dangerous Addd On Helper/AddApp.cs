@@ -96,7 +96,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
 
         }
-        private string FindSelectPath()
+        private void FindSelectPath()
         {
 
             OpenFileDialog openDialog = new OpenFileDialog();
@@ -123,13 +123,13 @@ namespace Elite_Dangerous_Add_On_Helper
 
             }
 
-            return null;
+            //return null;
 
         }
 
         private void Bt_BrowsePath_Click(object sender, EventArgs e)
         {
-            string result = FindSelectPath();
+            FindSelectPath();
 
 
         }

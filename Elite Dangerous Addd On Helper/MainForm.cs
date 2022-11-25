@@ -264,11 +264,11 @@ namespace Elite_Dangerous_Add_On_Helper
 
             if (File.Exists(path))
             {
-                updatemystatus($"Launching {addOn.FriendlyName}..");
+
                 try
                 {
                     //need to check this works for elevated programs
-
+                    updatemystatus($"Launching {addOn.FriendlyName}..");
                     using (Process apptolaunch = new Process())
                     {
                         apptolaunch.StartInfo.FileName = path;
@@ -290,7 +290,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
-            System.Threading.Thread.Sleep(2000);
+
 
         }
         internal static Dictionary<string, AddOn> DeserializeAddOns()
@@ -381,14 +381,14 @@ namespace Elite_Dangerous_Add_On_Helper
 
             foreach (var addOn in addOns.Values)
             {
-                updatemystatus(addOn.ToString());
+
                 if (addOn.Enabled)
                 {
                     updatemystatus(addOn.ToString());
                     LaunchAddon(addOn);
                 }
             }
-            System.Threading.Thread.Sleep(2000);
+
             updatemystatus("Ready");
             // for ref how to open a webpage in default browser
             //Process.Start("https://www.google.com/");
