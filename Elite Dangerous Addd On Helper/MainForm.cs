@@ -127,15 +127,26 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Location = new System.Drawing.Point(360, yPosition);
             textBox.Size = new System.Drawing.Size(230, 30);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
-            textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             if (addOn.AutoDiscoverPath != string.Empty)
             {
                 if (Directory.Exists(addOn.AutoDiscoverPath))
                 {
-                    textBox.Text = addOn.AutoDiscoverPath;
+                    addOn.ProgramDirectory= addOn.AutoDiscoverPath;
                 }
             }
+            textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
+            textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            //if (addOn.AutoDiscoverPath != string.Empty)
+            //{
+            //    if (Directory.Exists(addOn.AutoDiscoverPath))
+            //    {
+            //        textBox.DataBindings.Add("Text", addOn, "AutoDiscoverPath", true);
+            //    }
+            //    else
+            //    {
+            //        textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
+            //    }
+            //}
             addOn.AppDirectorytextbox= textBox;
             Controls.Add(textBox);
 
