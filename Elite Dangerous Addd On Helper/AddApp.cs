@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace Elite_Dangerous_Add_On_Helper
 {
@@ -20,8 +21,22 @@ namespace Elite_Dangerous_Add_On_Helper
         public AddApp()
         {
             InitializeComponent();
-        }
+            foreach (var addon in addOns.Values)
+            {
+                listaddons(addon);
+            }
 
+        }
+        internal static void SerializeAddons(object addOns)
+        {
+            var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            });
+
+            File.WriteAllText(settingsFilePath + "AddOns.json", Json);
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             // this is the cancel button
@@ -35,7 +50,11 @@ namespace Elite_Dangerous_Add_On_Helper
             MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
         }
+        private void listaddons(AddOn addOn)
+        {
+            richTextBox1.Text += addOn.FriendlyName;
 
+        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -70,6 +89,7 @@ namespace Elite_Dangerous_Add_On_Helper
                     Scripts = Tb_App_Args.Text,
                     Url = Tb_InstallationURL.Text
                 });
+                SerializeAddons(addOns);
                 this.Dispose();
             }
 

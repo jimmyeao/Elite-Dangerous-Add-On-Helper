@@ -40,6 +40,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Cb_Enable = new System.Windows.Forms.CheckBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -136,11 +137,20 @@
             this.Cb_Enable.Text = "Enable?";
             this.Cb_Enable.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(557, 90);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(231, 150);
+            this.richTextBox1.TabIndex = 11;
+            this.richTextBox1.Text = "";
+            // 
             // AddApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 287);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.Cb_Enable);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -173,5 +183,6 @@
         private Button button1;
         private Button button2;
         private CheckBox Cb_Enable;
+        private RichTextBox richTextBox1;
     }
 }
