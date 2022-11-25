@@ -112,7 +112,7 @@ namespace Elite_Dangerous_Add_On_Helper
             Button button = new Button();
             button.Text = "Select Path...";
             button.Location = new System.Drawing.Point(277, yPosition);
-            button.Size = new System.Drawing.Size(80, 25);
+            button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             Controls.Add(button);
@@ -120,7 +120,7 @@ namespace Elite_Dangerous_Add_On_Helper
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
             textBox.Location = new System.Drawing.Point(360, yPosition);
-            textBox.Size = new System.Drawing.Size(230, 25);
+            textBox.Size = new System.Drawing.Size(230, 30);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
@@ -131,7 +131,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 Button installButton = new Button();
                 installButton.Text = "Install?";
                 installButton.Location = new System.Drawing.Point(600, yPosition);
-                installButton.Size = new System.Drawing.Size(80, 25);
+                installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
                 Controls.Add(installButton);
