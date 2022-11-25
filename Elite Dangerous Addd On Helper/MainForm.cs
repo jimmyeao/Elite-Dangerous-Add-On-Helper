@@ -115,7 +115,7 @@ namespace Elite_Dangerous_Add_On_Helper
             button.Location = new System.Drawing.Point(277, yPosition);
             button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
-            button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
+            button.Click += (sender, e) => Folderpath(addOn.FriendlyName);
             addOn.SelectPathButton= button; 
             Controls.Add(button);
 
