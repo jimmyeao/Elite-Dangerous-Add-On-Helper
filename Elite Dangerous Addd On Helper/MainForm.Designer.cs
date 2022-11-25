@@ -30,9 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Bt_Launch = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openPrefsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +42,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Bt_AddApp = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -48,20 +50,13 @@
             // 
             // Bt_Launch
             // 
-            this.Bt_Launch.Location = new System.Drawing.Point(412, 81);
+            this.Bt_Launch.Location = new System.Drawing.Point(752, 154);
             this.Bt_Launch.Name = "Bt_Launch";
-            this.Bt_Launch.Size = new System.Drawing.Size(94, 29);
+            this.Bt_Launch.Size = new System.Drawing.Size(121, 29);
             this.Bt_Launch.TabIndex = 35;
             this.Bt_Launch.Text = "Launch!";
             this.Bt_Launch.UseVisualStyleBackColor = true;
             this.Bt_Launch.Click += new System.EventHandler(this.Bt_Launch_Click);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(2, 505);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(928, 29);
-            this.progressBar1.TabIndex = 1;
             // 
             // menuStrip1
             // 
@@ -69,32 +64,62 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(5, 5);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(938, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(877, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addApplicationToolStripMenuItem,
+            this.editApplicationToolStripMenuItem,
+            this.openPrefsFolderToolStripMenuItem,
             this.savePreferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
+            // 
+            // addApplicationToolStripMenuItem
+            // 
+            this.addApplicationToolStripMenuItem.Name = "addApplicationToolStripMenuItem";
+            this.addApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
+            this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
+            this.addApplicationToolStripMenuItem.Text = "Add Application";
+            this.addApplicationToolStripMenuItem.Click += new System.EventHandler(this.addApplicationToolStripMenuItem_Click);
+            // 
+            // editApplicationToolStripMenuItem
+            // 
+            this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
+            this.editApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
+            this.editApplicationToolStripMenuItem.Text = "Edit Application";
+            // 
+            // openPrefsFolderToolStripMenuItem
+            // 
+            this.openPrefsFolderToolStripMenuItem.Name = "openPrefsFolderToolStripMenuItem";
+            this.openPrefsFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.openPrefsFolderToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
+            this.openPrefsFolderToolStripMenuItem.Text = "Open Prefs Folder";
+            this.openPrefsFolderToolStripMenuItem.Click += new System.EventHandler(this.openPrefsFolderToolStripMenuItem_Click);
             // 
             // savePreferencesToolStripMenuItem
             // 
             this.savePreferencesToolStripMenuItem.Name = "savePreferencesToolStripMenuItem";
-            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.savePreferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
+            this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.savePreferencesToolStripMenuItem.Text = "Save Preferences";
             this.savePreferencesToolStripMenuItem.Click += new System.EventHandler(this.savePreferencesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click_1);
             // 
@@ -115,17 +140,19 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(862, 20);
+            this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "Ready";
+            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 537);
+            this.statusStrip1.Location = new System.Drawing.Point(5, 379);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(938, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(877, 26);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -133,37 +160,37 @@
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(805, 31);
+            this.pictureBox1.Location = new System.Drawing.Point(752, 36);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(121, 112);
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // Bt_AddApp
+            // label1
             // 
-            this.Bt_AddApp.Location = new System.Drawing.Point(24, 75);
-            this.Bt_AddApp.Name = "Bt_AddApp";
-            this.Bt_AddApp.Size = new System.Drawing.Size(138, 29);
-            this.Bt_AddApp.TabIndex = 20;
-            this.Bt_AddApp.Text = "Add Application";
-            this.Bt_AddApp.UseVisualStyleBackColor = true;
-            this.Bt_AddApp.Click += new System.EventHandler(this.Bt_AddApp_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(32, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Enabled?";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(938, 563);
-            this.Controls.Add(this.Bt_AddApp);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(887, 410);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.Bt_Launch);
-            this.Controls.Add(this.progressBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Elite Dangerous Addon Helper";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -176,7 +203,6 @@
         }
 
         #endregion
-        private ProgressBar progressBar1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem savePreferencesToolStripMenuItem;
@@ -187,6 +213,9 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private StatusStrip statusStrip1;
         private PictureBox pictureBox1;
-        private Button Bt_AddApp;
+        private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
+        private ToolStripMenuItem addApplicationToolStripMenuItem;
+        private ToolStripMenuItem editApplicationToolStripMenuItem;
+        private Label label1;
     }
 }

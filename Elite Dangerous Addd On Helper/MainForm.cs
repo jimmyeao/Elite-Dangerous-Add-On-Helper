@@ -11,6 +11,9 @@ using System;
 using System.Net.Http;
 using System.Data;
 using System.IO.Pipes;
+using System.Web;
+
+
 
 
 // TODO LIST!
@@ -26,9 +29,10 @@ namespace Elite_Dangerous_Add_On_Helper
     {
         // setup a folder for settings0
         // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Elite Add On Helper/";
+        static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         static readonly HttpClient client = new HttpClient();
-        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector","Ed Discovery","Voiceattack","ED Odyysey Materials Helper Launcher","T.A.R.G.E.T.","AussieDroid Warthog Script","Elite Dangerous Launcher" };
+        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
+        static string[] launched;
         /// <summary>
         /// List of all addons
         /// </summary>
@@ -38,7 +42,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
         public MainForm()
         {
-           
+
             InitializeComponent();
             Load_prefs();
             updatemystatus("Ready");
@@ -56,17 +60,37 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 updatemystatus("Loading Settings");
                 addOns = DeserializeAddOns();
-               
+
             }
             else
             {
-                updatemystatus("Settings not found");
-                InitialAddonsSetup();
+                // lets copy the default addons.json to the settings path..
+                // probably want to remove this and do the file copy in an installer..
+                // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
+                string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
+                string sourceFile = startupPath;
+                string destinationFile = settingsFilePath + "AddOns.json";
+                try
+                {
+                    File.Copy(sourceFile, destinationFile, true);
+                    updatemystatus("Settings copied");
+                    updatemystatus("Loading Settings");
+                    addOns = DeserializeAddOns();
+                }
+                catch (IOException iox)
+                {
+                    Console.WriteLine(iox.Message);
+                    updatemystatus("Settings error");
+                }
+
+                //InitialAddonsSetup();
             }
             foreach (var addon in addOns.Values)
             {
                 CreateControls(addon);
             }
+            this.Refresh();
+            this.Size = new Size(this.Width, this.Height+25);
 
 
         }
@@ -74,7 +98,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
-            var yPosition = ((currentControlRow) * 30) + 150;
+            var yPosition = ((currentControlRow) * 30) + 100;
 
             //Create checkbox
             CheckBox checkBox = new CheckBox();
@@ -88,23 +112,44 @@ namespace Elite_Dangerous_Add_On_Helper
             //Set the location on screen, this can be a bit trial and error
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
+            addOn.EnableCheckbox = checkBox;
             Controls.Add(checkBox);
 
             Button button = new Button();
             button.Text = "Select Path...";
             button.Location = new System.Drawing.Point(277, yPosition);
-            button.Size = new System.Drawing.Size(80, 25);
+            button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
+            addOn.SelectPathButton= button;
             Controls.Add(button);
 
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
             textBox.Location = new System.Drawing.Point(360, yPosition);
-            textBox.Size = new System.Drawing.Size(230, 25);
+            textBox.Size = new System.Drawing.Size(230, 30);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            if (addOn.AutoDiscoverPath != string.Empty)
+            {
+                if (Directory.Exists(addOn.AutoDiscoverPath))
+                {
+                    addOn.ProgramDirectory= addOn.AutoDiscoverPath;
+                }
+            }
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            //if (addOn.AutoDiscoverPath != string.Empty)
+            //{
+            //    if (Directory.Exists(addOn.AutoDiscoverPath))
+            //    {
+            //        textBox.DataBindings.Add("Text", addOn, "AutoDiscoverPath", true);
+            //    }
+            //    else
+            //    {
+            //        textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
+            //    }
+            //}
+            addOn.AppDirectorytextbox= textBox;
             Controls.Add(textBox);
 
             if (addOn.Installable)
@@ -112,118 +157,36 @@ namespace Elite_Dangerous_Add_On_Helper
                 Button installButton = new Button();
                 installButton.Text = "Install?";
                 installButton.Location = new System.Drawing.Point(600, yPosition);
-                installButton.Size = new System.Drawing.Size(80, 25);
+                installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
+                addOn.InstallButton= installButton;
                 Controls.Add(installButton);
             }
 
 
+
             currentControlRow++;
         }
-       
-        private void InitialAddonsSetup()
+        private void DeleteControls(AddOn addOn)
         {
-            //Test data below, dictionary key should match friendly name
-            if (!addOns.ContainsKey("Ed Engineer"))
-            {
-                addOns.TryAdd("Ed Engineer", new AddOn
-                {
-                    Enabled = false,
-                    Installable = true,
-                    ProgramDirectory = "",
-                    FriendlyName = "Ed Engineer",
-                    ExecutableName = "EDEngineer.exe",
-                    AutoDiscoverPath = "",
-                    Scripts = "",
-                    Url = "https://raw.githubusercontent.com/msarilar/EDEngineer/master/EDEngineer/releases/setup.exe"
-                });
-            }
-            if (!addOns.ContainsKey("Ed Market Connector"))
-            {
-                addOns.Add("Ed Market Connector", new AddOn
-                {
-                    Enabled = false,
-                    Installable = true,
-                    ProgramDirectory = "",
-                    FriendlyName = "Ed Market Connector",
-                    ExecutableName = "EDMarketConnector.exe",
-                    AutoDiscoverPath = "C:\\Program Files (x86)\\EDMarketConnector",
-                    Scripts = "",
-                    Url = "https://github.com/EDCD/EDMarketConnector/releases/download/Release%2F5.5.0/EDMarketConnector_win_5.5.0.msi"
+            currentControlRow = 0;
+            Controls.Remove(addOn.EnableCheckbox);
+            Controls.Remove(addOn.AppDirectorytextbox);
 
-                });
-            }
-            if (!addOns.ContainsKey("VoiceAttack"))
+            Controls.Remove(addOn.SelectPathButton);
+
+            Controls.Remove(addOn.InstallButton);
+
+            if (addOn.InstallButton != null)
             {
-                addOns.Add("VoiceAttack", new AddOn
-                {
-                    Enabled = false,
-                    Installable = false,
-                    ProgramDirectory = "",
-                    FriendlyName = "VoiceAttack",
-                    ExecutableName = "VoiceAttack.exe",
-                    AutoDiscoverPath = "",
-                    Scripts = ""
-                });
+                Controls.Remove(addOn.InstallButton);
             }
-            if (!addOns.ContainsKey("Ed Discovery"))
-            {
-                addOns.Add("Ed Discovery", new AddOn
-                {
-                    Enabled = false,
-                    Installable = true,
-                    ProgramDirectory = "",
-                    FriendlyName = "ED Discovery",
-                    ExecutableName = "EDDiscovery.exe",
-                    AutoDiscoverPath = "C:\\Program Files\\EDDiscovery",
-                    Scripts = "",
-                    Url = "https://github.com/EDDiscovery/EDDiscovery/releases/download/Release_15.1.4/EDDiscovery-15.1.4.exe"
-                });
-            }
-            if (!addOns.ContainsKey("ED Odyysey Materials Helper"))
-            {
-                addOns.Add("ED Odyysey Materials Helper", new AddOn
-                {
-                    Enabled = false,
-                    Installable = true,
-                    ProgramDirectory = "",
-                    FriendlyName = "ED Odyysey Materials Helper",
-                    ExecutableName = "Elite Dangerous Odyssey Materials Helper Launcher.exe",
-                    AutoDiscoverPath = "",
-                    Scripts = "",
-                    Url = "https://github.com/jixxed/ed-odyssey-materials-helper/releases/download/1.101/Elite.Dangerous.Odyssey.Materials.Helper-1.101.msi"
-                });
-            }
-            if (!addOns.ContainsKey("T.A.R.G.E.T."))
-            {
-                addOns.Add("T.A.R.G.E.T.", new AddOn
-                {
-                    Enabled = false,
-                    Installable = false,
-                    ProgramDirectory = "",
-                    FriendlyName = "T.A.R.G.E.T.",
-                    ExecutableName = "TARGETGUI.exe",
-                    AutoDiscoverPath = "",
-                    Scripts = ""
-                });
-            }
-            if (!addOns.ContainsKey("Elite"))
-            {
-                addOns.Add("Elite", new AddOn
-                {
-                    Enabled = false,
-                    Installable = false,
-                    ProgramDirectory = "",
-                    FriendlyName = "Elite",
-                    ExecutableName = "EDLaunch.exe",
-                    AutoDiscoverPath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Elite Dangerous\\",
-                    Scripts = ""
-                });
-            }
+
 
 
         }
+
         private void updatemystatus(string status)
         {
             // function to update the status bar
@@ -287,12 +250,12 @@ namespace Elite_Dangerous_Add_On_Helper
                             UseShellExecute = true
                         };
                         p.Start();
-                        
+
                     }
                 }
                 // end new code
             }
-            
+
         }
 
         private void LaunchAddon(AddOn addOn)
@@ -301,16 +264,21 @@ namespace Elite_Dangerous_Add_On_Helper
 
             if (File.Exists(path))
             {
-                updatemystatus($"Launching {addOn.FriendlyName}..");
+
                 try
                 {
-                    var p = new Process();
-                    p.StartInfo = new ProcessStartInfo(path)
+                    //need to check this works for elevated programs
+                    updatemystatus($"Launching {addOn.FriendlyName}..");
+                    using (Process apptolaunch = new Process())
                     {
-                        UseShellExecute = true
-                    };
-                    p.Start();
-                    //Process.Start(path);
+                        apptolaunch.StartInfo.FileName = path;
+                        apptolaunch.StartInfo.Arguments = addOn.Scripts;
+                        apptolaunch.StartInfo.UseShellExecute = false;
+                        apptolaunch.StartInfo.RedirectStandardOutput = true;
+                        apptolaunch.Start();
+
+
+                    }
                 }
                 catch
                 {
@@ -322,7 +290,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
-            System.Threading.Thread.Sleep(2000);
+
 
         }
         internal static Dictionary<string, AddOn> DeserializeAddOns()
@@ -330,10 +298,10 @@ namespace Elite_Dangerous_Add_On_Helper
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
 
             return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Objects,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-                });
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            });
         }
 
         internal static void SerializeAddons(object addOns)
@@ -346,12 +314,21 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        static string Folderpath()
+        static string Folderpath(string path)
         {
+            string mypath;
+            if (path == string.Empty)
+            {
+                mypath = Environment.SpecialFolder.MyComputer.ToString();
+            }
+            else
+            {
+                mypath = path;
+            }
             FolderBrowserDialog diag = new FolderBrowserDialog
             {
                 // set the root folder or it defaults to desktop
-                RootFolder = Environment.SpecialFolder.MyComputer
+                SelectedPath = mypath
             };
             if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -359,7 +336,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             else { return null; }
         }
-        
+
         private void HandleSelectPath(string dictKey)
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
@@ -374,230 +351,16 @@ namespace Elite_Dangerous_Add_On_Helper
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string file = openDialog.FileName;
-                addOn.ProgramDirectory = file;
+                // need to get just the path element here, but store filename as well
+                addOn.ProgramDirectory = Path.GetDirectoryName(file);
+                addOn.ExecutableName = openDialog.SafeFileName;
+                //addOn.ProgramDirectory = file;
             }
 
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-        //private void btn_autodetect_Click_1(object sender, EventArgs e)
-        //{
-        //    // Display the ProgressBar control.
-        //    progressBar1.Visible = true;
-        //    // Set Minimum to 1 to represent the first file being copied.
-        //    progressBar1.Minimum = 1;
-        //    // Set Maximum to the total number of files to copy.
-        //    int Totalchecked = nonvrtab.Controls.OfType<System.Windows.Forms.CheckBox>().Count();
-        //    progressBar1.Maximum = Totalchecked;
-        //    Console.WriteLine(Totalchecked);
-        //    // Set the initial value of the ProgressBar.
-        //    progressBar1.Value = 1;
-        //    // Set the Step property to a value of 1 to represent each step.
-        //    progressBar1.Step = 1;
-        //    List<String> Driveletter = new List<string>();                                  //who has more than 10 local drives???
-        //    DriveInfo[] allDrives = DriveInfo.GetDrives();
-        //    foreach (DriveInfo d in allDrives)
-        //    {
-        //        if (d.IsReady && d.DriveType == DriveType.Fixed)
-        //        {
-        //            // Store Drives in list..
-        //            // Drives;
 
-        //            Driveletter.Add(d.ToString());
-
-        //        }
-        //    }
-        //    string pathtocheck;
-        //    updatemystatus("This may take a while.. Searching for EDMC");
-        //    // lets check the default path
-        //    // 
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-
-        //    pathtocheck = @"C:\Program Files (x86)\EDMarketConnector";
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_Ed_Market_Connector.Text = pathtocheck;
-        //        Tb_Ed_Market_Connector.Refresh();
-        //        Cb_Ed_Market_Connector.Checked = true;
-        //    }
-        //    else
-        //    {
-        //        updatemystatus("EDMC Not found");
-
-        //    }
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    updatemystatus("This may take a while.. Searching for Ed Engineer");
-        //    // lets get the users appdata/local folder...
-        //    string Foldertosearch = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\apps";
-        //    //now we need an array to hold the search result (Edengineer leases stuff behind when it updates resulting in mulitple copies)
-        //    string[] result;
-        //    // now lets search app data for EdEngineer..           
-        //    result = Directory.GetFiles(Foldertosearch, "EDEngineer.exe", SearchOption.AllDirectories);
-
-        //    //ok so we have a list of possible candidates, lets get the last one..
-
-        //    if (File.Exists(result.Last()))
-        //    {
-        //        // found it!
-        //        string edeng = result.Last();                       //get the last (usually most recent, meh) version of the file.
-        //        edeng = edeng.Replace(@"\EDEngineer.exe", "");      //take of the exe name so we jjust have the path
-        //        Tb_Ed_Engineer.Text = edeng;                         //update the textbox
-        //        Tb_Ed_Engineer.Refresh();                            // refresh the textbox
-        //        Cb_Ed_Engineer.Checked = true;                       // enable the app by checking the checkbox
-        //    }
-        //    else
-        //    {
-        //        updatemystatus("Ed Engineer Not found");
-        //    }
-        //    updatemystatus("This may take a while.. Searching for Voice Attack");
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    // lets check the default path
-        //    // lets also search well known locations on all local fixed drives
-        //    pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\commonVoiceAttack";
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_Voiceattack.Text = pathtocheck;
-        //        Tb_Voiceattack.Refresh();
-        //        Cb_Voiceattack.Checked = true;
-        //    }
-        //    else                                    // not found in default? lets search all local drives for steam apps
-        //    {
-        //        foreach (string d in Driveletter)
-        //        {
-        //            pathtocheck = d + @"SteamLibrary\steamapps\common\VoiceAttack";
-
-        //            if (Directory.Exists(pathtocheck))
-        //            {
-        //                // found it!
-        //                Tb_Voiceattack.Text = pathtocheck;
-        //                Tb_Voiceattack.Refresh();
-        //                Cb_Voiceattack.Checked = true;
-        //            }
-        //            else
-        //            {
-        //                updatemystatus("Voice Attack Not found");
-
-        //            }
-        //        }
-        //    }
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    updatemystatus("This may take a while.. Searching for ED Discovery");
-        //    // lets check the default path
-        //    // 
-        //    pathtocheck = @"C:\Program Files\EDDiscovery";
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_Ed_Discovery.Text = pathtocheck;
-        //        Tb_Ed_Discovery.Refresh();
-        //        Cb_Ed_Discovery.Checked = true;
-        //    }
-        //    else
-        //    {
-        //        updatemystatus("ED Discovery Not found");
-
-        //    }
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    updatemystatus("This may take a while.. Searching for ED Odyysey Materials Helper");
-
-        //    // lets check the default path
-        //    // 
-
-        //    pathtocheck = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Elite Dangerous Odyssey Materials Helper Launcher";
-
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Text = pathtocheck;
-        //        Tb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Refresh();
-        //        Cb_Elite_Dangerous_Odyssey_Materials_Helper_Launcher.Checked = true;
-        //    }
-        //    else
-        //    {
-        //        updatemystatus(" ED Odyysey Materials Helper not found");
-        //    }
-
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    updatemystatus("This may take a while.. Searching for T.A.R.G.E.T");
-        //    // lets check the default path
-        //    // 
-        //    pathtocheck = @"c:\program files (x86)\Thrustmaster\TARGET\x64";
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_T_A_R_G_E_T_.Text = pathtocheck;
-        //        Tb_T_A_R_G_E_T_.Refresh();
-        //        Cb_TARGET.Checked = true;
-        //    }
-        //    else
-        //    {
-        //        updatemystatus(" ED Odyysey Materials Helper not found");
-        //    }
-
-        //    progressBar1.PerformStep();
-        //    progressBar1.Refresh();
-        //    updatemystatus("This may take a while.. Searching for Elite Dangerous");
-
-        //    // lets check the default path
-        //    // 
-        //    pathtocheck = @"C:\Program Files (x86)\Steam\steamapps\common\Elite Dangerous\";
-
-        //    if (Directory.Exists(pathtocheck))
-        //    {
-        //        // found it!
-        //        Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
-        //        Tb_Elite_Dangerous_Launcher.Refresh();
-        //        Cb_Elite_Dangerous_Launcher.Checked = true;
-        //    }
-        //    else                                    // not found in default? lets search all local drives for steam apps
-        //    {
-        //        foreach (string d in Driveletter)
-        //        {
-
-
-        //            pathtocheck = d + @"SteamLibrary\steamapps\common\Elite Dangerous";
-
-        //            if (Directory.Exists(pathtocheck))
-        //            {
-        //                // found it!
-        //                Tb_Elite_Dangerous_Launcher.Text = pathtocheck;
-        //                Tb_Elite_Dangerous_Launcher.Refresh();
-        //                Cb_Elite_Dangerous_Launcher.Checked = true;
-        //            }
-        //        }
-        //    }
-        //    if (Tb_Elite_Dangerous_Launcher.Text == null)
-        //    {
-        //        updatemystatus("Elite launcher not found");
-        //    }
-
-        //    progressBar1.Value = 1;
-        //    progressBar1.Refresh();
-        //    updatemystatus("Ready");
-        //}
- 
-
-        //private void Bt_AussieDroid_Warthog_Script_Click(object sender, EventArgs e)
-        //{
-        //    OpenFileDialog openDialog = new OpenFileDialog
-        //    {
-        //        Title = "Select A File",
-        //        Filter = "Thrustmaster Files (*.tmc)|*.tmc"
-        //    };
-        //    if (openDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string file = openDialog.FileName;
-        //        Tb_AussieDroid_Warthog_Script.Text = file;
-        //    }
-        //}
 
         #endregion
         #region menuitems
@@ -608,48 +371,78 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                updatemystatus("Saving Prefs");
-             SerializeAddons(addOns);
+            updatemystatus("Saving Prefs");
+            SerializeAddons(addOns);
         }
         #endregion menuitems
         #region launch items
         private void Bt_Launch_Click(object sender, EventArgs e)
         {
-            
+
             foreach (var addOn in addOns.Values)
             {
-                updatemystatus(addOn.ToString());
+
                 if (addOn.Enabled)
                 {
                     updatemystatus(addOn.ToString());
                     LaunchAddon(addOn);
                 }
             }
-            System.Threading.Thread.Sleep(2000);
+
             updatemystatus("Ready");
             // for ref how to open a webpage in default browser
             //Process.Start("https://www.google.com/");
 
         }
         #endregion
-        # region installs
+        #region installs
 
 
-    private void DoInstall(AddOn addOn)
-    {
-        updatemystatus($"Installing {addOn.FriendlyName}");
-        DownloadFileAndExecute(addOn.Url);
-        updatemystatus("Ready");
-    }
+        private void DoInstall(AddOn addOn)
+        {
+            updatemystatus($"Installing {addOn.FriendlyName}");
+            DownloadFileAndExecute(addOn.Url);
+            updatemystatus("Ready");
+        }
         #endregion installs  
 
-        private void Bt_AddApp_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
-            var AddApp = new AddApp();
-            AddApp.Show();  
+
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = settingsFilePath,
+                UseShellExecute = true,
+                Verb = "open"
+            });
+        }
+
+        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var AddApp = new AddApp(addOns);
+            AddApp.ShowDialog();
+
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
+        }
+
+        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // this proc resets prefs to default
+
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
