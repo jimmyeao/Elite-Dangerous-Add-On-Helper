@@ -43,6 +43,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.Rb_Vr = new System.Windows.Forms.RadioButton();
+            this.Rb_NonVR = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -134,7 +136,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -177,12 +179,36 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "Enabled?";
             // 
+            // Rb_Vr
+            // 
+            this.Rb_Vr.AutoSize = true;
+            this.Rb_Vr.Location = new System.Drawing.Point(782, 189);
+            this.Rb_Vr.Name = "Rb_Vr";
+            this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
+            this.Rb_Vr.TabIndex = 37;
+            this.Rb_Vr.Text = "Vr";
+            this.Rb_Vr.UseVisualStyleBackColor = true;
+            // 
+            // Rb_NonVR
+            // 
+            this.Rb_NonVR.AutoSize = true;
+            this.Rb_NonVR.Checked = true;
+            this.Rb_NonVR.Location = new System.Drawing.Point(782, 219);
+            this.Rb_NonVR.Name = "Rb_NonVR";
+            this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
+            this.Rb_NonVR.TabIndex = 38;
+            this.Rb_NonVR.TabStop = true;
+            this.Rb_NonVR.Text = "Non Vr";
+            this.Rb_NonVR.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(887, 410);
+            this.Controls.Add(this.Rb_NonVR);
+            this.Controls.Add(this.Rb_Vr);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
@@ -218,5 +244,7 @@
         private ToolStripMenuItem addApplicationToolStripMenuItem;
         private ToolStripMenuItem editApplicationToolStripMenuItem;
         private Label label1;
+        private RadioButton Rb_Vr;
+        private RadioButton Rb_NonVR;
     }
 }

@@ -22,5 +22,17 @@ namespace Elite_Dangerous_Add_On_Helper.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool VR {
+            get {
+                return ((bool)(this["VR"]));
+            }
+            set {
+                this["VR"] = value;
+            }
+        }
     }
 }

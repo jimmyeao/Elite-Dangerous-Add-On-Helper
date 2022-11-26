@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Net;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +15,8 @@ using System.Data;
 using System.IO.Pipes;
 using System.Web;
 using System.Linq.Expressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
+
 
 
 
@@ -35,10 +38,11 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly HttpClient client = new HttpClient();
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         static string[] launched;
-        /// <summary>
-        /// List of all addons
-        /// </summary>
-        public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
+        
+/// <summary>
+/// List of all addons
+/// </summary>
+public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         public static CancellationToken WebCommsTimeout { get; private set; }
 
@@ -93,6 +97,15 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             this.Refresh();
             this.Size = new Size(this.Width, this.Height + 25);
+            updatemystatus(Properties.Settings.Default.VR.ToString());
+            if (Properties.Settings.Default.VR == true)
+            {
+                Rb_Vr.Checked = true;
+            }
+            else
+            {
+                Rb_NonVR.Checked = true;
+            }
 
 
         }
@@ -265,19 +278,31 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void LaunchAddon(AddOn addOn)
         {
+            // set up a list to track which apps we launched
+            List<string> processList = new List<string>();
+            //different apps have different args, so lets set up a string to hold them
             string args;
+            // TARGET requires a path to a script, if that path has spaces, we need to quote them - set a string called quote we can use to top and tail
             const string quote = "\"";
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
+            // are we launching TARGET? 
             if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase) )
                 {
-                    args = "-r " + quote + addOn.Scripts + quote;
+                // -r is to specify a script
+                args = "-r " + quote + addOn.Scripts + quote;
                 }else
             {
+                // ok its not target, leave the argumnets as is
                 args = addOn.Scripts; 
             }
-            if (File.Exists(path))
+            // are we launching Elite? Lets check if the users wants VR mode
+            if(string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
             {
-                
+                //enable vr mode args
+                args = "/VR";
+            }
+            if (File.Exists(path))      // worth checking the app we want to launch actually exists...
+            {
                 try
                 {
                     var info = new ProcessStartInfo(path);
@@ -285,21 +310,26 @@ namespace Elite_Dangerous_Add_On_Helper
                     info.UseShellExecute = true;
                     info.WorkingDirectory = @addOn.ProgramDirectory;
                     Process proc = Process.Start(info);
+                    proc.EnableRaisingEvents = true;
+                    processList.Add(proc.ProcessName);
                 }
                 catch
                 {
+                    // oh dear, something want horribluy wrong..
                     updatemystatus($"An Error occured trying to launch {addOn.FriendlyName}..");
                 }
 
             }
             else
             {
+                // yeah, that path didnt exist...
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
-
+           
 
         }
+
         internal static Dictionary<string, AddOn> DeserializeAddOns()
         {
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
@@ -387,6 +417,17 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             updatemystatus("Saving Prefs");
             SerializeAddons(addOns);
+            if (Rb_Vr.Checked) {
+                
+                Properties.Settings.Default.VR = true;
+            }
+            else
+            {
+                
+                Properties.Settings.Default.VR = false; 
+            }
+
+            Properties.Settings.Default.Save();
         }
         #endregion menuitems
         #region launch items
