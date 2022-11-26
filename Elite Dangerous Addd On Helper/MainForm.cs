@@ -19,6 +19,8 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         static string[] launched;
 
+
+
         /// <summary>
         /// List of all addons
         /// </summary>
@@ -40,6 +42,14 @@ namespace Elite_Dangerous_Add_On_Helper
         #region functions
         private void Load_prefs()
         {
+            if (!Path.Exists(settingsFilePath))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(settingsFilePath);
+                }
+                catch (System.IO.DirectoryNotFoundException) { }
+            }
             // load all the textboxes with values from settings file
             updatemystatus("Checking file exists");
             if (Path.Exists(settingsFilePath))
