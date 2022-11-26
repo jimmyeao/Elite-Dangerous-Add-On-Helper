@@ -268,7 +268,7 @@ namespace Elite_Dangerous_Add_On_Helper
             string args;
             const string quote = "\"";
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
-            if (addOn.ExecutableName == "TARGETGUI.exe")
+            if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase) )
                 {
                     args = "-r " + quote + addOn.Scripts + quote;
                 }else
