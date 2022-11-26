@@ -50,9 +50,9 @@
             // 
             // Bt_Launch
             // 
-            this.Bt_Launch.Location = new System.Drawing.Point(752, 154);
+            this.Bt_Launch.Location = new System.Drawing.Point(782, 154);
             this.Bt_Launch.Name = "Bt_Launch";
-            this.Bt_Launch.Size = new System.Drawing.Size(121, 29);
+            this.Bt_Launch.Size = new System.Drawing.Size(91, 29);
             this.Bt_Launch.TabIndex = 35;
             this.Bt_Launch.Text = "Launch!";
             this.Bt_Launch.UseVisualStyleBackColor = true;
@@ -160,9 +160,9 @@
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(752, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(782, 36);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(121, 112);
+            this.pictureBox1.Size = new System.Drawing.Size(91, 89);
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);

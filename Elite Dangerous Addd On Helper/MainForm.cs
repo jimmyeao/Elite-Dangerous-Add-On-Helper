@@ -138,17 +138,6 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            //if (addOn.AutoDiscoverPath != string.Empty)
-            //{
-            //    if (Directory.Exists(addOn.AutoDiscoverPath))
-            //    {
-            //        textBox.DataBindings.Add("Text", addOn, "AutoDiscoverPath", true);
-            //    }
-            //    else
-            //    {
-            //        textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
-            //    }
-            //}
             addOn.AppDirectorytextbox= textBox;
             Controls.Add(textBox);
 
@@ -163,7 +152,13 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.InstallButton= installButton;
                 Controls.Add(installButton);
             }
-
+            Button editButton = new Button();
+            editButton.Text = "Edit";
+            editButton.Location = new System.Drawing.Point(680, yPosition);
+            editButton.Size = new System.Drawing.Size(80, 30);
+            // editButton.Click += (sender, e) => DoEdit(addOn);
+            addOn.EditButton= editButton;
+            Controls.Add(editButton);
 
 
             currentControlRow++;
@@ -404,6 +399,13 @@ namespace Elite_Dangerous_Add_On_Helper
             DownloadFileAndExecute(addOn.Url);
             updatemystatus("Ready");
         }
+        //private void DoEdit(object sender, EventArgs e)
+        //{
+        //    var AddApp = new AddApp(addOns);
+        //    Edit.ShowDialog();
+        //    updatemystatus($"Editing {addOn.FriendlyName}");
+
+        //}
         #endregion installs  
 
         private void pictureBox1_Click(object sender, EventArgs e)
