@@ -172,7 +172,7 @@ namespace Elite_Dangerous_Add_On_Helper
             Controls.Remove(addOn.SelectPathButton);
 
             Controls.Remove(addOn.InstallButton);
-
+            Controls.Remove(addOn.EditButton);
             if (addOn.InstallButton != null)
             {
                 Controls.Remove(addOn.InstallButton);
@@ -447,6 +447,14 @@ namespace Elite_Dangerous_Add_On_Helper
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (About box = new About())
+            {
+                box.ShowDialog(this);
+            }
         }
     }
 }
