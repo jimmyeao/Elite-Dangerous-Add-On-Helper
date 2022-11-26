@@ -19,6 +19,7 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         static string[] launched;
 
+        string[] launchargs = Environment.GetCommandLineArgs();
 
 
         /// <summary>
@@ -34,6 +35,22 @@ namespace Elite_Dangerous_Add_On_Helper
             InitializeComponent();
             Load_prefs();
             updatemystatus("Ready");
+            try
+            {
+                if (launchargs[1] == "/auto")
+                {
+                    foreach (var addOn in addOns.Values)
+                    {
+
+                        if (addOn.Enabled)
+                        {
+                            updatemystatus(addOn.ToString());
+                            LaunchAddon(addOn);
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
 
