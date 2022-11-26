@@ -18,11 +18,11 @@ namespace Elite_Dangerous_Add_On_Helper
         static readonly HttpClient client = new HttpClient();
         static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         static string[] launched;
-        
-/// <summary>
-/// List of all addons
-/// </summary>
-public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
+
+        /// <summary>
+        /// List of all addons
+        /// </summary>
+        public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         public static CancellationToken WebCommsTimeout { get; private set; }
 
@@ -42,35 +42,39 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
         {
             // load all the textboxes with values from settings file
             updatemystatus("Checking file exists");
-            if (File.Exists(settingsFilePath + "AddOns.json"))
+            if (Path.Exists(settingsFilePath))
             {
-                updatemystatus("Loading Settings");
-                addOns = DeserializeAddOns();
-
-            }
-            else
-            {
-                // lets copy the default addons.json to the settings path..
-                // probably want to remove this and do the file copy in an installer..
-                // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
-                string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
-                string sourceFile = startupPath;
-                string destinationFile = settingsFilePath + "AddOns.json";
-                try
+                if (File.Exists(settingsFilePath + "AddOns.json"))
                 {
-                    File.Copy(sourceFile, destinationFile, true);
-                    updatemystatus("Settings copied");
                     updatemystatus("Loading Settings");
                     addOns = DeserializeAddOns();
-                }
-                catch (IOException iox)
-                {
-                    Console.WriteLine(iox.Message);
-                    updatemystatus("Settings error");
-                }
 
-                //InitialAddonsSetup();
+                }
+                else
+                {
+                    // lets copy the default addons.json to the settings path..
+                    // probably want to remove this and do the file copy in an installer..
+                    // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
+                    string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
+                    string sourceFile = startupPath;
+                    string destinationFile = settingsFilePath + "AddOns.json";
+                    try
+                    {
+                        File.Copy(sourceFile, destinationFile, true);
+                        updatemystatus("Settings copied");
+                        updatemystatus("Loading Settings");
+                        addOns = DeserializeAddOns();
+                    }
+                    catch (IOException iox)
+                    {
+                        // Console.WriteLine(iox.Message);
+                        updatemystatus("Settings error");
+                    }
+
+                    //InitialAddonsSetup();
+                }
             }
+
             foreach (var addon in addOns.Values)
             {
                 CreateControls(addon);
@@ -183,7 +187,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
 
         }
-      
+
 
         private void updatemystatus(string status)
         {
@@ -266,17 +270,18 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
             const string quote = "\"";
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
             // are we launching TARGET? 
-            if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase) )
-                {
+            if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase))
+            {
                 // -r is to specify a script
                 args = "-r " + quote + addOn.Scripts + quote;
-                }else
+            }
+            else
             {
                 // ok its not target, leave the argumnets as is
-                args = addOn.Scripts; 
+                args = addOn.Scripts;
             }
             // are we launching Elite? Lets check if the users wants VR mode
-            if(string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
+            if (string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
             {
                 //enable vr mode args
                 args = "/VR";
@@ -306,7 +311,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
-           
+
 
         }
 
@@ -328,7 +333,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 return null;
             }
         }
-         internal static void SerializeAddons(object addOns)
+        internal static void SerializeAddons(object addOns)
         {
             var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
             {
@@ -397,14 +402,15 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
         {
             updatemystatus("Saving Prefs");
             SerializeAddons(addOns);
-            if (Rb_Vr.Checked) {
-                
+            if (Rb_Vr.Checked)
+            {
+
                 Properties.Settings.Default.VR = true;
             }
             else
             {
-                
-                Properties.Settings.Default.VR = false; 
+
+                Properties.Settings.Default.VR = false;
             }
 
             Properties.Settings.Default.Save();
