@@ -1,30 +1,10 @@
 using Elite_Dangerous_Add_On_Helper.Model;
 using System.Diagnostics;
-using System.Net;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Net.Http;
-using System.Data;
-using System.IO.Pipes;
-using System.Web;
-using System.Linq.Expressions;
-
-
-
-
-
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
-// Load prefs populates fields
-// deal with arguments in launch apps
+// fix edit funcitonality
 // ....
 
 
