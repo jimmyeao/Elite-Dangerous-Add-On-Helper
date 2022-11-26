@@ -516,5 +516,37 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 box.ShowDialog(this);
             }
         }
+
+        private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Rb_Vr.Checked)
+            {
+
+                Properties.Settings.Default.VR = true;
+            }
+            else
+            {
+
+                Properties.Settings.Default.VR = false;
+            }
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void Rb_NonVR_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Rb_Vr.Checked)
+            {
+
+                Properties.Settings.Default.VR = true;
+            }
+            else
+            {
+
+                Properties.Settings.Default.VR = false;
+            }
+
+            Properties.Settings.Default.Save();
+        }
     }
 }

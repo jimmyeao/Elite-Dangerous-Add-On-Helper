@@ -127,7 +127,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -179,6 +179,7 @@
             this.Rb_Vr.TabIndex = 37;
             this.Rb_Vr.Text = "Vr";
             this.Rb_Vr.UseVisualStyleBackColor = true;
+            this.Rb_Vr.CheckedChanged += new System.EventHandler(this.Rb_Vr_CheckedChanged);
             // 
             // Rb_NonVR
             // 
@@ -191,6 +192,7 @@
             this.Rb_NonVR.TabStop = true;
             this.Rb_NonVR.Text = "Non Vr";
             this.Rb_NonVR.UseVisualStyleBackColor = true;
+            this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
             // 
             // MainForm
             // 
