@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Data;
 using System.IO.Pipes;
 using System.Web;
+using System.Linq.Expressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 
@@ -90,11 +92,18 @@ namespace Elite_Dangerous_Add_On_Helper
                 CreateControls(addon);
             }
             this.Refresh();
-            this.Size = new Size(this.Width, this.Height+25);
+            this.Size = new Size(this.Width, this.Height + 25);
 
 
         }
         private int currentControlRow = 0;
+        private void DoEdit(object sender)
+        {
+            var EditApp = new EditApp(addOns);
+            //EditApp.sender = sender;
+            EditApp.ShowDialog();
+
+        }
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -121,7 +130,7 @@ namespace Elite_Dangerous_Add_On_Helper
             button.Size = new System.Drawing.Size(80, 30);
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
-            addOn.SelectPathButton= button;
+            addOn.SelectPathButton = button;
             Controls.Add(button);
 
             TextBox textBox = new TextBox();
@@ -133,12 +142,12 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 if (Directory.Exists(addOn.AutoDiscoverPath))
                 {
-                    addOn.ProgramDirectory= addOn.AutoDiscoverPath;
+                    addOn.ProgramDirectory = addOn.AutoDiscoverPath;
                 }
             }
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            addOn.AppDirectorytextbox= textBox;
+            addOn.AppDirectorytextbox = textBox;
             Controls.Add(textBox);
 
             if (addOn.Installable)
@@ -149,15 +158,15 @@ namespace Elite_Dangerous_Add_On_Helper
                 installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
-                addOn.InstallButton= installButton;
+                addOn.InstallButton = installButton;
                 Controls.Add(installButton);
             }
             Button editButton = new Button();
             editButton.Text = "Edit";
             editButton.Location = new System.Drawing.Point(680, yPosition);
             editButton.Size = new System.Drawing.Size(80, 30);
-            // editButton.Click += (sender, e) => DoEdit(addOn);
-            addOn.EditButton= editButton;
+            editButton.Click += (sender, e) => DoEdit(addOn);
+            addOn.EditButton = editButton;
             Controls.Add(editButton);
 
 
@@ -181,6 +190,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
         }
+      
 
         private void updatemystatus(string status)
         {
@@ -255,30 +265,32 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void LaunchAddon(AddOn addOn)
         {
+            string args;
+            const string quote = "\"";
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
-
+            if (addOn.ExecutableName == "TARGETGUI.exe")
+                {
+                    args = "-r " + quote + addOn.Scripts + quote;
+                }else
+            {
+                args = addOn.Scripts; 
+            }
             if (File.Exists(path))
             {
-
+                
                 try
                 {
-                    //need to check this works for elevated programs
-                    updatemystatus($"Launching {addOn.FriendlyName}..");
-                    using (Process apptolaunch = new Process())
-                    {
-                        apptolaunch.StartInfo.FileName = path;
-                        apptolaunch.StartInfo.Arguments = addOn.Scripts;
-                        apptolaunch.StartInfo.UseShellExecute = false;
-                        apptolaunch.StartInfo.RedirectStandardOutput = true;
-                        apptolaunch.Start();
-
-
-                    }
+                    var info = new ProcessStartInfo(path);
+                    info.Arguments = args;
+                    info.UseShellExecute = true;
+                    info.WorkingDirectory = @addOn.ProgramDirectory;
+                    Process proc = Process.Start(info);
                 }
                 catch
                 {
                     updatemystatus($"An Error occured trying to launch {addOn.FriendlyName}..");
                 }
+
             }
             else
             {
@@ -291,15 +303,22 @@ namespace Elite_Dangerous_Add_On_Helper
         internal static Dictionary<string, AddOn> DeserializeAddOns()
         {
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
-
-            return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
+            try
             {
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-            });
+                return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects,
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                });
+            }
+            catch
+            {
+                //oops somethign went wrong
+                //updatemystatus("Prefs file corrupt, please delete and re run");
+                return null;
+            }
         }
-
-        internal static void SerializeAddons(object addOns)
+         internal static void SerializeAddons(object addOns)
         {
             var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
             {
