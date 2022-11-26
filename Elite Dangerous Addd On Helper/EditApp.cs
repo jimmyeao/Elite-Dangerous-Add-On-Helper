@@ -14,10 +14,10 @@ namespace Elite_Dangerous_Add_On_Helper
         public EditApp(Dictionary<string, AddOn> addonDictionary)
 
         {
-            addOns = addonDictionary;
+            // addOns = addonDictionary;
             InitializeComponent();
             //Tb_AppName.Text = addOns.;
-            Tb_AppPath.Text= settingsFilePath;
+            Tb_AppPath.Text= "";
             Tb_Arguments.Text= settingsFilePath;
             Tb_Autodiscover.Text= settingsFilePath;
             Tb_ExeName.Text= settingsFilePath;

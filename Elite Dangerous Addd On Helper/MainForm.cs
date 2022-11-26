@@ -1,6 +1,7 @@
 using Elite_Dangerous_Add_On_Helper.Model;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
@@ -16,15 +17,19 @@ namespace Elite_Dangerous_Add_On_Helper
         // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         static readonly HttpClient client = new HttpClient();
-        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
         static string[] launched;
-
+        //************************************************
+        // added for passing app to edit form, maybe wrong
+        public delegate void delPassDataToFrom(AddOn addOn);
+        //************************************************
         string[] launchargs = Environment.GetCommandLineArgs();
 
 
         /// <summary>
         /// List of all addons
         /// </summary>
+        /// 
+        // i need to know what the below is actually doing...
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         public static CancellationToken WebCommsTimeout { get; private set; }
@@ -127,10 +132,12 @@ namespace Elite_Dangerous_Add_On_Helper
         private void DoEdit(object sender)
         {
             var EditApp = new EditApp(addOns);
+
             //EditApp.sender = sender;
             EditApp.ShowDialog();
 
         }
+        #region controls
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -199,6 +206,9 @@ namespace Elite_Dangerous_Add_On_Helper
 
             currentControlRow++;
         }
+
+
+
         private void DeleteControls(AddOn addOn)
         {
             currentControlRow = 0;
@@ -217,7 +227,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
         }
-
+        #endregion
 
         private void updatemystatus(string status)
         {
@@ -486,9 +496,12 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            using (About box = new About())
+            {
+                box.ShowDialog(this);
+            }
         }
-
+        #region menu items
         private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
@@ -532,6 +545,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 box.ShowDialog(this);
             }
         }
+        #endregion
 
         private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
         {
