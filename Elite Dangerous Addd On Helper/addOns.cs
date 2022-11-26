@@ -63,6 +63,8 @@ namespace Elite_Dangerous_Add_On_Helper.Model
         public CheckBox EnableCheckbox { get; set; }
         [JsonIgnore]
         public TextBox AppDirectorytextbox { get; set; }
+        [JsonIgnore]
+        public Button EditButton { get; set; }
 
 
 

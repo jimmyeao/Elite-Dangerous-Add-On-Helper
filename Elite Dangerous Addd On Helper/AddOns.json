@@ -29,7 +29,7 @@
     "FriendlyName": "VoiceAttack",
     "ExecutableName": "VoiceAttack.exe",
     "Installable": false,
-    "AutoDiscoverPath": "",
+    "AutoDiscoverPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\VoiceAttack\\",
     "Scripts": "",
     "Url": ""
   },
@@ -62,7 +62,7 @@
     "FriendlyName": "T.A.R.G.E.T.",
     "ExecutableName": "TARGETGUI.exe",
     "Installable": false,
-    "AutoDiscoverPath": "",
+    "AutoDiscoverPath": "C:\\Program Files (x86)\\Thrustmaster\\TARGET\\x64",
     "Scripts": "",
     "Url": ""
   },

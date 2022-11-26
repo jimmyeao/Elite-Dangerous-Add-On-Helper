@@ -33,7 +33,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPrefsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +42,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.Rb_Vr = new System.Windows.Forms.RadioButton();
+            this.Rb_NonVR = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -50,9 +51,9 @@
             // 
             // Bt_Launch
             // 
-            this.Bt_Launch.Location = new System.Drawing.Point(752, 154);
+            this.Bt_Launch.Location = new System.Drawing.Point(782, 154);
             this.Bt_Launch.Name = "Bt_Launch";
-            this.Bt_Launch.Size = new System.Drawing.Size(121, 29);
+            this.Bt_Launch.Size = new System.Drawing.Size(91, 29);
             this.Bt_Launch.TabIndex = 35;
             this.Bt_Launch.Text = "Launch!";
             this.Bt_Launch.UseVisualStyleBackColor = true;
@@ -74,7 +75,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addApplicationToolStripMenuItem,
-            this.editApplicationToolStripMenuItem,
             this.openPrefsFolderToolStripMenuItem,
             this.savePreferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -91,13 +91,6 @@
             this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.addApplicationToolStripMenuItem.Text = "Add Application";
             this.addApplicationToolStripMenuItem.Click += new System.EventHandler(this.addApplicationToolStripMenuItem_Click);
-            // 
-            // editApplicationToolStripMenuItem
-            // 
-            this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
-            this.editApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
-            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
-            this.editApplicationToolStripMenuItem.Text = "Edit Application";
             // 
             // openPrefsFolderToolStripMenuItem
             // 
@@ -134,8 +127,9 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About..";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripStatusLabel1
             // 
@@ -160,9 +154,9 @@
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(752, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(782, 36);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(121, 112);
+            this.pictureBox1.Size = new System.Drawing.Size(91, 89);
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -176,12 +170,38 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "Enabled?";
             // 
+            // Rb_Vr
+            // 
+            this.Rb_Vr.AutoSize = true;
+            this.Rb_Vr.Location = new System.Drawing.Point(782, 189);
+            this.Rb_Vr.Name = "Rb_Vr";
+            this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
+            this.Rb_Vr.TabIndex = 37;
+            this.Rb_Vr.Text = "Vr";
+            this.Rb_Vr.UseVisualStyleBackColor = true;
+            this.Rb_Vr.CheckedChanged += new System.EventHandler(this.Rb_Vr_CheckedChanged);
+            // 
+            // Rb_NonVR
+            // 
+            this.Rb_NonVR.AutoSize = true;
+            this.Rb_NonVR.Checked = true;
+            this.Rb_NonVR.Location = new System.Drawing.Point(782, 219);
+            this.Rb_NonVR.Name = "Rb_NonVR";
+            this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
+            this.Rb_NonVR.TabIndex = 38;
+            this.Rb_NonVR.TabStop = true;
+            this.Rb_NonVR.Text = "Non Vr";
+            this.Rb_NonVR.UseVisualStyleBackColor = true;
+            this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(887, 410);
+            this.Controls.Add(this.Rb_NonVR);
+            this.Controls.Add(this.Rb_Vr);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
@@ -215,7 +235,8 @@
         private PictureBox pictureBox1;
         private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
         private ToolStripMenuItem addApplicationToolStripMenuItem;
-        private ToolStripMenuItem editApplicationToolStripMenuItem;
         private Label label1;
+        private RadioButton Rb_Vr;
+        private RadioButton Rb_NonVR;
     }
 }
