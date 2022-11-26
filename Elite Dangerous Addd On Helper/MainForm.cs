@@ -37,15 +37,18 @@ namespace Elite_Dangerous_Add_On_Helper
             updatemystatus("Ready");
             try
             {
-                if (launchargs[1] == "/auto")
+                foreach (string launch in launchargs)
                 {
-                    foreach (var addOn in addOns.Values)
+                    if (launch == "/auto")
                     {
-
-                        if (addOn.Enabled)
+                        foreach (var addOn in addOns.Values)
                         {
-                            updatemystatus(addOn.ToString());
-                            LaunchAddon(addOn);
+
+                            if (addOn.Enabled)
+                            {
+                                updatemystatus(addOn.ToString());
+                                LaunchAddon(addOn);
+                            }
                         }
                     }
                 }
