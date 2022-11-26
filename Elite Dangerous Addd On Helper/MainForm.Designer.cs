@@ -33,7 +33,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPrefsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +75,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addApplicationToolStripMenuItem,
-            this.editApplicationToolStripMenuItem,
             this.openPrefsFolderToolStripMenuItem,
             this.savePreferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -93,13 +91,6 @@
             this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
             this.addApplicationToolStripMenuItem.Text = "Add Application";
             this.addApplicationToolStripMenuItem.Click += new System.EventHandler(this.addApplicationToolStripMenuItem_Click);
-            // 
-            // editApplicationToolStripMenuItem
-            // 
-            this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
-            this.editApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
-            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
-            this.editApplicationToolStripMenuItem.Text = "Edit Application";
             // 
             // openPrefsFolderToolStripMenuItem
             // 
@@ -242,7 +233,6 @@
         private PictureBox pictureBox1;
         private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
         private ToolStripMenuItem addApplicationToolStripMenuItem;
-        private ToolStripMenuItem editApplicationToolStripMenuItem;
         private Label label1;
         private RadioButton Rb_Vr;
         private RadioButton Rb_NonVR;
