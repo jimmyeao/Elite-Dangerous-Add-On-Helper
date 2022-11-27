@@ -1,38 +1,30 @@
 ﻿using Elite_Dangerous_Add_On_Helper.Model;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace Elite_Dangerous_Add_On_Helper
 {
     public partial class EditApp : Form
     {
-        
+
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
-        
+
 
         public EditApp(Dictionary<string, AddOn> addonDictionary)
 
         {
-            addOns = addonDictionary;
+            // addOns = addonDictionary;
             InitializeComponent();
-            Tb_AppName.Text = "";
-            Tb_AppPath.Text= settingsFilePath;
-            Tb_Arguments.Text= settingsFilePath;   
-            Tb_Autodiscover.Text= settingsFilePath; 
-            Tb_ExeName.Text= settingsFilePath;  
-            Tb_InstallURL.Text= settingsFilePath;   
+            //Tb_AppName.Text = addOns.;
+            Tb_AppPath.Text= "";
+            Tb_Arguments.Text= settingsFilePath;
+            Tb_Autodiscover.Text= settingsFilePath;
+            Tb_ExeName.Text= settingsFilePath;
+            Tb_InstallURL.Text= settingsFilePath;
 
         }
-   
+
         internal static void SerializeAddons(object addOns)
         {
             var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
@@ -43,7 +35,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        public EditApp()
+        public EditApp(object sender)
         {
             InitializeComponent();
         }

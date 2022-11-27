@@ -1,6 +1,11 @@
 using Elite_Dangerous_Add_On_Helper.Model;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Windows.Forms;
+using System;
+using System.Security.Cryptography;
+using PropertyChanged;
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
@@ -12,17 +17,19 @@ namespace Elite_Dangerous_Add_On_Helper
 {
     public partial class MainForm : Form
     {
-        // setup a folder for settings0
-        // static readonly string directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        // setup some variables
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
-        static readonly HttpClient client = new HttpClient();
-        static readonly string[] appnames = { "Ed Enginer", "Ed Market Connector", "Ed Discovery", "Voiceattack", "ED Odyysey Materials Helper Launcher", "T.A.R.G.E.T.", "AussieDroid Warthog Script", "Elite Dangerous Launcher" };
-        static string[] launched;
-        
-/// <summary>
-/// List of all addons
-/// </summary>
-public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
+        static readonly HttpClient client = new HttpClient();    //used by the install app function
+        public List<string> processList = new List<string>();    // holds a list of launched aps
+        string[] launchargs = Environment.GetCommandLineArgs();  // gets any command line args that were passed at run time
+        private int currentControlRow = 0;
+
+        /// <summary>
+        /// List of all addons
+        /// </summary>
+        /// 
+        // i need to know what the below is actually doing...
+        public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         public static CancellationToken WebCommsTimeout { get; private set; }
 
@@ -32,71 +39,28 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
             InitializeComponent();
             Load_prefs();
             updatemystatus("Ready");
-        }
-
-
-
-        // My Functions
-        #region functions
-        private void Load_prefs()
-        {
-            // load all the textboxes with values from settings file
-            updatemystatus("Checking file exists");
-            if (File.Exists(settingsFilePath + "AddOns.json"))
+            try
             {
-                updatemystatus("Loading Settings");
-                addOns = DeserializeAddOns();
-
-            }
-            else
-            {
-                // lets copy the default addons.json to the settings path..
-                // probably want to remove this and do the file copy in an installer..
-                // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
-                string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
-                string sourceFile = startupPath;
-                string destinationFile = settingsFilePath + "AddOns.json";
-                try
+                foreach (string launch in launchargs)
                 {
-                    File.Copy(sourceFile, destinationFile, true);
-                    updatemystatus("Settings copied");
-                    updatemystatus("Loading Settings");
-                    addOns = DeserializeAddOns();
+                    if (launch == "/auto")
+                    {
+                        foreach (var addOn in addOns.Values)
+                        {
+
+                            if (addOn.Enabled)
+                            {
+                                updatemystatus(addOn.ToString());
+                                LaunchAddon(addOn);
+                            }
+                        }
+                    }
                 }
-                catch (IOException iox)
-                {
-                    Console.WriteLine(iox.Message);
-                    updatemystatus("Settings error");
-                }
-
-                //InitialAddonsSetup();
             }
-            foreach (var addon in addOns.Values)
-            {
-                CreateControls(addon);
-            }
-            this.Refresh();
-            this.Size = new Size(this.Width, this.Height + 25);
-            updatemystatus(Properties.Settings.Default.VR.ToString());
-            if (Properties.Settings.Default.VR == true)
-            {
-                Rb_Vr.Checked = true;
-            }
-            else
-            {
-                Rb_NonVR.Checked = true;
-            }
-
-
+            catch { }
         }
-        private int currentControlRow = 0;
-        private void DoEdit(object sender)
-        {
-            var EditApp = new EditApp(addOns);
-            //EditApp.sender = sender;
-            EditApp.ShowDialog();
 
-        }
+        #region controls
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -165,6 +129,9 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
             currentControlRow++;
         }
+
+
+
         private void DeleteControls(AddOn addOn)
         {
             currentControlRow = 0;
@@ -183,19 +150,107 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
 
         }
-      
+        #endregion
 
-        private void updatemystatus(string status)
+        // My Functions
+        #region functions
+        private void Load_prefs()                                       //load preferences
         {
-            // function to update the status bar
+            if (!Path.Exists(settingsFilePath))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(settingsFilePath);
+                }
+                catch (System.IO.DirectoryNotFoundException) { }
+            }
+            // load all the textboxes with values from settings file
+            updatemystatus("Checking file exists");
+            if (Path.Exists(settingsFilePath))
+            {
+                if (File.Exists(settingsFilePath + "AddOns.json"))
+                {
+                    updatemystatus("Loading Settings");
+                    addOns = DeserializeAddOns();
+
+                }
+                else
+                {
+                    // lets copy the default addons.json to the settings path..
+                    // probably want to remove this and do the file copy in an installer..
+                    // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
+                    string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
+                    string sourceFile = startupPath;
+                    string destinationFile = settingsFilePath + "AddOns.json";
+                    try
+                    {
+                        File.Copy(sourceFile, destinationFile, true);
+                        updatemystatus("Settings copied");
+                        updatemystatus("Loading Settings");
+                        addOns = DeserializeAddOns();
+                    }
+                    catch (IOException iox)
+                    {
+                        // Console.WriteLine(iox.Message);
+                        updatemystatus("Settings error");
+                    }
+
+                    //InitialAddonsSetup();
+                }
+            }
+
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
+            this.Refresh();
+            this.Size = new Size(this.Width, this.Height + 25);
+            updatemystatus(Properties.Settings.Default.VR.ToString());
+            if (Properties.Settings.Default.VR == true)
+            {
+                Rb_Vr.Checked = true;
+            }
+            else
+            {
+                Rb_NonVR.Checked = true;
+            }
+            if (Properties.Settings.Default.CLOSE == true)
+            {
+                Cb_CloseOnExit.Checked = true;
+            }
+            else
+            {
+                Cb_CloseOnExit.Checked = false;
+            }
+
+        }
+        private void DoEdit(object sender)                              //send object to edit form (BROKEN!!)
+        {
+            var EditApp = new EditApp(addOns);
+
+
+            //EditApp.sender = sender;
+            EditApp.ShowDialog();
+
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)      // show about box if logo clicked
+        {
+            using (About box = new About())
+            {
+                box.ShowDialog(this);
+            }
+        }
+        private void updatemystatus(string status)                      // function to update the status bar
+        {
+
             toolStripStatusLabel1.Text = status;
             toolStripStatusLabel1.Invalidate();
             statusStrip1.Invalidate();
             statusStrip1.Refresh();
         }
-        private void DownloadFileAndExecute(string link)
+        private void DownloadFileAndExecute(string link)                // function to download and install add on
         {
-            // download and install function
+
             // where are we going to save it?
             string filename = Path.GetFileName(link);
             // new code
@@ -255,28 +310,28 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
             }
 
         }
-
-        private void LaunchAddon(AddOn addOn)
+        private void LaunchAddon(AddOn addOn)                           // function to launch enabled applications
         {
             // set up a list to track which apps we launched
-            List<string> processList = new List<string>();
+
             //different apps have different args, so lets set up a string to hold them
             string args;
             // TARGET requires a path to a script, if that path has spaces, we need to quote them - set a string called quote we can use to top and tail
             const string quote = "\"";
             var path = $"{addOn.ProgramDirectory}/{addOn.ExecutableName}";
             // are we launching TARGET? 
-            if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase) )
-                {
+            if (string.Equals(addOn.ExecutableName, "targetgui.exe", StringComparison.OrdinalIgnoreCase))
+            {
                 // -r is to specify a script
                 args = "-r " + quote + addOn.Scripts + quote;
-                }else
+            }
+            else
             {
                 // ok its not target, leave the argumnets as is
-                args = addOn.Scripts; 
+                args = addOn.Scripts;
             }
             // are we launching Elite? Lets check if the users wants VR mode
-            if(string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
+            if (string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
             {
                 //enable vr mode args
                 args = "/VR";
@@ -292,6 +347,17 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                     Process proc = Process.Start(info);
                     proc.EnableRaisingEvents = true;
                     processList.Add(proc.ProcessName);
+                    if (proc.ProcessName == "EDLaunch")
+                    {
+                        proc.Exited += new EventHandler(ProcessExitHandler);
+                    }
+                    System.Threading.Thread.Sleep(10);
+                    proc.Refresh();
+                    if (proc.ProcessName == "EdLaunch")
+                    {
+                        // WaitForEdLaunch();
+                    }
+
                 }
                 catch
                 {
@@ -306,11 +372,11 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
-           
+
+
 
         }
-
-        internal static Dictionary<string, AddOn> DeserializeAddOns()
+        internal static Dictionary<string, AddOn> DeserializeAddOns()   //read settings to json and load into objects
         {
             var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
             try
@@ -328,7 +394,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 return null;
             }
         }
-         internal static void SerializeAddons(object addOns)
+        internal static void SerializeAddons(object addOns)             // grabs all objects and saves states in json
         {
             var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
             {
@@ -338,30 +404,29 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        static string Folderpath(string path)
-        {
-            string mypath;
-            if (path == string.Empty)
-            {
-                mypath = Environment.SpecialFolder.MyComputer.ToString();
-            }
-            else
-            {
-                mypath = path;
-            }
-            FolderBrowserDialog diag = new FolderBrowserDialog
-            {
-                // set the root folder or it defaults to desktop
-                SelectedPath = mypath
-            };
-            if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                return diag.SelectedPath;
-            }
-            else { return null; }
-        }
-
-        private void HandleSelectPath(string dictKey)
+        //static string Folderpath(string path)
+        //{
+        //    string mypath;
+        //    if (path == string.Empty)
+        //    {
+        //        mypath = Environment.SpecialFolder.MyComputer.ToString();
+        //    }
+        //    else
+        //    {
+        //        mypath = path;
+        //    }
+        //    FolderBrowserDialog diag = new FolderBrowserDialog
+        //    {
+        //        // set the root folder or it defaults to desktop
+        //        SelectedPath = mypath
+        //    };
+        //    if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
+        //        return diag.SelectedPath;
+        //    }
+        //    else { return null; }
+        //}
+        private void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
 
@@ -384,34 +449,21 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
-
-
-        #endregion
-        #region menuitems
-        private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void ProcessExitHandler(object sender, EventArgs args)  //triggered when EDLaunch exits
         {
-            this.Close();
-        }
-
-        private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            updatemystatus("Saving Prefs");
-            SerializeAddons(addOns);
-            if (Rb_Vr.Checked) {
-                
-                Properties.Settings.Default.VR = true;
-            }
-            else
+            // of Edlaunch has quit, does the user want us to kill all the apps?
+            if (Cb_CloseOnExit.Checked)
             {
-                
-                Properties.Settings.Default.VR = false; 
+                foreach (string p in processList)
+                    foreach (var process in Process.GetProcessesByName(p))
+                    {
+                        // Temp is a document which you need to kill.
+                        if (process.ProcessName.Contains(p))
+                            process.CloseMainWindow();
+                    }
             }
-
-            Properties.Settings.Default.Save();
         }
-        #endregion menuitems
-        #region launch items
-        private void Bt_Launch_Click(object sender, EventArgs e)
+        private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
         {
 
             foreach (var addOn in addOns.Values)
@@ -423,16 +475,37 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                     LaunchAddon(addOn);
                 }
             }
+            //lets breath a little to let things start up..
 
-            updatemystatus("Ready");
-            // for ref how to open a webpage in default browser
-            //Process.Start("https://www.google.com/");
+
 
         }
         #endregion
+        #region menuitems
+        private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updatemystatus("Saving Prefs");
+            SerializeAddons(addOns);
+            if (Rb_Vr.Checked)
+            {
+
+                Properties.Settings.Default.VR = true;
+            }
+            else
+            {
+
+                Properties.Settings.Default.VR = false;
+            }
+
+            Properties.Settings.Default.Save();
+        }
+        #endregion menuitems
         #region installs
-
-
         private void DoInstall(AddOn addOn)
         {
             updatemystatus($"Installing {addOn.FriendlyName}");
@@ -447,12 +520,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         //}
         #endregion installs  
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        #region menu items
         private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
@@ -496,7 +564,7 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
                 box.ShowDialog(this);
             }
         }
-
+        #endregion
         private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
         {
             if (Rb_Vr.Checked)
@@ -512,7 +580,6 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
             Properties.Settings.Default.Save();
         }
-
         private void Rb_NonVR_CheckedChanged(object sender, EventArgs e)
         {
             if (Rb_Vr.Checked)
@@ -524,6 +591,21 @@ public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
             {
 
                 Properties.Settings.Default.VR = false;
+            }
+
+            Properties.Settings.Default.Save();
+        }
+        private void Cb_CloseOnExit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Cb_CloseOnExit.Checked)
+            {
+
+                Properties.Settings.Default.CLOSE = true;
+            }
+            else
+            {
+
+                Properties.Settings.Default.CLOSE = false;
             }
 
             Properties.Settings.Default.Save();

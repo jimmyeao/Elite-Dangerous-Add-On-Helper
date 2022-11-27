@@ -34,5 +34,17 @@ namespace Elite_Dangerous_Add_On_Helper.Properties {
                 this["VR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CLOSE {
+            get {
+                return ((bool)(this["CLOSE"]));
+            }
+            set {
+                this["CLOSE"] = value;
+            }
+        }
     }
 }

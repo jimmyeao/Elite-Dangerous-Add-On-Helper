@@ -14,7 +14,6 @@ namespace Elite_Dangerous_Add_On_Helper.Model
     [Serializable]
     public class AddOn : INotifyPropertyChanged
     {
-        [DebuggerDisplay("ProgramDirectory = {ProgramDirectory} - FriendlyName = {FriendlyName}")]
         /// <summary>
         /// Add on for if enabled (box checked)
         /// </summary>
