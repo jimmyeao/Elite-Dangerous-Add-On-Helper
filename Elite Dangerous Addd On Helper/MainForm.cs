@@ -7,8 +7,7 @@ using System;
 using System.Security.Cryptography;
 using PropertyChanged;
 using System.Runtime.CompilerServices;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
@@ -42,10 +41,12 @@ namespace Elite_Dangerous_Add_On_Helper
         {
 
             InitializeComponent();
-            //menuStrip1.BackColor = Color.DarkGray;
+            //menuStrip1.BackColor = Color.;
             this.menuStrip1.RenderMode = ToolStripRenderMode.Professional;
             this.menuStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
             this.statusStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
+            menuStrip1.BackColor = Color.FromArgb(64, 64, 64);
+
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 1000;
@@ -110,7 +111,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             addOn.EnableCheckbox = checkBox;
             Controls.Add(checkBox);
-
+            // add a browse button
             Button button = new Button();
             button.Text = "Browse";
             toolTip1.SetToolTip(button, "Browse for a folder");
@@ -121,7 +122,7 @@ namespace Elite_Dangerous_Add_On_Helper
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             addOn.SelectPathButton = button;
             Controls.Add(button);
-
+            //create the textbox with the path
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
             textBox.Location = new System.Drawing.Point(360, yPosition);
@@ -138,7 +139,7 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             addOn.AppDirectorytextbox = textBox;
             Controls.Add(textBox);
-
+            //add in install button
             if (addOn.Installable)
             {
                 Button installButton = new Button();
@@ -151,10 +152,9 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.InstallButton = installButton;
                 Controls.Add(installButton);
             }
+            // create the edit button
             Button editButton = new Button();
             editButton.Text = "Edit";
-
-
             editButton.Location = new System.Drawing.Point(680, yPosition);
             editButton.Size = new System.Drawing.Size(80, 30);
             editButton.Click += (sender, e) => DoEdit(addOn);
@@ -162,7 +162,7 @@ namespace Elite_Dangerous_Add_On_Helper
             Controls.Add(editButton);
             Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
 
-            currentControlRow++;
+            currentControlRow++;            //move to the next row
         }
 
 
@@ -658,17 +658,17 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
 
-        private void fileToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        {
-            fileToolStripMenuItem.BackColor = Color.Gray;
-            fileToolStripMenuItem.ForeColor =Color.Red;
-        }
+        //private void fileToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        //{
+        //    fileToolStripMenuItem.BackColor = Color.Gray;
+        //    fileToolStripMenuItem.ForeColor =Color.Red;
+        //}
 
-        private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
-        {
-            fileToolStripMenuItem.BackColor = Color.Gray;
-            fileToolStripMenuItem.ForeColor =Color.Orange;
-        }
+        //private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        //{
+        //    fileToolStripMenuItem.BackColor = Color.Gray;
+        //    fileToolStripMenuItem.ForeColor =Color.Orange;
+        //}
         private bool mouseDown;
         private Point lastLocation;
 
@@ -676,7 +676,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
 
-
+        //code to allow dragging of form if we hide the border..
         private void MainForm_MouseDown_1(object sender, MouseEventArgs e)
         {
             mouseDown = true;
@@ -704,4 +704,5 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
     }
+
 }

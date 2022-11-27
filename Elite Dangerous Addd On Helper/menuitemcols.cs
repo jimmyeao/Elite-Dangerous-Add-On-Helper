@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-// this file controls the colours of the menu strip
+// this file controls the colours of the menu strip / form
 namespace Elite_Dangerous_Add_On_Helper
 {
     public class CustomColorTable : ProfessionalColorTable
     {
+
         //a bunch of other overrides...
         public override Color StatusStripBorder
         {
@@ -17,9 +18,10 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             get { return Color.DarkGray; }
         }
+
         public override Color MenuItemSelected
         {
-            get { return Color.Yellow; }
+            get { return Color.Black; }
         }
         public override Color MenuItemSelectedGradientBegin
         {
@@ -27,7 +29,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         public override Color MenuItemSelectedGradientEnd
         {
-            get { return Color.Yellow; }
+            get { return Color.Orange; }
         }
         public override Color ToolStripBorder
         {
@@ -50,4 +52,6 @@ namespace Elite_Dangerous_Add_On_Helper
             get { return Color.DarkGray; }
         }
     }
+
+
 }
