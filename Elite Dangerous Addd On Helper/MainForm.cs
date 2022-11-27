@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System;
 using System.Security.Cryptography;
 using PropertyChanged;
+using System.Runtime.CompilerServices;
+
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
@@ -23,13 +25,15 @@ namespace Elite_Dangerous_Add_On_Helper
         public List<string> processList = new List<string>();    // holds a list of launched aps
         string[] launchargs = Environment.GetCommandLineArgs();  // gets any command line args that were passed at run time
         private int currentControlRow = 0;
-
-        /// <summary>
-        /// List of all addons
-        /// </summary>
-        /// 
+        public static readonly object Themes;
         // i need to know what the below is actually doing...
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
+        // Create the ToolTip and associate with the Form container.
+
+        ToolTip toolTip1 = new ToolTip();
+
+
+
 
         public static CancellationToken WebCommsTimeout { get; private set; }
 
@@ -37,11 +41,23 @@ namespace Elite_Dangerous_Add_On_Helper
         {
 
             InitializeComponent();
+            //menuStrip1.BackColor = Color.;
+            this.menuStrip1.RenderMode = ToolStripRenderMode.Professional;
+            this.menuStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
+            this.statusStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
+            menuStrip1.BackColor = Color.FromArgb(64, 64, 64);
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
             Load_prefs();
             updatemystatus("Ready");
             try
             {
-                foreach (string launch in launchargs)
+                foreach (string launch in launchargs)   // was the prog run with /auto? if so launch all enabled apps
                 {
                     if (launch == "/auto")
                     {
@@ -50,7 +66,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
                             if (addOn.Enabled)
                             {
-                                updatemystatus(addOn.ToString());
+                                updatemystatus(addOn.FriendlyName);
                                 LaunchAddon(addOn);
                             }
                         }
@@ -60,36 +76,53 @@ namespace Elite_Dangerous_Add_On_Helper
             catch { }
         }
 
+
         #region controls
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
             var yPosition = ((currentControlRow) * 30) + 100;
 
+
             //Create checkbox
             CheckBox checkBox = new CheckBox();
             //Set the text to the friendly (human readable) addon name
             checkBox.Text = addOn.FriendlyName;
             //Autosize on
-            checkBox.AutoSize = true;
+            checkBox.AutoSize = false;
+            checkBox.Size = new Size(250, 25);
             //Data binding, super useful. If the box is checked, it updates the model, if you update the model in code, the box changes too!
             //this is basically saying "The box being checked on screen is linked to this specific addon object, and more specifically the enabled property"
             checkBox.DataBindings.Add("Checked", addOn, "Enabled", true, DataSourceUpdateMode.OnPropertyChanged);
             //Set the location on screen, this can be a bit trial and error
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
+            // if we have a valid path, make it green!
+            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath))
+            {
+                checkBox.BackColor = Color.LimeGreen;
+                toolTip1.SetToolTip(checkBox, "Path Found");
+            }
+            else
+            {
+                // otherwise make it red to show its missing!
+                checkBox.BackColor = Color.Red;
+                toolTip1.SetToolTip(checkBox, "Path NOT Found");
+            }
             addOn.EnableCheckbox = checkBox;
             Controls.Add(checkBox);
-
+            // add a browse button
             Button button = new Button();
-            button.Text = "Select Path...";
+            button.Text = "Browse";
+            toolTip1.SetToolTip(button, "Browse for a folder");
             button.Location = new System.Drawing.Point(277, yPosition);
             button.Size = new System.Drawing.Size(80, 30);
+            button.BackColor= Color.LightGray;
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             addOn.SelectPathButton = button;
             Controls.Add(button);
-
+            //create the textbox with the path
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
             textBox.Location = new System.Drawing.Point(360, yPosition);
@@ -105,12 +138,13 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             addOn.AppDirectorytextbox = textBox;
-            Controls.Add(textBox);
-
+            //Controls.Add(textBox);
+            //add in install button
             if (addOn.Installable)
             {
                 Button installButton = new Button();
                 installButton.Text = "Install?";
+                installButton.BackColor= Color.LightGray;
                 installButton.Location = new System.Drawing.Point(600, yPosition);
                 installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
@@ -118,6 +152,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.InstallButton = installButton;
                 Controls.Add(installButton);
             }
+            // create the edit button
             Button editButton = new Button();
             editButton.Text = "Edit";
             editButton.Location = new System.Drawing.Point(680, yPosition);
@@ -125,9 +160,9 @@ namespace Elite_Dangerous_Add_On_Helper
             editButton.Click += (sender, e) => DoEdit(addOn);
             addOn.EditButton = editButton;
             Controls.Add(editButton);
+            Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
 
-
-            currentControlRow++;
+            currentControlRow++;            //move to the next row
         }
 
 
@@ -389,7 +424,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             catch
             {
-                //oops somethign went wrong
+                //oops something went wrong
                 //updatemystatus("Prefs file corrupt, please delete and re run");
                 return null;
             }
@@ -404,29 +439,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        //static string Folderpath(string path)
-        //{
-        //    string mypath;
-        //    if (path == string.Empty)
-        //    {
-        //        mypath = Environment.SpecialFolder.MyComputer.ToString();
-        //    }
-        //    else
-        //    {
-        //        mypath = path;
-        //    }
-        //    FolderBrowserDialog diag = new FolderBrowserDialog
-        //    {
-        //        // set the root folder or it defaults to desktop
-        //        SelectedPath = mypath
-        //    };
-        //    if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        return diag.SelectedPath;
-        //    }
-        //    else { return null; }
-        //}
-        private void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
+        public void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
 
@@ -445,8 +458,20 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.ExecutableName = openDialog.SafeFileName;
                 //addOn.ProgramDirectory = file;
             }
+            currentControlRow = 0;
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            this.Refresh();
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
+            this.Refresh();
 
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
+                                     //redraw
 
         }
         private void ProcessExitHandler(object sender, EventArgs args)  //triggered when EDLaunch exits
@@ -471,14 +496,12 @@ namespace Elite_Dangerous_Add_On_Helper
 
                 if (addOn.Enabled)
                 {
-                    updatemystatus(addOn.ToString());
+                    updatemystatus("Launching " + addOn.FriendlyName);
                     LaunchAddon(addOn);
                 }
             }
             //lets breath a little to let things start up..
-
-
-
+            updatemystatus("Ready");
         }
         #endregion
         #region menuitems
@@ -610,5 +633,54 @@ namespace Elite_Dangerous_Add_On_Helper
 
             Properties.Settings.Default.Save();
         }
+
+
+
+        //private void fileToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        //{
+        //    fileToolStripMenuItem.BackColor = Color.Gray;
+        //    fileToolStripMenuItem.ForeColor =Color.Red;
+        //}
+
+        //private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        //{
+        //    fileToolStripMenuItem.BackColor = Color.Gray;
+        //    fileToolStripMenuItem.ForeColor =Color.Orange;
+        //}
+        private bool mouseDown;
+        private Point lastLocation;
+
+
+
+
+
+        //code to allow dragging of form if we hide the border..
+        private void MainForm_MouseDown_1(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void MainForm_MouseUp_1(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
+
 }

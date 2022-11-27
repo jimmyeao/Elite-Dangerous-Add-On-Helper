@@ -62,23 +62,28 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(5, 5);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.menuStrip1.Size = new System.Drawing.Size(877, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fileToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addApplicationToolStripMenuItem,
             this.openPrefsFolderToolStripMenuItem,
             this.savePreferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
@@ -87,6 +92,8 @@
             // 
             // addApplicationToolStripMenuItem
             // 
+            this.addApplicationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.addApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.addApplicationToolStripMenuItem.Name = "addApplicationToolStripMenuItem";
             this.addApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
             this.addApplicationToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
@@ -95,6 +102,8 @@
             // 
             // openPrefsFolderToolStripMenuItem
             // 
+            this.openPrefsFolderToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.openPrefsFolderToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.openPrefsFolderToolStripMenuItem.Name = "openPrefsFolderToolStripMenuItem";
             this.openPrefsFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
             this.openPrefsFolderToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
@@ -103,6 +112,8 @@
             // 
             // savePreferencesToolStripMenuItem
             // 
+            this.savePreferencesToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.savePreferencesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.savePreferencesToolStripMenuItem.Name = "savePreferencesToolStripMenuItem";
             this.savePreferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             this.savePreferencesToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
@@ -111,6 +122,8 @@
             // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(259, 26);
@@ -119,16 +132,20 @@
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -142,6 +159,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
@@ -149,7 +167,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(877, 26);
             this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // pictureBox1
             // 
@@ -165,6 +182,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(32, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 20);
@@ -174,36 +192,42 @@
             // Rb_Vr
             // 
             this.Rb_Vr.AutoSize = true;
+            this.Rb_Vr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Rb_Vr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.Rb_Vr.Location = new System.Drawing.Point(782, 189);
             this.Rb_Vr.Name = "Rb_Vr";
             this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
             this.Rb_Vr.TabIndex = 37;
             this.Rb_Vr.Text = "Vr";
-            this.Rb_Vr.UseVisualStyleBackColor = true;
+            this.Rb_Vr.UseVisualStyleBackColor = false;
             this.Rb_Vr.CheckedChanged += new System.EventHandler(this.Rb_Vr_CheckedChanged);
             // 
             // Rb_NonVR
             // 
             this.Rb_NonVR.AutoSize = true;
+            this.Rb_NonVR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Rb_NonVR.Checked = true;
+            this.Rb_NonVR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.Rb_NonVR.Location = new System.Drawing.Point(782, 219);
             this.Rb_NonVR.Name = "Rb_NonVR";
             this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
             this.Rb_NonVR.TabIndex = 38;
             this.Rb_NonVR.TabStop = true;
             this.Rb_NonVR.Text = "Non Vr";
-            this.Rb_NonVR.UseVisualStyleBackColor = true;
+            this.Rb_NonVR.UseVisualStyleBackColor = false;
             this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
             // 
             // Cb_CloseOnExit
             // 
             this.Cb_CloseOnExit.AutoSize = true;
+            this.Cb_CloseOnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Cb_CloseOnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 63);
             this.Cb_CloseOnExit.Name = "Cb_CloseOnExit";
             this.Cb_CloseOnExit.Size = new System.Drawing.Size(123, 24);
             this.Cb_CloseOnExit.TabIndex = 39;
             this.Cb_CloseOnExit.Text = "Close on Exit?";
-            this.Cb_CloseOnExit.UseVisualStyleBackColor = true;
+            this.Cb_CloseOnExit.UseVisualStyleBackColor = false;
             this.Cb_CloseOnExit.CheckedChanged += new System.EventHandler(this.Cb_CloseOnExit_CheckedChanged);
             // 
             // MainForm
@@ -211,6 +235,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(887, 410);
             this.Controls.Add(this.Cb_CloseOnExit);
             this.Controls.Add(this.Rb_NonVR);
@@ -225,6 +250,10 @@
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Elite Dangerous Addon Helper";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown_1);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp_1);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
