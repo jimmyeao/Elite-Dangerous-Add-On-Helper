@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Rb_Vr = new System.Windows.Forms.RadioButton();
             this.Rb_NonVR = new System.Windows.Forms.RadioButton();
+            this.Cb_CloseOnExit = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -127,7 +128,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -194,12 +195,24 @@
             this.Rb_NonVR.UseVisualStyleBackColor = true;
             this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
             // 
+            // Cb_CloseOnExit
+            // 
+            this.Cb_CloseOnExit.AutoSize = true;
+            this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 63);
+            this.Cb_CloseOnExit.Name = "Cb_CloseOnExit";
+            this.Cb_CloseOnExit.Size = new System.Drawing.Size(123, 24);
+            this.Cb_CloseOnExit.TabIndex = 39;
+            this.Cb_CloseOnExit.Text = "Close on Exit?";
+            this.Cb_CloseOnExit.UseVisualStyleBackColor = true;
+            this.Cb_CloseOnExit.CheckedChanged += new System.EventHandler(this.Cb_CloseOnExit_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(887, 410);
+            this.Controls.Add(this.Cb_CloseOnExit);
             this.Controls.Add(this.Rb_NonVR);
             this.Controls.Add(this.Rb_Vr);
             this.Controls.Add(this.label1);
@@ -238,5 +251,6 @@
         private Label label1;
         private RadioButton Rb_Vr;
         private RadioButton Rb_NonVR;
+        private CheckBox Cb_CloseOnExit;
     }
 }
