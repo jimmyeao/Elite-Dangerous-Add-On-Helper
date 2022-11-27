@@ -1,4 +1,4 @@
 # Elite Dangerous Addd On Helper
 
-Currently Not working :) stay tuned for updates
-![image](https://user-images.githubusercontent.com/5197831/204059824-da1bd46e-0f4a-4fdf-8773-c4ec4ba5bb02.png)
+Partially working :) stay tuned for updates
+![image](https://user-images.githubusercontent.com/5197831/204138050-299977fc-41f7-406b-b8b0-64f2ee20d233.png)
