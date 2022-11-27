@@ -481,7 +481,8 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             //lets breath a little to let things start up..
             Process[] pname = Process.GetProcessesByName("EDLaunch");
-
+            //need to wrap this in a thread
+            //************************************************************************************
             if (pname.Length != 0)
             {
                 updatemystatus("Waiting for Elite Launcher to quit");
@@ -497,15 +498,17 @@ namespace Elite_Dangerous_Add_On_Helper
                     foreach (var process in Process.GetProcessesByName(p))
                     {
                         // Temp is a document which you need to kill.
-                        if (process.MainWindowTitle.Contains(p))
-                            process.Kill();
+                        if (process.ProcessName.Contains(p))
+                            process.CloseMainWindow();
                     }
+                //************************************************************************************
             }
             updatemystatus("Ready");
             // for ref how to open a webpage in default browser
             //Process.Start("https://www.google.com/");
 
         }
+
         #endregion
         #region installs
 
