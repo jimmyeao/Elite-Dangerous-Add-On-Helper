@@ -449,6 +449,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void ProcessExitHandler(object sender, EventArgs args)
         {
+            // of Edlaunch has quit, does the user want us to kill all the apps?
 
             foreach (string p in processList)
                 foreach (var process in Process.GetProcessesByName(p))
