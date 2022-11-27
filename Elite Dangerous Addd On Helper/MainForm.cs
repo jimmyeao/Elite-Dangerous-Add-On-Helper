@@ -439,28 +439,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        //static string Folderpath(string path)
-        //{
-        //    string mypath;
-        //    if (path == string.Empty)
-        //    {
-        //        mypath = Environment.SpecialFolder.MyComputer.ToString();
-        //    }
-        //    else
-        //    {
-        //        mypath = path;
-        //    }
-        //    FolderBrowserDialog diag = new FolderBrowserDialog
-        //    {
-        //        // set the root folder or it defaults to desktop
-        //        SelectedPath = mypath
-        //    };
-        //    if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        return diag.SelectedPath;
-        //    }
-        //    else { return null; }
-        //}
         public void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
         {
             addOns.TryGetValue(dictKey, out var addOn); //get the AddOn model as "addOn" using the dictionary key
