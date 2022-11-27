@@ -35,7 +35,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             File.WriteAllText(settingsFilePath + "AddOns.json", Json);
         }
-        public EditApp()
+        public EditApp(object sender)
         {
             InitializeComponent();
         }

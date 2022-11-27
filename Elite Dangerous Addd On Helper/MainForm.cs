@@ -2,6 +2,9 @@ using Elite_Dangerous_Add_On_Helper.Model;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System;
+using System.Security.Cryptography;
+using PropertyChanged;
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
@@ -133,10 +136,12 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             var EditApp = new EditApp(addOns);
 
+
             //EditApp.sender = sender;
             EditApp.ShowDialog();
 
         }
+        public List<string> processList = new List<string>();
         #region controls
         private void CreateControls(AddOn addOn)
         {
@@ -303,7 +308,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void LaunchAddon(AddOn addOn)
         {
             // set up a list to track which apps we launched
-            List<string> processList = new List<string>();
+
             //different apps have different args, so lets set up a string to hold them
             string args;
             // TARGET requires a path to a script, if that path has spaces, we need to quote them - set a string called quote we can use to top and tail
@@ -337,6 +342,10 @@ namespace Elite_Dangerous_Add_On_Helper
                     Process proc = Process.Start(info);
                     proc.EnableRaisingEvents = true;
                     processList.Add(proc.ProcessName);
+
+                    System.Threading.Thread.Sleep(10);
+                    proc.Refresh();
+
                 }
                 catch
                 {
@@ -351,6 +360,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 updatemystatus($"Unable to launch {addOn.FriendlyName}..");
 
             }
+
 
 
         }
@@ -469,7 +479,28 @@ namespace Elite_Dangerous_Add_On_Helper
                     LaunchAddon(addOn);
                 }
             }
+            //lets breath a little to let things start up..
+            Process[] pname = Process.GetProcessesByName("EDLaunch");
 
+            if (pname.Length != 0)
+            {
+                updatemystatus("Waiting for Elite Launcher to quit");
+                while (pname.Length > 0)
+                {
+                    pname = Process.GetProcessesByName("EDLaunch");
+
+                }
+                //ok edlaunch has quit, lets kill the other apps
+                // this is dirty and deosnt work particularly well
+                // it also blocks the form
+                foreach (string p in processList)
+                    foreach (var process in Process.GetProcessesByName(p))
+                    {
+                        // Temp is a document which you need to kill.
+                        if (process.MainWindowTitle.Contains(p))
+                            process.Kill();
+                    }
+            }
             updatemystatus("Ready");
             // for ref how to open a webpage in default browser
             //Process.Start("https://www.google.com/");
