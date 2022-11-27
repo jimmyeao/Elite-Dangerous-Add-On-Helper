@@ -138,7 +138,7 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             addOn.AppDirectorytextbox = textBox;
-            Controls.Add(textBox);
+            //Controls.Add(textBox);
             //add in install button
             if (addOn.Installable)
             {
