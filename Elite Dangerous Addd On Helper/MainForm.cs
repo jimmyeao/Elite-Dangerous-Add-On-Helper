@@ -1,6 +1,7 @@
 using Elite_Dangerous_Add_On_Helper.Model;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System;
 using System.Security.Cryptography;
@@ -342,9 +343,16 @@ namespace Elite_Dangerous_Add_On_Helper
                     Process proc = Process.Start(info);
                     proc.EnableRaisingEvents = true;
                     processList.Add(proc.ProcessName);
-
+                    if (proc.ProcessName == "EDLaunch")
+                    {
+                        proc.Exited += new EventHandler(ProcessExitHandler);
+                    }
                     System.Threading.Thread.Sleep(10);
                     proc.Refresh();
+                    if (proc.ProcessName == "EdLaunch")
+                    {
+                        // WaitForEdLaunch();
+                    }
 
                 }
                 catch
@@ -439,7 +447,17 @@ namespace Elite_Dangerous_Add_On_Helper
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
 
         }
+        private void ProcessExitHandler(object sender, EventArgs args)
+        {
 
+            foreach (string p in processList)
+                foreach (var process in Process.GetProcessesByName(p))
+                {
+                    // Temp is a document which you need to kill.
+                    if (process.ProcessName.Contains(p))
+                        process.CloseMainWindow();
+                }
+        }
 
         #endregion
         #region menuitems
@@ -480,32 +498,8 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
             }
             //lets breath a little to let things start up..
-            Process[] pname = Process.GetProcessesByName("EDLaunch");
-            //need to wrap this in a thread
-            //************************************************************************************
-            if (pname.Length != 0)
-            {
-                updatemystatus("Waiting for Elite Launcher to quit");
-                while (pname.Length > 0)
-                {
-                    pname = Process.GetProcessesByName("EDLaunch");
 
-                }
-                //ok edlaunch has quit, lets kill the other apps
-                // this is dirty and deosnt work particularly well
-                // it also blocks the form
-                foreach (string p in processList)
-                    foreach (var process in Process.GetProcessesByName(p))
-                    {
-                        // Temp is a document which you need to kill.
-                        if (process.ProcessName.Contains(p))
-                            process.CloseMainWindow();
-                    }
-                //************************************************************************************
-            }
-            updatemystatus("Ready");
-            // for ref how to open a webpage in default browser
-            //Process.Start("https://www.google.com/");
+
 
         }
 
