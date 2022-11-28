@@ -163,18 +163,20 @@ namespace Elite_Dangerous_Add_On_Helper
             deleteButton.Location = new System.Drawing.Point(540, yPosition);
             deleteButton.Size = new System.Drawing.Size(30, 30);
             deleteButton.Click += (sender, e) => DeleteAddon(addOn);
+            addOn.DeleteButton = deleteButton;
             toolTip1.SetToolTip(deleteButton, "Delete App from List");
-            panel1.Controls.Add(deleteButton);
+            if (addOn.FriendlyName != "Elite")
+            {
+                panel1.Controls.Add(deleteButton);
+            }
             panel1.Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
             currentControlRow++;            //move to the next row
         }
         private void DeleteAddon(AddOn addOn)
         {
             // delete - none of these work :/
-
-            // addOn.Dispose();  //ssems to do nothing
-            // addOns.Remove(addOn);
-
+            addOns.Remove(addOn.FriendlyName);
+            DeleteControls(addOn);
             SerializeAddons(addOns);
             //delete controls
             foreach (var addon in addOns.Values)
@@ -191,7 +193,7 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void DeleteControls(AddOn addOn)
         {
-            currentControlRow = 0;
+            currentControlRow -= 1;
             panel1.Controls.Remove(addOn.EnableCheckbox);
             panel1.Controls.Remove(addOn.AppDirectorytextbox);
 
@@ -203,6 +205,7 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 panel1.Controls.Remove(addOn.InstallButton);
             }
+            panel1.Controls.Remove(addOn.DeleteButton);
 
 
 
@@ -282,9 +285,6 @@ namespace Elite_Dangerous_Add_On_Helper
         private void DoEdit(object sender)                              //send object to edit form (BROKEN!!)
         {
             var EditApp = new EditApp(addOns);
-
-
-            //EditApp.sender = sender;
             EditApp.ShowDialog();
 
         }
