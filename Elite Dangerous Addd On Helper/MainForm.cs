@@ -474,20 +474,30 @@ namespace Elite_Dangerous_Add_On_Helper
             if (Cb_CloseOnExit.Checked)
             {
                 //Process[] process;
-                foreach (string p in processList)
-                    foreach (Process process in Process.GetProcessesByName(p))
-                    {
-                        // Temp is a document which you need to kill.
-                        if (process.ProcessName.Contains(p))
-                            process.CloseMainWindow();
-                    }
+                try
+                {
+                    foreach (string p in processList)
+                        foreach (Process process in Process.GetProcessesByName(p))
+                        {
+                            // Temp is a document which you need to kill.
+                            if (process.ProcessName.Contains(p))
+                                process.CloseMainWindow();
+                        }
+                }
+                catch
+                {
+                    // if something went wrong, I dont want to know about it..
+                }
+
                 // Ed Odyysey Materials Helper is a little strange, lets deal with its multiple running processes..
                 try
                 {
                     Process[] procs = Process.GetProcessesByName("Elite Dangerous Odyssey Materials Helper");
                     foreach (var proc in procs) { proc.CloseMainWindow(); }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                { // if something went wrong, I dont want to know about it..
+                }
             }
         }
         private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
@@ -546,7 +556,7 @@ namespace Elite_Dangerous_Add_On_Helper
         //}
         #endregion installs  
         #region menu items
-        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)     //Open folder containing settings file in windows explorer
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
             {
@@ -556,7 +566,7 @@ namespace Elite_Dangerous_Add_On_Helper
             });
         }
 
-        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)      //add an application
         {
             var AddApp = new AddApp(addOns);
             AddApp.ShowDialog();
@@ -571,7 +581,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
         }
 
-        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)          //tbc delete an app, may be moved into edit form
         {
             // this proc resets prefs to default
 
