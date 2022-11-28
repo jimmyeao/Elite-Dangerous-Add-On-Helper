@@ -145,7 +145,10 @@ namespace Elite_Dangerous_Add_On_Helper
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
                 addOn.InstallButton = installButton;
-                panel1.Controls.Add(installButton);
+                if (!Path.Exists(addOn.ProgramDirectory))
+                {
+                    panel1.Controls.Add(installButton);
+                }
             }
             // create the edit button
             Button editButton = new Button();
@@ -438,6 +441,10 @@ namespace Elite_Dangerous_Add_On_Helper
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Title = "Select A File";
             openDialog.Filter = "Executable files (*.exe)|*.exe";
+            if (addOn.AutoDiscoverPath != String.Empty)
+            {
+                openDialog.InitialDirectory = addOn.AutoDiscoverPath;
+            }
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string file = openDialog.FileName;
