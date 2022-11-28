@@ -282,10 +282,22 @@ namespace Elite_Dangerous_Add_On_Helper
             }
 
         }
-        private void DoEdit(object sender)                              //send object to edit form (BROKEN!!)
+        private void DoEdit(AddOn addOn)                              //send object to edit form (BROKEN!!)
         {
-            var EditApp = new EditApp(addOns);
+            var EditApp = new EditApp(addOn);
             EditApp.ShowDialog();
+            //DeleteControls(addOn);
+            SerializeAddons(addOns);
+            //delete controls
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            //recreate controls
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
 
         }
         private void pictureBox1_Click(object sender, EventArgs e)      // show about box if logo clicked
