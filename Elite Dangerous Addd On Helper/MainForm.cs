@@ -178,7 +178,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
         #endregion
-        // My Functions
         #region functions
         private void Load_prefs()                                       //load preferences
         {
@@ -533,23 +532,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
             Properties.Settings.Default.Save();
         }
-        #endregion menuitems
-        #region installs
-        private void DoInstall(AddOn addOn)
-        {
-            updatemystatus($"Installing {addOn.FriendlyName}");
-            DownloadFileAndExecute(addOn.Url);
-            updatemystatus("Ready");
-        }
-        //private void DoEdit(object sender, EventArgs e)
-        //{
-        //    var AddApp = new AddApp(addOns);
-        //    Edit.ShowDialog();
-        //    updatemystatus($"Editing {addOn.FriendlyName}");
-
-        //}
-        #endregion installs  
-        #region menu items
         private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)     //Open folder containing settings file in windows explorer
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
@@ -593,7 +575,22 @@ namespace Elite_Dangerous_Add_On_Helper
                 box.ShowDialog(this);
             }
         }
-        #endregion
+        #endregion menuitems
+        #region installs
+        private void DoInstall(AddOn addOn)
+        {
+            updatemystatus($"Installing {addOn.FriendlyName}");
+            DownloadFileAndExecute(addOn.Url);
+            updatemystatus("Ready");
+        }
+        //private void DoEdit(object sender, EventArgs e)
+        //{
+        //    var AddApp = new AddApp(addOns);
+        //    Edit.ShowDialog();
+        //    updatemystatus($"Editing {addOn.FriendlyName}");
+
+        //}
+        #endregion installs  
         #region save misc settings
         private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
         {
@@ -641,8 +638,6 @@ namespace Elite_Dangerous_Add_On_Helper
             Properties.Settings.Default.Save();
         }
         #endregion  
-
-        //code to allow dragging of form if we hide the border..
         #region moveform
         private void MainForm_MouseDown_1(object sender, MouseEventArgs e)
         {
