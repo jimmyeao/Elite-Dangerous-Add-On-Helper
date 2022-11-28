@@ -44,11 +44,14 @@
             this.Bt_BrowseArgs = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.Tb_AppExeName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.Tb_WebApURL = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 20);
@@ -58,6 +61,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label2.Location = new System.Drawing.Point(12, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 20);
@@ -67,6 +71,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label3.Location = new System.Drawing.Point(12, 159);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(162, 20);
@@ -76,6 +81,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label4.Location = new System.Drawing.Point(12, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 20);
@@ -112,7 +118,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(190, 258);
+            this.button1.Location = new System.Drawing.Point(190, 318);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 8;
@@ -122,7 +128,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(290, 258);
+            this.button2.Location = new System.Drawing.Point(290, 318);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 9;
@@ -133,7 +139,8 @@
             // Cb_Enable
             // 
             this.Cb_Enable.AutoSize = true;
-            this.Cb_Enable.Location = new System.Drawing.Point(12, 243);
+            this.Cb_Enable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.Cb_Enable.Location = new System.Drawing.Point(12, 303);
             this.Cb_Enable.Name = "Cb_Enable";
             this.Cb_Enable.Size = new System.Drawing.Size(83, 24);
             this.Cb_Enable.TabIndex = 10;
@@ -162,6 +169,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label5.Location = new System.Drawing.Point(12, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 20);
@@ -175,11 +183,33 @@
             this.Tb_AppExeName.Size = new System.Drawing.Size(278, 27);
             this.Tb_AppExeName.TabIndex = 15;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.label6.Location = new System.Drawing.Point(12, 259);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(97, 20);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "WebApp URL";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // Tb_WebApURL
+            // 
+            this.Tb_WebApURL.Location = new System.Drawing.Point(190, 259);
+            this.Tb_WebApURL.Name = "Tb_WebApURL";
+            this.Tb_WebApURL.Size = new System.Drawing.Size(278, 27);
+            this.Tb_WebApURL.TabIndex = 17;
+            this.Tb_WebApURL.TextChanged += new System.EventHandler(this.Tb_WebApURL_TextChanged);
+            // 
             // AddApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 311);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(566, 358);
+            this.Controls.Add(this.Tb_WebApURL);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.Tb_AppExeName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.Bt_BrowseArgs);
@@ -221,5 +251,7 @@
         private Button Bt_BrowseArgs;
         private Label label5;
         private TextBox Tb_AppExeName;
+        private Label label6;
+        private TextBox Tb_WebApURL;
     }
 }

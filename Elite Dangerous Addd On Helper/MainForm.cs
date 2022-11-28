@@ -1,12 +1,6 @@
 using Elite_Dangerous_Add_On_Helper.Model;
-using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System;
-using System.Security.Cryptography;
-using PropertyChanged;
-using System.Runtime.CompilerServices;
 
 
 // TODO LIST!
@@ -78,7 +72,6 @@ namespace Elite_Dangerous_Add_On_Helper
             //Sets the y position of the controls based on how many rows (addons) there are
             var yPosition = ((currentControlRow) * 30) + 0;
 
-
             //Create checkbox
             CheckBox checkBox = new CheckBox();
             //Set the text to the friendly (human readable) addon name
@@ -93,7 +86,7 @@ namespace Elite_Dangerous_Add_On_Helper
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
             // if we have a valid path, make it green!
-            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath))
+            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath) || addOn.WebApp != String.Empty)
             {
                 checkBox.BackColor = Color.LimeGreen;
                 toolTip1.SetToolTip(checkBox, "Path Found");
@@ -116,7 +109,10 @@ namespace Elite_Dangerous_Add_On_Helper
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             addOn.SelectPathButton = button;
-            panel1.Controls.Add(button);
+            if (addOn.WebApp== String.Empty)    //no point adding an explorer browse box for a URL!
+            {
+                panel1.Controls.Add(button);
+            }
             //create the textbox with the path
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
@@ -145,7 +141,10 @@ namespace Elite_Dangerous_Add_On_Helper
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
                 addOn.InstallButton = installButton;
-                panel1.Controls.Add(installButton);
+                if (!Path.Exists(addOn.ProgramDirectory))
+                {
+                    panel1.Controls.Add(installButton);
+                }
             }
             // create the edit button
             Button editButton = new Button();
@@ -154,15 +153,47 @@ namespace Elite_Dangerous_Add_On_Helper
             editButton.Size = new System.Drawing.Size(80, 30);
             editButton.BackColor= Color.LightGray;
             editButton.Click += (sender, e) => DoEdit(addOn);
+            toolTip1.SetToolTip(editButton, "Edit App");
             addOn.EditButton = editButton;
             panel1.Controls.Add(editButton);
-            Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
 
+            // lets create a delete button too to remove an app
+            Button deleteButton = new Button();
+            deleteButton.Text = "X";
+            deleteButton.Location = new System.Drawing.Point(540, yPosition);
+            deleteButton.Size = new System.Drawing.Size(30, 30);
+            deleteButton.Click += (sender, e) => DeleteAddon(addOn);
+            addOn.DeleteButton = deleteButton;
+            toolTip1.SetToolTip(deleteButton, "Delete App from List");
+            if (addOn.FriendlyName != "Elite")
+            {
+                panel1.Controls.Add(deleteButton);
+            }
+            panel1.Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
             currentControlRow++;            //move to the next row
+        }
+        private void DeleteAddon(AddOn addOn)
+        {
+            // delete - none of these work :/
+            addOns.Remove(addOn.FriendlyName);
+            DeleteControls(addOn);
+            SerializeAddons(addOns);
+            //delete controls
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            //recreate controls
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
+
+
         }
         private void DeleteControls(AddOn addOn)
         {
-            currentControlRow = 0;
+            currentControlRow -= 1;
             panel1.Controls.Remove(addOn.EnableCheckbox);
             panel1.Controls.Remove(addOn.AppDirectorytextbox);
 
@@ -174,6 +205,7 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 panel1.Controls.Remove(addOn.InstallButton);
             }
+            panel1.Controls.Remove(addOn.DeleteButton);
 
 
 
@@ -250,13 +282,22 @@ namespace Elite_Dangerous_Add_On_Helper
             }
 
         }
-        private void DoEdit(object sender)                              //send object to edit form (BROKEN!!)
+        private void DoEdit(AddOn addOn)                              //send object to edit form (BROKEN!!)
         {
-            var EditApp = new EditApp(addOns);
-
-
-            //EditApp.sender = sender;
+            var EditApp = new EditApp(addOn);
             EditApp.ShowDialog();
+            //DeleteControls(addOn);
+            SerializeAddons(addOns);
+            //delete controls
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            //recreate controls
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
 
         }
         private void pictureBox1_Click(object sender, EventArgs e)      // show about box if logo clicked
@@ -388,11 +429,24 @@ namespace Elite_Dangerous_Add_On_Helper
                     updatemystatus($"An Error occured trying to launch {addOn.FriendlyName}..");
                 }
 
+
             }
             else
             {
                 // yeah, that path didnt exist...
-                updatemystatus($"Unable to launch {addOn.FriendlyName}..");
+                //are we launching a web app?
+                if (addOn.WebApp != String.Empty)
+                {
+                    //ok lets launch it in default browser
+                    updatemystatus("Launching " + addOn.FriendlyName);
+                    string target = addOn.WebApp;
+                    Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+                    //System.Diagnostics.Process.Start(target);
+                }
+                else
+                {
+                    updatemystatus($"Unable to launch {addOn.FriendlyName}..");
+                }
 
             }
 
@@ -438,6 +492,10 @@ namespace Elite_Dangerous_Add_On_Helper
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Title = "Select A File";
             openDialog.Filter = "Executable files (*.exe)|*.exe";
+            if (addOn.AutoDiscoverPath != String.Empty)
+            {
+                openDialog.InitialDirectory = addOn.AutoDiscoverPath;
+            }
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 string file = openDialog.FileName;
