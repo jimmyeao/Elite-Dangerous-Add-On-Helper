@@ -33,7 +33,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
         // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
-        public static CancellationToken WebCommsTimeout { get; private set; }
+        public static CancellationToken WebCommsTimeout { get; private set; }       //required for install code
         public MainForm()
         {
 
