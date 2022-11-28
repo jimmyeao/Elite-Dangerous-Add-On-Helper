@@ -21,23 +21,19 @@ namespace Elite_Dangerous_Add_On_Helper
     {
         // setup some variables
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
-        static readonly HttpClient client = new HttpClient();    //used by the install app function
-        public List<string> processList = new List<string>();    // holds a list of launched aps
-        string[] launchargs = Environment.GetCommandLineArgs();  // gets any command line args that were passed at run time
-        private int currentControlRow = 0;
-        private bool mouseDown;
-        private Point lastLocation;
-        // i need to know what the below is actually doing...
+        static readonly HttpClient client = new HttpClient();   //used by the install app function
+        public List<string> processList = new List<string>();   // holds a list of launched aps
+        string[] launchargs = Environment.GetCommandLineArgs(); // gets any command line args that were passed at run time
+        private int currentControlRow = 0;                      // used by createitems
+        private bool mouseDown;                                 //used by proc to drag app around
+        private Point lastLocation;                             //used by proc to drag app around
+
+        // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
-        // Create the ToolTip and associate with the Form container.
 
+        // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
-
-
-
-
         public static CancellationToken WebCommsTimeout { get; private set; }
-
         public MainForm()
         {
 
@@ -76,8 +72,6 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             catch { }
         }
-
-
         #region controls
         private void CreateControls(AddOn addOn)
         {
@@ -600,6 +594,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
         }
         #endregion
+        #region save misc settings
         private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
         {
             if (Rb_Vr.Checked)
@@ -645,14 +640,10 @@ namespace Elite_Dangerous_Add_On_Helper
 
             Properties.Settings.Default.Save();
         }
-
-
-
-
-
-
+        #endregion  
 
         //code to allow dragging of form if we hide the border..
+        #region moveform
         private void MainForm_MouseDown_1(object sender, MouseEventArgs e)
         {
             mouseDown = true;
@@ -674,7 +665,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 this.Update();
             }
         }
-
+        #endregion
         private void MainForm_Load(object sender, EventArgs e)
         {
 
