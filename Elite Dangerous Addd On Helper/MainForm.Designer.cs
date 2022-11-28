@@ -185,11 +185,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(32, 64);
+            this.label1.Location = new System.Drawing.Point(10, 64);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 20);
+            this.label1.Size = new System.Drawing.Size(63, 20);
             this.label1.TabIndex = 36;
-            this.label1.Text = "Enabled?";
+            this.label1.Text = "Enabled";
             // 
             // Rb_Vr
             // 
@@ -226,9 +226,9 @@
             this.Cb_CloseOnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 63);
             this.Cb_CloseOnExit.Name = "Cb_CloseOnExit";
-            this.Cb_CloseOnExit.Size = new System.Drawing.Size(123, 24);
+            this.Cb_CloseOnExit.Size = new System.Drawing.Size(161, 24);
             this.Cb_CloseOnExit.TabIndex = 39;
-            this.Cb_CloseOnExit.Text = "Close on Exit?";
+            this.Cb_CloseOnExit.Text = "Close Apps on Exit?";
             this.Cb_CloseOnExit.UseVisualStyleBackColor = false;
             this.Cb_CloseOnExit.CheckedChanged += new System.EventHandler(this.Cb_CloseOnExit_CheckedChanged);
             // 

@@ -1,12 +1,6 @@
 using Elite_Dangerous_Add_On_Helper.Model;
-using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System;
-using System.Security.Cryptography;
-using PropertyChanged;
-using System.Runtime.CompilerServices;
 
 
 // TODO LIST!
@@ -159,6 +153,7 @@ namespace Elite_Dangerous_Add_On_Helper
             editButton.Size = new System.Drawing.Size(80, 30);
             editButton.BackColor= Color.LightGray;
             editButton.Click += (sender, e) => DoEdit(addOn);
+            toolTip1.SetToolTip(editButton, "Edit App");
             addOn.EditButton = editButton;
             panel1.Controls.Add(editButton);
 
@@ -168,6 +163,7 @@ namespace Elite_Dangerous_Add_On_Helper
             deleteButton.Location = new System.Drawing.Point(540, yPosition);
             deleteButton.Size = new System.Drawing.Size(30, 30);
             deleteButton.Click += (sender, e) => DeleteAddon(addOn);
+            toolTip1.SetToolTip(deleteButton, "Delete App from List");
             panel1.Controls.Add(deleteButton);
             panel1.Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
             currentControlRow++;            //move to the next row
