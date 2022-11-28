@@ -25,7 +25,8 @@ namespace Elite_Dangerous_Add_On_Helper
         public List<string> processList = new List<string>();    // holds a list of launched aps
         string[] launchargs = Environment.GetCommandLineArgs();  // gets any command line args that were passed at run time
         private int currentControlRow = 0;
-        public static readonly object Themes;
+        private bool mouseDown;
+        private Point lastLocation;
         // i need to know what the below is actually doing...
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
         // Create the ToolTip and associate with the Form container.
@@ -164,9 +165,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
             currentControlRow++;            //move to the next row
         }
-
-
-
         private void DeleteControls(AddOn addOn)
         {
             currentControlRow = 0;
@@ -186,7 +184,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
         #endregion
-
         // My Functions
         #region functions
         private void Load_prefs()                                       //load preferences
@@ -386,12 +383,9 @@ namespace Elite_Dangerous_Add_On_Helper
                     {
                         proc.Exited += new EventHandler(ProcessExitHandler);
                     }
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(50);
                     proc.Refresh();
-                    if (proc.ProcessName == "EdLaunch")
-                    {
-                        // WaitForEdLaunch();
-                    }
+
 
                 }
                 catch
@@ -479,13 +473,21 @@ namespace Elite_Dangerous_Add_On_Helper
             // of Edlaunch has quit, does the user want us to kill all the apps?
             if (Cb_CloseOnExit.Checked)
             {
+                //Process[] process;
                 foreach (string p in processList)
-                    foreach (var process in Process.GetProcessesByName(p))
+                    foreach (Process process in Process.GetProcessesByName(p))
                     {
                         // Temp is a document which you need to kill.
                         if (process.ProcessName.Contains(p))
                             process.CloseMainWindow();
                     }
+                // Ed Odyysey Materials Helper is a little strange, lets deal with its multiple running processes..
+                try
+                {
+                    Process[] procs = Process.GetProcessesByName("Elite Dangerous Odyssey Materials Helper");
+                    foreach (var proc in procs) { proc.CloseMainWindow(); }
+                }
+                catch (Exception ex) { }
             }
         }
         private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
@@ -635,20 +637,6 @@ namespace Elite_Dangerous_Add_On_Helper
         }
 
 
-
-        //private void fileToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        //{
-        //    fileToolStripMenuItem.BackColor = Color.Gray;
-        //    fileToolStripMenuItem.ForeColor =Color.Red;
-        //}
-
-        //private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
-        //{
-        //    fileToolStripMenuItem.BackColor = Color.Gray;
-        //    fileToolStripMenuItem.ForeColor =Color.Orange;
-        //}
-        private bool mouseDown;
-        private Point lastLocation;
 
 
 
