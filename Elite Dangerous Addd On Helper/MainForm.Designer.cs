@@ -45,6 +45,7 @@
             this.Rb_Vr = new System.Windows.Forms.RadioButton();
             this.Rb_NonVR = new System.Windows.Forms.RadioButton();
             this.Cb_CloseOnExit = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -145,7 +146,7 @@
             this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.aboutToolStripMenuItem.Text = "About..";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -230,6 +231,14 @@
             this.Cb_CloseOnExit.UseVisualStyleBackColor = false;
             this.Cb_CloseOnExit.CheckedChanged += new System.EventHandler(this.Cb_CloseOnExit_CheckedChanged);
             // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.Location = new System.Drawing.Point(8, 100);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(759, 276);
+            this.panel1.TabIndex = 40;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -237,6 +246,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(887, 410);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.Cb_CloseOnExit);
             this.Controls.Add(this.Rb_NonVR);
             this.Controls.Add(this.Rb_Vr);
@@ -281,5 +291,6 @@
         private RadioButton Rb_Vr;
         private RadioButton Rb_NonVR;
         private CheckBox Cb_CloseOnExit;
+        private Panel panel1;
     }
 }

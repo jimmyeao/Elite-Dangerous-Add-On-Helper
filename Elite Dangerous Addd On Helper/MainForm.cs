@@ -76,7 +76,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
-            var yPosition = ((currentControlRow) * 30) + 100;
+            var yPosition = ((currentControlRow) * 30) + 0;
 
 
             //Create checkbox
@@ -105,7 +105,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 toolTip1.SetToolTip(checkBox, "Path NOT Found");
             }
             addOn.EnableCheckbox = checkBox;
-            Controls.Add(checkBox);
+            panel1.Controls.Add(checkBox);
             // add a browse button
             Button button = new Button();
             button.Text = "Browse";
@@ -116,7 +116,7 @@ namespace Elite_Dangerous_Add_On_Helper
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             addOn.SelectPathButton = button;
-            Controls.Add(button);
+            panel1.Controls.Add(button);
             //create the textbox with the path
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
@@ -133,28 +133,29 @@ namespace Elite_Dangerous_Add_On_Helper
             textBox.DataBindings.Add("Text", addOn, "ProgramDirectory", true, DataSourceUpdateMode.OnPropertyChanged);
             textBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             addOn.AppDirectorytextbox = textBox;
-            //Controls.Add(textBox);
+            //panel1.Controls.Add(textBox);     //removed for form neatness, only required for debugging
             //add in install button
             if (addOn.Installable)
             {
                 Button installButton = new Button();
                 installButton.Text = "Install?";
                 installButton.BackColor= Color.LightGray;
-                installButton.Location = new System.Drawing.Point(600, yPosition);
+                installButton.Location = new System.Drawing.Point(450, yPosition);
                 installButton.Size = new System.Drawing.Size(80, 30);
                 //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
                 installButton.Click += (sender, e) => DoInstall(addOn);
                 addOn.InstallButton = installButton;
-                Controls.Add(installButton);
+                panel1.Controls.Add(installButton);
             }
             // create the edit button
             Button editButton = new Button();
             editButton.Text = "Edit";
-            editButton.Location = new System.Drawing.Point(680, yPosition);
+            editButton.Location = new System.Drawing.Point(360, yPosition);
             editButton.Size = new System.Drawing.Size(80, 30);
+            editButton.BackColor= Color.LightGray;
             editButton.Click += (sender, e) => DoEdit(addOn);
             addOn.EditButton = editButton;
-            Controls.Add(editButton);
+            panel1.Controls.Add(editButton);
             Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
 
             currentControlRow++;            //move to the next row
@@ -162,16 +163,16 @@ namespace Elite_Dangerous_Add_On_Helper
         private void DeleteControls(AddOn addOn)
         {
             currentControlRow = 0;
-            Controls.Remove(addOn.EnableCheckbox);
-            Controls.Remove(addOn.AppDirectorytextbox);
+            panel1.Controls.Remove(addOn.EnableCheckbox);
+            panel1.Controls.Remove(addOn.AppDirectorytextbox);
 
-            Controls.Remove(addOn.SelectPathButton);
+            panel1.Controls.Remove(addOn.SelectPathButton);
 
-            Controls.Remove(addOn.InstallButton);
-            Controls.Remove(addOn.EditButton);
+            panel1.Controls.Remove(addOn.InstallButton);
+            panel1.Controls.Remove(addOn.EditButton);
             if (addOn.InstallButton != null)
             {
-                Controls.Remove(addOn.InstallButton);
+                panel1.Controls.Remove(addOn.InstallButton);
             }
 
 
