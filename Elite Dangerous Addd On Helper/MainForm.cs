@@ -21,22 +21,19 @@ namespace Elite_Dangerous_Add_On_Helper
     {
         // setup some variables
         static readonly string settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Elite Add On Helper\\";
-        static readonly HttpClient client = new HttpClient();    //used by the install app function
-        public List<string> processList = new List<string>();    // holds a list of launched aps
-        string[] launchargs = Environment.GetCommandLineArgs();  // gets any command line args that were passed at run time
-        private int currentControlRow = 0;
-        public static readonly object Themes;
-        // i need to know what the below is actually doing...
+        static readonly HttpClient client = new HttpClient();   //used by the install app function
+        public List<string> processList = new List<string>();   // holds a list of launched aps
+        string[] launchargs = Environment.GetCommandLineArgs(); // gets any command line args that were passed at run time
+        private int currentControlRow = 0;                      // used by createitems
+        private bool mouseDown;                                 //used by proc to drag app around
+        private Point lastLocation;                             //used by proc to drag app around
+
+        // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
-        // Create the ToolTip and associate with the Form container.
 
+        // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
-
-
-
-
-        public static CancellationToken WebCommsTimeout { get; private set; }
-
+        public static CancellationToken WebCommsTimeout { get; private set; }       //required for install code
         public MainForm()
         {
 
@@ -75,8 +72,6 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             catch { }
         }
-
-
         #region controls
         private void CreateControls(AddOn addOn)
         {
@@ -164,9 +159,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
             currentControlRow++;            //move to the next row
         }
-
-
-
         private void DeleteControls(AddOn addOn)
         {
             currentControlRow = 0;
@@ -186,8 +178,6 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
         #endregion
-
-        // My Functions
         #region functions
         private void Load_prefs()                                       //load preferences
         {
@@ -386,12 +376,9 @@ namespace Elite_Dangerous_Add_On_Helper
                     {
                         proc.Exited += new EventHandler(ProcessExitHandler);
                     }
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(50);
                     proc.Refresh();
-                    if (proc.ProcessName == "EdLaunch")
-                    {
-                        // WaitForEdLaunch();
-                    }
+
 
                 }
                 catch
@@ -479,13 +466,31 @@ namespace Elite_Dangerous_Add_On_Helper
             // of Edlaunch has quit, does the user want us to kill all the apps?
             if (Cb_CloseOnExit.Checked)
             {
-                foreach (string p in processList)
-                    foreach (var process in Process.GetProcessesByName(p))
-                    {
-                        // Temp is a document which you need to kill.
-                        if (process.ProcessName.Contains(p))
-                            process.CloseMainWindow();
-                    }
+                //Process[] process;
+                try
+                {
+                    foreach (string p in processList)
+                        foreach (Process process in Process.GetProcessesByName(p))
+                        {
+                            // Temp is a document which you need to kill.
+                            if (process.ProcessName.Contains(p))
+                                process.CloseMainWindow();
+                        }
+                }
+                catch
+                {
+                    // if something went wrong, I dont want to know about it..
+                }
+
+                // Ed Odyysey Materials Helper is a little strange, lets deal with its multiple running processes..
+                try
+                {
+                    Process[] procs = Process.GetProcessesByName("Elite Dangerous Odyssey Materials Helper");
+                    foreach (var proc in procs) { proc.CloseMainWindow(); }
+                }
+                catch (Exception ex)
+                { // if something went wrong, I dont want to know about it..
+                }
             }
         }
         private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
@@ -527,24 +532,7 @@ namespace Elite_Dangerous_Add_On_Helper
 
             Properties.Settings.Default.Save();
         }
-        #endregion menuitems
-        #region installs
-        private void DoInstall(AddOn addOn)
-        {
-            updatemystatus($"Installing {addOn.FriendlyName}");
-            DownloadFileAndExecute(addOn.Url);
-            updatemystatus("Ready");
-        }
-        //private void DoEdit(object sender, EventArgs e)
-        //{
-        //    var AddApp = new AddApp(addOns);
-        //    Edit.ShowDialog();
-        //    updatemystatus($"Editing {addOn.FriendlyName}");
-
-        //}
-        #endregion installs  
-        #region menu items
-        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openPrefsFolderToolStripMenuItem_Click(object sender, EventArgs e)     //Open folder containing settings file in windows explorer
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
             {
@@ -554,7 +542,7 @@ namespace Elite_Dangerous_Add_On_Helper
             });
         }
 
-        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addApplicationToolStripMenuItem_Click(object sender, EventArgs e)      //add an application
         {
             var AddApp = new AddApp(addOns);
             AddApp.ShowDialog();
@@ -569,7 +557,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
         }
 
-        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void areYouSureToolStripMenuItem_Click(object sender, EventArgs e)          //tbc delete an app, may be moved into edit form
         {
             // this proc resets prefs to default
 
@@ -587,7 +575,23 @@ namespace Elite_Dangerous_Add_On_Helper
                 box.ShowDialog(this);
             }
         }
-        #endregion
+        #endregion menuitems
+        #region installs
+        private void DoInstall(AddOn addOn)
+        {
+            updatemystatus($"Installing {addOn.FriendlyName}");
+            DownloadFileAndExecute(addOn.Url);
+            updatemystatus("Ready");
+        }
+        //private void DoEdit(object sender, EventArgs e)
+        //{
+        //    var AddApp = new AddApp(addOns);
+        //    Edit.ShowDialog();
+        //    updatemystatus($"Editing {addOn.FriendlyName}");
+
+        //}
+        #endregion installs  
+        #region save misc settings
         private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
         {
             if (Rb_Vr.Checked)
@@ -633,28 +637,8 @@ namespace Elite_Dangerous_Add_On_Helper
 
             Properties.Settings.Default.Save();
         }
-
-
-
-        //private void fileToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        //{
-        //    fileToolStripMenuItem.BackColor = Color.Gray;
-        //    fileToolStripMenuItem.ForeColor =Color.Red;
-        //}
-
-        //private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
-        //{
-        //    fileToolStripMenuItem.BackColor = Color.Gray;
-        //    fileToolStripMenuItem.ForeColor =Color.Orange;
-        //}
-        private bool mouseDown;
-        private Point lastLocation;
-
-
-
-
-
-        //code to allow dragging of form if we hide the border..
+        #endregion  
+        #region moveform
         private void MainForm_MouseDown_1(object sender, MouseEventArgs e)
         {
             mouseDown = true;
@@ -676,7 +660,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 this.Update();
             }
         }
-
+        #endregion
         private void MainForm_Load(object sender, EventArgs e)
         {
 
