@@ -93,7 +93,7 @@ namespace Elite_Dangerous_Add_On_Helper
             checkBox.Location = new System.Drawing.Point(15, yPosition);
             //Add the checkbox to the controls for this form1 form
             // if we have a valid path, make it green!
-            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath))
+            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath) || addOn.WebApp != String.Empty)
             {
                 checkBox.BackColor = Color.LimeGreen;
                 toolTip1.SetToolTip(checkBox, "Path Found");
@@ -116,7 +116,10 @@ namespace Elite_Dangerous_Add_On_Helper
             //To the buttons click method, add this method, and pass it the friendly name (to use as the AddOns dictionary key)
             button.Click += (sender, e) => HandleSelectPath(addOn.FriendlyName);
             addOn.SelectPathButton = button;
-            panel1.Controls.Add(button);
+            if (addOn.WebApp== String.Empty)    //no point adding an explorer browse box for a URL!
+            {
+                panel1.Controls.Add(button);
+            }
             //create the textbox with the path
             TextBox textBox = new TextBox();
             textBox.Name = addOn.FriendlyName;
@@ -159,9 +162,37 @@ namespace Elite_Dangerous_Add_On_Helper
             editButton.Click += (sender, e) => DoEdit(addOn);
             addOn.EditButton = editButton;
             panel1.Controls.Add(editButton);
-            Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
 
+            // lets create a delete button too to remove an app
+            Button deleteButton = new Button();
+            deleteButton.Text = "X";
+            deleteButton.Location = new System.Drawing.Point(540, yPosition);
+            deleteButton.Size = new System.Drawing.Size(30, 30);
+            deleteButton.Click += (sender, e) => DeleteAddon(addOn);
+            panel1.Controls.Add(deleteButton);
+            panel1.Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
             currentControlRow++;            //move to the next row
+        }
+        private void DeleteAddon(AddOn addOn)
+        {
+            // delete - none of these work :/
+
+            // addOn.Dispose();  //ssems to do nothing
+            // addOns.Remove(addOn);
+
+            SerializeAddons(addOns);
+            //delete controls
+            foreach (var addon in addOns.Values)
+            {
+                DeleteControls(addon);
+            }
+            //recreate controls
+            foreach (var addon in addOns.Values)
+            {
+                CreateControls(addon);
+            }
+
+
         }
         private void DeleteControls(AddOn addOn)
         {
@@ -391,11 +422,24 @@ namespace Elite_Dangerous_Add_On_Helper
                     updatemystatus($"An Error occured trying to launch {addOn.FriendlyName}..");
                 }
 
+
             }
             else
             {
                 // yeah, that path didnt exist...
-                updatemystatus($"Unable to launch {addOn.FriendlyName}..");
+                //are we launching a web app?
+                if (addOn.WebApp != String.Empty)
+                {
+                    //ok lets launch it in default browser
+                    updatemystatus("Launching " + addOn.FriendlyName);
+                    string target = addOn.WebApp;
+                    Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+                    //System.Diagnostics.Process.Start(target);
+                }
+                else
+                {
+                    updatemystatus($"Unable to launch {addOn.FriendlyName}..");
+                }
 
             }
 

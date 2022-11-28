@@ -68,7 +68,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 fieldMissing("Application Name");
                 return;
             }
-            if (Tb_AppPath.Text == string.Empty)
+            if (Tb_AppPath.Text == string.Empty && Tb_WebApURL.Text == string.Empty)
             {
                 fieldMissing("Application Path");
                 return;
@@ -84,12 +84,13 @@ namespace Elite_Dangerous_Add_On_Helper
                 {
                     Enabled = Cb_Enable.Checked,            // this will always have a bool state of checked or unchecked
                     Installable = caninstall,               // bool caninstall set to true if an installation URL exists. Note, validity of url not yet checked
-                    ProgramDirectory = Tb_AppPath.Text,     // mandatory field
+                    ProgramDirectory = Tb_AppPath.Text,     // mandatory field unless webapp url set
                     FriendlyName = Tb_App_Name.Text,        // mandatory field
-                    ExecutableName = Tb_AppExeName.Text,      // mandatory field
-                    AutoDiscoverPath = "",                  // not implimented
+                    ExecutableName = Tb_AppExeName.Text,    // mandatory field
+                    AutoDiscoverPath = "",                  // not implimented unless webapp url set
                     Scripts = Tb_App_Args.Text,             // not implimented, required for TARGET scripts
-                    Url = Tb_InstallationURL.Text           // non mandatory
+                    Url = Tb_InstallationURL.Text,          // non mandatory
+                    WebApp = Tb_WebApURL.Text               // non mandatory
                 });
                 SerializeAddons(addOns);
                 this.Dispose();
@@ -134,6 +135,31 @@ namespace Elite_Dangerous_Add_On_Helper
 
         }
 
+        private void label6_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void Tb_WebApURL_TextChanged(object sender, EventArgs e)
+        {
+            if (Tb_WebApURL.Text == String.Empty)
+            {
+                Tb_AppExeName.Enabled= true;
+                Tb_AppPath.Enabled= true;
+                Tb_App_Args.Enabled= true;
+                Tb_InstallationURL.Enabled= true;
+                Bt_BrowseArgs.Enabled= true;
+                Bt_BrowsePath.Enabled= true;
+            }
+            else
+            {
+                Tb_AppExeName.Enabled= false;
+                Tb_AppPath.Enabled= false;
+                Tb_App_Args.Enabled= false;
+                Tb_InstallationURL.Enabled= false;
+                Bt_BrowsePath.Enabled= false;
+                Bt_BrowseArgs.Enabled= false;
+            }
+        }
     }
 }

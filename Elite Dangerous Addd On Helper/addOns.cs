@@ -53,6 +53,10 @@ namespace Elite_Dangerous_Add_On_Helper.Model
         /// Path for extras e.g. TARGET scripts.
         /// </summary>
         public string Url { get; set; } = string.Empty;
+        /// <summary>
+        /// Path for webapps, eg inara.
+        /// </summary>
+        public string WebApp { get; set; } = string.Empty;
 
         [JsonIgnore]
         public Button SelectPathButton { get; set; }
@@ -67,9 +71,12 @@ namespace Elite_Dangerous_Add_On_Helper.Model
 
 
 
-#pragma warning disable 67 
+
+#pragma warning disable 67
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore 67
+
+
 
     }
 }
