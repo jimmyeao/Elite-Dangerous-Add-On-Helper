@@ -54,7 +54,7 @@
             // 
             // Bt_Launch
             // 
-            this.Bt_Launch.Location = new System.Drawing.Point(782, 154);
+            this.Bt_Launch.Location = new System.Drawing.Point(659, 154);
             this.Bt_Launch.Name = "Bt_Launch";
             this.Bt_Launch.Size = new System.Drawing.Size(91, 29);
             this.Bt_Launch.TabIndex = 35;
@@ -72,7 +72,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(5, 5);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(877, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(762, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -154,7 +154,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(862, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(747, 20);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "Ready";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,16 +165,16 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(5, 379);
+            this.statusStrip1.Location = new System.Drawing.Point(5, 445);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(877, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(762, 26);
             this.statusStrip1.TabIndex = 2;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(782, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(659, 36);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(91, 89);
             this.pictureBox1.TabIndex = 19;
@@ -196,7 +196,7 @@
             this.Rb_Vr.AutoSize = true;
             this.Rb_Vr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Rb_Vr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_Vr.Location = new System.Drawing.Point(782, 189);
+            this.Rb_Vr.Location = new System.Drawing.Point(659, 189);
             this.Rb_Vr.Name = "Rb_Vr";
             this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
             this.Rb_Vr.TabIndex = 37;
@@ -210,7 +210,7 @@
             this.Rb_NonVR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Rb_NonVR.Checked = true;
             this.Rb_NonVR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_NonVR.Location = new System.Drawing.Point(782, 219);
+            this.Rb_NonVR.Location = new System.Drawing.Point(659, 219);
             this.Rb_NonVR.Name = "Rb_NonVR";
             this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
             this.Rb_NonVR.TabIndex = 38;
@@ -235,9 +235,10 @@
             // panel1
             // 
             this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.Location = new System.Drawing.Point(8, 100);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(759, 276);
+            this.panel1.Size = new System.Drawing.Size(0, 0);
             this.panel1.TabIndex = 40;
             // 
             // label2
@@ -256,7 +257,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(887, 410);
+            this.ClientSize = new System.Drawing.Size(772, 476);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Cb_CloseOnExit);

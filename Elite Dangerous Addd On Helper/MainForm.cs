@@ -78,7 +78,6 @@ namespace Elite_Dangerous_Add_On_Helper
             //Sets the y position of the controls based on how many rows (addons) there are
             var yPosition = ((currentControlRow) * 30) + 0;
 
-
             //Create checkbox
             CheckBox checkBox = new CheckBox();
             //Set the text to the friendly (human readable) addon name
