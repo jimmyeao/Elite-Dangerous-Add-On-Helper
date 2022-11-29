@@ -9,7 +9,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyVersion>0.0.1</AssemblyVersion>
     <FileVersion>1.0.1</FileVersion>
+    <ApplicationIcon>elite-dangerous-icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="elite-dangerous-icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Fody" Version="6.6.4">
