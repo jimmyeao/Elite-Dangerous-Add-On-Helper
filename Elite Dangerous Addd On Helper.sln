@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elite_Dangerous_Add_On_Helper", "Elite Dangerous Addd On Helper\Elite_Dangerous_Add_On_Helper.csproj", "{59C38221-7FDC-4164-9D5A-FDA4111C9EA8}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installation", "Installation\Installation.vdproj", "{28E3742D-F641-46CA-AC9B-3FE5B8931766}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{59C38221-7FDC-4164-9D5A-FDA4111C9EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C38221-7FDC-4164-9D5A-FDA4111C9EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59C38221-7FDC-4164-9D5A-FDA4111C9EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E3742D-F641-46CA-AC9B-3FE5B8931766}.Debug|Any CPU.ActiveCfg = Debug
+		{28E3742D-F641-46CA-AC9B-3FE5B8931766}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
