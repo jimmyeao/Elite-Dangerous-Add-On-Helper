@@ -288,6 +288,17 @@ namespace Elite_Dangerous_Add_On_Helper
             EditApp.ShowDialog();
             //DeleteControls(addOn);
             SerializeAddons(addOns);
+            if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath) || addOn.WebApp != String.Empty)
+            {
+                addOn.EnableCheckbox.BackColor = Color.LimeGreen;
+                toolTip1.SetToolTip(addOn.EnableCheckbox, "Path Found");
+            }
+            else
+            {
+                // otherwise make it red to show its missing!
+                addOn.EnableCheckbox.BackColor = Color.Red;
+                toolTip1.SetToolTip(addOn.EnableCheckbox, "Path NOT Found");
+            }
             //delete controls
             //foreach (var addon in addOns.Values)
             //{
