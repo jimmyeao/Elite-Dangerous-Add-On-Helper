@@ -289,15 +289,15 @@ namespace Elite_Dangerous_Add_On_Helper
             //DeleteControls(addOn);
             SerializeAddons(addOns);
             //delete controls
-            foreach (var addon in addOns.Values)
-            {
-                DeleteControls(addon);
-            }
-            //recreate controls
-            foreach (var addon in addOns.Values)
-            {
-                CreateControls(addon);
-            }
+            //foreach (var addon in addOns.Values)
+            //{
+            //    DeleteControls(addon);
+            //}
+            ////recreate controls
+            //foreach (var addon in addOns.Values)
+            //{
+            //    CreateControls(addon);
+            //}
 
         }
         private void pictureBox1_Click(object sender, EventArgs e)      // show about box if logo clicked
@@ -504,18 +504,18 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.ExecutableName = openDialog.SafeFileName;
                 //addOn.ProgramDirectory = file;
             }
-            currentControlRow = 0;
-            foreach (var addon in addOns.Values)
-            {
-                DeleteControls(addon);
-            }
-            this.Refresh();
-            currentControlRow = 0;
-            foreach (var addon in addOns.Values)
-            {
-                CreateControls(addon);
-            }
-            this.Refresh();
+            //currentControlRow = 0;
+            //foreach (var addon in addOns.Values)
+            //{
+            //    DeleteControls(addon);
+            //}
+            //this.Refresh();
+            //currentControlRow = 0;
+            //foreach (var addon in addOns.Values)
+            //{
+            //    CreateControls(addon);
+            //}
+            //this.Refresh();
 
             addOns[dictKey] = addOn; //overwrite the existing addon in the dictionary with the updated model
                                      //redraw
@@ -535,13 +535,23 @@ namespace Elite_Dangerous_Add_On_Helper
                             // Temp is a document which you need to kill.
                             if (process.ProcessName.Contains(p))
                                 process.CloseMainWindow();
+                                process.Close();
                         }
                 }
                 catch
                 {
                     // if something went wrong, I dont want to know about it..
+                   
                 }
-
+                // doesnt seem to want to kill voice attack nicely..
+                try
+                {
+                    Process[] procs = Process.GetProcessesByName("VoiceAttack");
+                    foreach (var proc in procs) { proc.Kill(); }        //sadly this means next time it starts, it will complain it was shutddown in an unclean fashion
+                }
+                catch (Exception ex)
+                { // if something went wrong, I dont want to know about it..
+                }
                 // Ed Odyysey Materials Helper is a little strange, lets deal with its multiple running processes..
                 try
                 {
