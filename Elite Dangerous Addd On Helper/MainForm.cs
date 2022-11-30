@@ -535,7 +535,7 @@ namespace Elite_Dangerous_Add_On_Helper
                             // Temp is a document which you need to kill.
                             if (process.ProcessName.Contains(p))
                                 process.CloseMainWindow();
-                                process.Close();
+                                
                         }
                 }
                 catch
