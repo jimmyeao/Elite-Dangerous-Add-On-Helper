@@ -68,6 +68,7 @@ namespace Elite_Dangerous_Add_On_Helper
             AddOn.AutoDiscoverPath= Tb_Autodiscover.Text;
             AddOn.Url = Tb_InstallURL.Text;
             AddOn.WebApp = Tb_WebAppURL.Text;
+            AddOn.Scripts = Tb_Arguments.Text;
             this.Dispose();
 
         }
@@ -110,7 +111,7 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 string file = openDialog.FileName;
                 // need to get just the path element here, but store filename as well
-                Tb_Arguments.Text = Path.GetDirectoryName(file);
+                Tb_Arguments.Text = file;
 
             }
         }
@@ -136,6 +137,11 @@ namespace Elite_Dangerous_Add_On_Helper
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Tb_Arguments_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

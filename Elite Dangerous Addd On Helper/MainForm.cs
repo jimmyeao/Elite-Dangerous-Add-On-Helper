@@ -510,6 +510,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 DeleteControls(addon);
             }
             this.Refresh();
+            currentControlRow = 0;
             foreach (var addon in addOns.Values)
             {
                 CreateControls(addon);

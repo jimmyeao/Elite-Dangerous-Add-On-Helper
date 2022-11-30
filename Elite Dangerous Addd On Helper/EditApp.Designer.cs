@@ -42,7 +42,6 @@
             this.Tb_Arguments = new System.Windows.Forms.TextBox();
             this.Tb_InstallURL = new System.Windows.Forms.TextBox();
             this.Bt_Save = new System.Windows.Forms.Button();
-            this.Bt_Delete = new System.Windows.Forms.Button();
             this.Bt_Cancel = new System.Windows.Forms.Button();
             this.Bt_Browse = new System.Windows.Forms.Button();
             this.Bt_BrowseArgs = new System.Windows.Forms.Button();
@@ -145,6 +144,7 @@
             this.Tb_Arguments.Name = "Tb_Arguments";
             this.Tb_Arguments.Size = new System.Drawing.Size(382, 27);
             this.Tb_Arguments.TabIndex = 10;
+            this.Tb_Arguments.TextChanged += new System.EventHandler(this.Tb_Arguments_TextChanged);
             // 
             // Tb_InstallURL
             // 
@@ -155,23 +155,13 @@
             // 
             // Bt_Save
             // 
-            this.Bt_Save.Location = new System.Drawing.Point(250, 317);
+            this.Bt_Save.Location = new System.Drawing.Point(350, 317);
             this.Bt_Save.Name = "Bt_Save";
             this.Bt_Save.Size = new System.Drawing.Size(94, 29);
             this.Bt_Save.TabIndex = 12;
             this.Bt_Save.Text = "Save";
             this.Bt_Save.UseVisualStyleBackColor = true;
             this.Bt_Save.Click += new System.EventHandler(this.Bt_Save_Click);
-            // 
-            // Bt_Delete
-            // 
-            this.Bt_Delete.Location = new System.Drawing.Point(350, 317);
-            this.Bt_Delete.Name = "Bt_Delete";
-            this.Bt_Delete.Size = new System.Drawing.Size(94, 29);
-            this.Bt_Delete.TabIndex = 13;
-            this.Bt_Delete.Text = "Delete";
-            this.Bt_Delete.UseVisualStyleBackColor = true;
-            this.Bt_Delete.Click += new System.EventHandler(this.Bt_Delete_Click);
             // 
             // Bt_Cancel
             // 
@@ -232,7 +222,6 @@
             this.Controls.Add(this.Bt_BrowseArgs);
             this.Controls.Add(this.Bt_Browse);
             this.Controls.Add(this.Bt_Cancel);
-            this.Controls.Add(this.Bt_Delete);
             this.Controls.Add(this.Bt_Save);
             this.Controls.Add(this.Tb_InstallURL);
             this.Controls.Add(this.Tb_Arguments);
@@ -270,7 +259,6 @@
         private TextBox Tb_Arguments;
         private TextBox Tb_InstallURL;
         private Button Bt_Save;
-        private Button Bt_Delete;
         private Button Bt_Cancel;
         private Button Bt_Browse;
         private Button Bt_BrowseArgs;
