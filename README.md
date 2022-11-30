@@ -22,9 +22,10 @@ WebApp URL - when you type in this, the Application Path, Exe name and buttons a
 
 # Edit App
 
-![image](https://user-images.githubusercontent.com/5197831/204607577-85b94d5a-510f-44ee-ad32-c9e899adca48.png)
+![image](https://user-images.githubusercontent.com/5197831/204809831-0a4c6564-60b8-495e-a1be-8d60c64c6407.png)
+
 This is almost identical to the Add App screen, with the exception of the Autodiscver URL, which will be removed in future releases.
-The delete button does nothing here - use the 'X' button on the main form instead, but be aware, there is no Yes/No prompt, it just deletes!
+
 
 Other options on the main form you can see are Close Apps on Exit, which will cause the app to watch the Elite Launcer, and when it closes will close all apps it has opened. It will not however close websites it opened (May be added in future releases)
 You can also toggle between VR/Non VR for those players that flip between the two mode depending on their gameplay style.
