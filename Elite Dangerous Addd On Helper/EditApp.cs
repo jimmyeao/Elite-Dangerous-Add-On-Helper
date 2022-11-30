@@ -45,7 +45,6 @@ namespace Elite_Dangerous_Add_On_Helper
             Tb_AppName.Text = addon.FriendlyName;
             Tb_AppPath.Text = addon.ProgramDirectory;
             Tb_Arguments.Text= addon.Scripts;
-            Tb_Autodiscover.Text= addon.AutoDiscoverPath;
             Tb_ExeName.Text= AddOn.ExecutableName;
             Tb_InstallURL.Text= addon.Url; ;
             Tb_WebAppURL.Text = addon.WebApp;
@@ -54,7 +53,6 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 Tb_AppPath.Enabled= false; Tb_ExeName.Enabled= false;
                 Tb_InstallURL.Enabled= false;
-                Tb_Autodiscover.Enabled= false;
                 Tb_Arguments.Enabled= false;
             }
         }
@@ -65,7 +63,6 @@ namespace Elite_Dangerous_Add_On_Helper
             AddOn.ProgramDirectory= Tb_AppPath.Text;
             AddOn.ExecutableName = Tb_ExeName.Text;
             AddOn.ProgramDirectory = Tb_AppPath.Text;
-            AddOn.AutoDiscoverPath= Tb_Autodiscover.Text;
             AddOn.Url = Tb_InstallURL.Text;
             AddOn.WebApp = Tb_WebAppURL.Text;
             AddOn.Scripts = Tb_Arguments.Text;
@@ -122,14 +119,12 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 Tb_AppPath.Enabled= false; Tb_ExeName.Enabled= false;
                 Tb_InstallURL.Enabled= false;
-                Tb_Autodiscover.Enabled= false;
                 Tb_Arguments.Enabled= false;
             }
             else
             {
                 Tb_AppPath.Enabled= true; Tb_ExeName.Enabled= true;
                 Tb_InstallURL.Enabled= true;
-                Tb_Autodiscover.Enabled= true;
                 Tb_Arguments.Enabled= true;
             }
         }

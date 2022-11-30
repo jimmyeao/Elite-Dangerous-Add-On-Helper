@@ -32,13 +32,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.Tb_AppName = new System.Windows.Forms.TextBox();
             this.Tb_ExeName = new System.Windows.Forms.TextBox();
             this.Tb_AppPath = new System.Windows.Forms.TextBox();
-            this.Tb_Autodiscover = new System.Windows.Forms.TextBox();
             this.Tb_Arguments = new System.Windows.Forms.TextBox();
             this.Tb_InstallURL = new System.Windows.Forms.TextBox();
             this.Bt_Save = new System.Windows.Forms.Button();
@@ -63,7 +61,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(69, 65);
+            this.label2.Location = new System.Drawing.Point(69, 73);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 20);
             this.label2.TabIndex = 1;
@@ -73,27 +71,17 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(76, 104);
+            this.label3.Location = new System.Drawing.Point(76, 120);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "App Path";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label4.Location = new System.Drawing.Point(15, 143);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(130, 20);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "AutoDiscover Path";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(64, 182);
+            this.label5.Location = new System.Drawing.Point(64, 167);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(81, 20);
             this.label5.TabIndex = 4;
@@ -104,7 +92,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label6.Location = new System.Drawing.Point(67, 220);
+            this.label6.Location = new System.Drawing.Point(67, 214);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 20);
             this.label6.TabIndex = 5;
@@ -119,28 +107,21 @@
             // 
             // Tb_ExeName
             // 
-            this.Tb_ExeName.Location = new System.Drawing.Point(162, 62);
+            this.Tb_ExeName.Location = new System.Drawing.Point(162, 69);
             this.Tb_ExeName.Name = "Tb_ExeName";
             this.Tb_ExeName.Size = new System.Drawing.Size(382, 27);
             this.Tb_ExeName.TabIndex = 7;
             // 
             // Tb_AppPath
             // 
-            this.Tb_AppPath.Location = new System.Drawing.Point(162, 101);
+            this.Tb_AppPath.Location = new System.Drawing.Point(162, 115);
             this.Tb_AppPath.Name = "Tb_AppPath";
             this.Tb_AppPath.Size = new System.Drawing.Size(382, 27);
             this.Tb_AppPath.TabIndex = 8;
             // 
-            // Tb_Autodiscover
-            // 
-            this.Tb_Autodiscover.Location = new System.Drawing.Point(162, 140);
-            this.Tb_Autodiscover.Name = "Tb_Autodiscover";
-            this.Tb_Autodiscover.Size = new System.Drawing.Size(382, 27);
-            this.Tb_Autodiscover.TabIndex = 9;
-            // 
             // Tb_Arguments
             // 
-            this.Tb_Arguments.Location = new System.Drawing.Point(162, 179);
+            this.Tb_Arguments.Location = new System.Drawing.Point(162, 161);
             this.Tb_Arguments.Name = "Tb_Arguments";
             this.Tb_Arguments.Size = new System.Drawing.Size(382, 27);
             this.Tb_Arguments.TabIndex = 10;
@@ -148,7 +129,7 @@
             // 
             // Tb_InstallURL
             // 
-            this.Tb_InstallURL.Location = new System.Drawing.Point(162, 217);
+            this.Tb_InstallURL.Location = new System.Drawing.Point(162, 207);
             this.Tb_InstallURL.Name = "Tb_InstallURL";
             this.Tb_InstallURL.Size = new System.Drawing.Size(382, 27);
             this.Tb_InstallURL.TabIndex = 11;
@@ -175,7 +156,7 @@
             // 
             // Bt_Browse
             // 
-            this.Bt_Browse.Location = new System.Drawing.Point(550, 100);
+            this.Bt_Browse.Location = new System.Drawing.Point(550, 114);
             this.Bt_Browse.Name = "Bt_Browse";
             this.Bt_Browse.Size = new System.Drawing.Size(34, 29);
             this.Bt_Browse.TabIndex = 15;
@@ -185,7 +166,7 @@
             // 
             // Bt_BrowseArgs
             // 
-            this.Bt_BrowseArgs.Location = new System.Drawing.Point(550, 178);
+            this.Bt_BrowseArgs.Location = new System.Drawing.Point(550, 160);
             this.Bt_BrowseArgs.Name = "Bt_BrowseArgs";
             this.Bt_BrowseArgs.Size = new System.Drawing.Size(34, 29);
             this.Bt_BrowseArgs.TabIndex = 16;
@@ -205,7 +186,7 @@
             // 
             // Tb_WebAppURL
             // 
-            this.Tb_WebAppURL.Location = new System.Drawing.Point(162, 255);
+            this.Tb_WebAppURL.Location = new System.Drawing.Point(162, 253);
             this.Tb_WebAppURL.Name = "Tb_WebAppURL";
             this.Tb_WebAppURL.Size = new System.Drawing.Size(382, 27);
             this.Tb_WebAppURL.TabIndex = 18;
@@ -225,13 +206,11 @@
             this.Controls.Add(this.Bt_Save);
             this.Controls.Add(this.Tb_InstallURL);
             this.Controls.Add(this.Tb_Arguments);
-            this.Controls.Add(this.Tb_Autodiscover);
             this.Controls.Add(this.Tb_AppPath);
             this.Controls.Add(this.Tb_ExeName);
             this.Controls.Add(this.Tb_AppName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -249,13 +228,11 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
         private Label label5;
         private Label label6;
         private TextBox Tb_AppName;
         private TextBox Tb_ExeName;
         private TextBox Tb_AppPath;
-        private TextBox Tb_Autodiscover;
         private TextBox Tb_Arguments;
         private TextBox Tb_InstallURL;
         private Button Bt_Save;
