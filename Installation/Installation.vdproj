@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -238,15 +246,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Elite Dangerous Add On Helper"
-        "ProductCode" = "8:{FC4EB0C4-66AB-42F6-82D4-5783DC73DB58}"
-        "PackageCode" = "8:{788DD157-DDA5-4594-94D9-04BCCA861E4B}"
+        "ProductCode" = "8:{89D41623-B7F0-4C82-8293-31DAACBE33C2}"
+        "PackageCode" = "8:{81D98966-F642-4EFB-8554-74B6671B69DA}"
         "UpgradeCode" = "8:{BEFB892C-AA4B-4D1D-8A80-866E9669434F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.0"
+        "ProductVersion" = "8:0.1.1"
         "Manufacturer" = "8:Jimmy White"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
