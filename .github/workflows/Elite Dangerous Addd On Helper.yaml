@@ -35,6 +35,7 @@ jobs:
       DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
       DOTNET_MULTILEVEL_LOOKUP: 0
       DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: true
+       
       TERM: xterm
 
     steps:
@@ -43,7 +44,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
 
     - name: Restore
       run: dotnet restore
