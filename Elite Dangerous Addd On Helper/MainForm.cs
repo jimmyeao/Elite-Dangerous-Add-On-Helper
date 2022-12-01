@@ -1,6 +1,7 @@
 using Elite_Dangerous_Add_On_Helper.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Reflection;
 
 
 // TODO LIST!
@@ -21,7 +22,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private int currentControlRow = 0;                      // used by createitems
         private bool mouseDown;                                 //used by proc to drag app around
         private Point lastLocation;                             //used by proc to drag app around
-
+        
         // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
@@ -37,6 +38,8 @@ namespace Elite_Dangerous_Add_On_Helper
             this.menuStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
             this.statusStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
             menuStrip1.BackColor = Color.FromArgb(64, 64, 64);
+            //string version = System.Windows.Forms.Application.ProductVersion;
+            this.Text = String.Format("Elite Dangerous Add On Helper V{0}", AssemblyVersion);
 
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 5000;
@@ -67,6 +70,7 @@ namespace Elite_Dangerous_Add_On_Helper
             catch { }
         }
         #region controls
+
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -513,6 +517,19 @@ namespace Elite_Dangerous_Add_On_Helper
                 // need to get just the path element here, but store filename as well
                 addOn.ProgramDirectory = Path.GetDirectoryName(file);
                 addOn.ExecutableName = openDialog.SafeFileName;
+                if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath) || addOn.WebApp != String.Empty)
+                {
+                    //checkBox.addOn.FriendlyName.BackColor = Color.LimeGreen;
+                    addOn.EnableCheckbox.BackColor = Color.LimeGreen;
+                    toolTip1.SetToolTip(addOn.EnableCheckbox, "Path Found");
+                    //SetToolTip(addOn.EnableCheckbox, "Path Found");
+                }
+                else
+                {
+                    // otherwise make it red to show its missing!
+                    addOn.EnableCheckbox.BackColor = Color.Red;
+                    toolTip1.SetToolTip(addOn.EnableCheckbox, "Path NOT Found");
+                }
                 //addOn.ProgramDirectory = file;
             }
             //currentControlRow = 0;
@@ -744,7 +761,15 @@ namespace Elite_Dangerous_Add_On_Helper
         #endregion
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        public string AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
         }
     }
 
