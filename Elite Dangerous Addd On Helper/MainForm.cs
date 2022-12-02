@@ -2,6 +2,9 @@ using Elite_Dangerous_Add_On_Helper.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 // TODO LIST!
@@ -25,10 +28,12 @@ namespace Elite_Dangerous_Add_On_Helper
         
         // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
-
+     
         // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
         public static CancellationToken WebCommsTimeout { get; private set; }       //required for install code
+        
+       
         public MainForm()
         {
 
@@ -70,7 +75,7 @@ namespace Elite_Dangerous_Add_On_Helper
             catch { }
         }
         #region controls
-
+        
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -464,7 +469,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
 
             }
-
+            updatemystatus("All apps launched, waiting for EDLaunch Exit..");
 
 
         }
@@ -589,6 +594,13 @@ namespace Elite_Dangerous_Add_On_Helper
                 catch (Exception ex)
                 { // if something went wrong, I dont want to know about it..
                 }
+                //sleep for 5 secondfs then quit
+                for (int i = 5; i != 0; i--)
+                {
+                    
+                    Thread.Sleep(1000);
+                    Environment.Exit(0);
+                }
             }
         }
         private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
@@ -603,8 +615,8 @@ namespace Elite_Dangerous_Add_On_Helper
                     LaunchAddon(addOn);
                 }
             }
-            //lets breath a little to let things start up..
-            updatemystatus("Ready");
+            //  lets breath a little to let things start up..
+            // updatemystatus("Ready");
         }
         #endregion
         #region menuitems
