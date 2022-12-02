@@ -202,7 +202,8 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void DeleteControls(AddOn addOn)
         {
-            currentControlRow -= 1;
+            currentControlRow = 0;
+            //currentControlRow -= 1;
             panel1.Controls.Remove(addOn.EnableCheckbox);
             panel1.Controls.Remove(addOn.AppDirectorytextbox);
 
