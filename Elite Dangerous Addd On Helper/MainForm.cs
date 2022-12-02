@@ -3,13 +3,12 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 
 // TODO LIST!
 // Make a dependanciy between warthog being enabled and requiring a script to be specified
-// fix edit funcitonality
+
 // ....
 
 
@@ -183,16 +182,17 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         private void DeleteAddon(AddOn addOn)
         {
-            // delete - none of these work :/
+            // delete addon
             addOns.Remove(addOn.FriendlyName);
             DeleteControls(addOn);
+            //save new list
             SerializeAddons(addOns);
-            //delete controls
+            //delete controls on form
             foreach (var addon in addOns.Values)
             {
                 DeleteControls(addon);
             }
-            //recreate controls
+            //recreate controls on form
             foreach (var addon in addOns.Values)
             {
                 CreateControls(addon);
@@ -245,7 +245,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 else
                 {
                     // lets copy the default addons.json to the settings path..
-                    // probably want to remove this and do the file copy in an installer..
+                    // should never get here, settings file should be installed by installer, code for dev use only really
                     // string defaultpath = AppDomain.CurrentDomain.BaseDirectory;
                     string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "addons.json");
                     string sourceFile = startupPath;
@@ -292,7 +292,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
 
         }
-        private void DoEdit(AddOn addOn)                              //send object to edit form (BROKEN!!)
+        private void DoEdit(AddOn addOn)                              //send object to edit form (!!)
         {
             var EditApp = new EditApp(addOn);
             EditApp.ShowDialog();
@@ -309,16 +309,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 addOn.EnableCheckbox.BackColor = Color.Red;
                 toolTip1.SetToolTip(addOn.EnableCheckbox, "Path NOT Found");
             }
-            //delete controls
-            //foreach (var addon in addOns.Values)
-            //{
-            //    DeleteControls(addon);
-            //}
-            ////recreate controls
-            //foreach (var addon in addOns.Values)
-            //{
-            //    CreateControls(addon);
-            //}
+
 
         }
         private void pictureBox1_Click(object sender, EventArgs e)      // show about box if logo clicked
@@ -340,8 +331,9 @@ namespace Elite_Dangerous_Add_On_Helper
         {
 
             // where are we going to save it?
-            string filename = Path.GetFileName(link);
-            // new code
+            System.IO.Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads\\EliteAddons\\");   //check the folder exists, and create if it doesnt
+            string filename = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads\\EliteAddons\\"  + Path.GetFileName(link);
+            
             //string requestString = link;
             if (link != string.Empty)
             {
