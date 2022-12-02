@@ -92,7 +92,7 @@ namespace Elite_Dangerous_Add_On_Helper
                     Url = Tb_InstallationURL.Text,          // non mandatory
                     WebApp = Tb_WebApURL.Text               // non mandatory
                 });
-                SerializeAddons(addOns);
+                //SerializeAddons(addOns);
                 this.Dispose();
             }
 
