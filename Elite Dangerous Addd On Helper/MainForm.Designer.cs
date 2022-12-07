@@ -42,8 +42,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Rb_Vr = new System.Windows.Forms.RadioButton();
-            this.Rb_NonVR = new System.Windows.Forms.RadioButton();
             this.Cb_CloseOnExit = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -196,36 +194,6 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "Enabled";
             // 
-            // Rb_Vr
-            // 
-            this.Rb_Vr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Rb_Vr.AutoSize = true;
-            this.Rb_Vr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Rb_Vr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_Vr.Location = new System.Drawing.Point(770, 189);
-            this.Rb_Vr.Name = "Rb_Vr";
-            this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
-            this.Rb_Vr.TabIndex = 37;
-            this.Rb_Vr.Text = "Vr";
-            this.Rb_Vr.UseVisualStyleBackColor = false;
-            this.Rb_Vr.CheckedChanged += new System.EventHandler(this.Rb_Vr_CheckedChanged);
-            // 
-            // Rb_NonVR
-            // 
-            this.Rb_NonVR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Rb_NonVR.AutoSize = true;
-            this.Rb_NonVR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Rb_NonVR.Checked = true;
-            this.Rb_NonVR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_NonVR.Location = new System.Drawing.Point(770, 219);
-            this.Rb_NonVR.Name = "Rb_NonVR";
-            this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
-            this.Rb_NonVR.TabIndex = 38;
-            this.Rb_NonVR.TabStop = true;
-            this.Rb_NonVR.Text = "Non Vr";
-            this.Rb_NonVR.UseVisualStyleBackColor = false;
-            this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
-            // 
             // Cb_CloseOnExit
             // 
             this.Cb_CloseOnExit.AutoSize = true;
@@ -299,8 +267,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Cb_CloseOnExit);
-            this.Controls.Add(this.Rb_NonVR);
-            this.Controls.Add(this.Rb_Vr);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
@@ -339,8 +305,6 @@
         private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
         private ToolStripMenuItem addApplicationToolStripMenuItem;
         private Label label1;
-        private RadioButton Rb_Vr;
-        private RadioButton Rb_NonVR;
         private CheckBox Cb_CloseOnExit;
         private Panel panel1;
         private Label label2;

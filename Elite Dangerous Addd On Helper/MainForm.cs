@@ -366,15 +366,8 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             this.Refresh();
             this.Size = new Size(this.Width, this.Height + 25);
-            updatemystatus(Properties.Settings.Default.VR.ToString());
-            if (Properties.Settings.Default.VR == true)
-            {
-                Rb_Vr.Checked = true;
-            }
-            else
-            {
-                Rb_NonVR.Checked = true;
-            }
+            
+           
             if (Properties.Settings.Default.CLOSE == true)
             {
                 Cb_CloseOnExit.Checked = true;
@@ -503,12 +496,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 // ok its not target, leave the argumnets as is
                 args = addOn.Scripts;
             }
-            // are we launching Elite? Lets check if the users wants VR mode
-            if (string.Equals(addOn.ExecutableName, "edlaunch.exe", StringComparison.OrdinalIgnoreCase) && Rb_Vr.Checked)
-            {
-                //enable vr mode args
-                args = "/VR";
-            }
+
             if (File.Exists(path))      // worth checking the app we want to launch actually exists...
             {
                 try
@@ -737,16 +725,7 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             updatemystatus("Saving Prefs");
             SerializeAddons(addOns, Cb_Profiles.Text);
-            if (Rb_Vr.Checked)
-            {
 
-                Properties.Settings.Default.VR = true;
-            }
-            else
-            {
-
-                Properties.Settings.Default.VR = false;
-            }
 
             Properties.Settings.Default.Save();
         }
@@ -810,36 +789,7 @@ namespace Elite_Dangerous_Add_On_Helper
         //}
         #endregion installs  
         #region save misc settings
-        private void Rb_Vr_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Rb_Vr.Checked)
-            {
 
-                Properties.Settings.Default.VR = true;
-            }
-            else
-            {
-
-                Properties.Settings.Default.VR = false;
-            }
-
-            Properties.Settings.Default.Save();
-        }
-        private void Rb_NonVR_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Rb_Vr.Checked)
-            {
-
-                Properties.Settings.Default.VR = true;
-            }
-            else
-            {
-
-                Properties.Settings.Default.VR = false;
-            }
-
-            Properties.Settings.Default.Save();
-        }
         private void Cb_CloseOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (Cb_CloseOnExit.Checked)
