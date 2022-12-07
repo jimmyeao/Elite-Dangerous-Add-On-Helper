@@ -42,11 +42,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Rb_Vr = new System.Windows.Forms.RadioButton();
-            this.Rb_NonVR = new System.Windows.Forms.RadioButton();
             this.Cb_CloseOnExit = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.Cb_Profiles = new System.Windows.Forms.ComboBox();
+            this.Bt_AddProfile = new System.Windows.Forms.Button();
+            this.Bt_RemoveProfile = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -187,48 +188,18 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(10, 64);
+            this.label1.Location = new System.Drawing.Point(10, 70);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 20);
             this.label1.TabIndex = 36;
             this.label1.Text = "Enabled";
-            // 
-            // Rb_Vr
-            // 
-            this.Rb_Vr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Rb_Vr.AutoSize = true;
-            this.Rb_Vr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Rb_Vr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_Vr.Location = new System.Drawing.Point(770, 189);
-            this.Rb_Vr.Name = "Rb_Vr";
-            this.Rb_Vr.Size = new System.Drawing.Size(43, 24);
-            this.Rb_Vr.TabIndex = 37;
-            this.Rb_Vr.Text = "Vr";
-            this.Rb_Vr.UseVisualStyleBackColor = false;
-            this.Rb_Vr.CheckedChanged += new System.EventHandler(this.Rb_Vr_CheckedChanged);
-            // 
-            // Rb_NonVR
-            // 
-            this.Rb_NonVR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Rb_NonVR.AutoSize = true;
-            this.Rb_NonVR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Rb_NonVR.Checked = true;
-            this.Rb_NonVR.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Rb_NonVR.Location = new System.Drawing.Point(770, 219);
-            this.Rb_NonVR.Name = "Rb_NonVR";
-            this.Rb_NonVR.Size = new System.Drawing.Size(75, 24);
-            this.Rb_NonVR.TabIndex = 38;
-            this.Rb_NonVR.TabStop = true;
-            this.Rb_NonVR.Text = "Non Vr";
-            this.Rb_NonVR.UseVisualStyleBackColor = false;
-            this.Rb_NonVR.CheckedChanged += new System.EventHandler(this.Rb_NonVR_CheckedChanged);
             // 
             // Cb_CloseOnExit
             // 
             this.Cb_CloseOnExit.AutoSize = true;
             this.Cb_CloseOnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Cb_CloseOnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 63);
+            this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 69);
             this.Cb_CloseOnExit.Name = "Cb_CloseOnExit";
             this.Cb_CloseOnExit.Size = new System.Drawing.Size(161, 24);
             this.Cb_CloseOnExit.TabIndex = 39;
@@ -240,7 +211,7 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Location = new System.Drawing.Point(8, 100);
+            this.panel1.Location = new System.Drawing.Point(8, 106);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(0, 0);
             this.panel1.TabIndex = 40;
@@ -249,11 +220,40 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(536, 64);
+            this.label2.Location = new System.Drawing.Point(536, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 20);
             this.label2.TabIndex = 41;
             this.label2.Text = "Delete";
+            // 
+            // Cb_Profiles
+            // 
+            this.Cb_Profiles.FormattingEnabled = true;
+            this.Cb_Profiles.Location = new System.Drawing.Point(293, 67);
+            this.Cb_Profiles.Name = "Cb_Profiles";
+            this.Cb_Profiles.Size = new System.Drawing.Size(237, 28);
+            this.Cb_Profiles.TabIndex = 42;
+            this.Cb_Profiles.SelectedIndexChanged += new System.EventHandler(this.Cb_Profiles_SelectedIndexChanged);
+            // 
+            // Bt_AddProfile
+            // 
+            this.Bt_AddProfile.Location = new System.Drawing.Point(293, 36);
+            this.Bt_AddProfile.Name = "Bt_AddProfile";
+            this.Bt_AddProfile.Size = new System.Drawing.Size(94, 29);
+            this.Bt_AddProfile.TabIndex = 43;
+            this.Bt_AddProfile.Text = "Add..";
+            this.Bt_AddProfile.UseVisualStyleBackColor = true;
+            this.Bt_AddProfile.Click += new System.EventHandler(this.Bt_AddProfile_Click);
+            // 
+            // Bt_RemoveProfile
+            // 
+            this.Bt_RemoveProfile.Location = new System.Drawing.Point(436, 36);
+            this.Bt_RemoveProfile.Name = "Bt_RemoveProfile";
+            this.Bt_RemoveProfile.Size = new System.Drawing.Size(94, 29);
+            this.Bt_RemoveProfile.TabIndex = 44;
+            this.Bt_RemoveProfile.Text = "Remove";
+            this.Bt_RemoveProfile.UseVisualStyleBackColor = true;
+            this.Bt_RemoveProfile.Click += new System.EventHandler(this.Bt_RemoveProfile_Click);
             // 
             // MainForm
             // 
@@ -261,11 +261,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(883, 483);
+            this.Controls.Add(this.Bt_RemoveProfile);
+            this.Controls.Add(this.Bt_AddProfile);
+            this.Controls.Add(this.Cb_Profiles);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Cb_CloseOnExit);
-            this.Controls.Add(this.Rb_NonVR);
-            this.Controls.Add(this.Rb_Vr);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
@@ -304,10 +305,11 @@
         private ToolStripMenuItem openPrefsFolderToolStripMenuItem;
         private ToolStripMenuItem addApplicationToolStripMenuItem;
         private Label label1;
-        private RadioButton Rb_Vr;
-        private RadioButton Rb_NonVR;
         private CheckBox Cb_CloseOnExit;
         private Panel panel1;
         private Label label2;
+        private ComboBox Cb_Profiles;
+        private Button Bt_AddProfile;
+        private Button Bt_RemoveProfile;
     }
 }

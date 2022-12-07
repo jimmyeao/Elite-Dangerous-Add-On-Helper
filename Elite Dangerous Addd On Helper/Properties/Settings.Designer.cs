@@ -46,5 +46,17 @@ namespace Elite_Dangerous_Add_On_Helper.Properties {
                 this["CLOSE"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ActiveProfile {
+            get {
+                return ((string)(this["ActiveProfile"]));
+            }
+            set {
+                this["ActiveProfile"] = value;
+            }
+        }
     }
 }
