@@ -279,6 +279,7 @@ namespace Elite_Dangerous_Add_On_Helper
                         
 }
                 }
+                Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact(Properties.Settings.Default.ActiveProfile);
             }
 
             ////////////////
@@ -295,7 +296,7 @@ namespace Elite_Dangerous_Add_On_Helper
             updatemystatus("Checking file exists");
             if (Path.Exists(settingsFilePath))
             {
-                if (File.Exists(settingsFilePath + "AddOns.json"))
+                if (File.Exists(settingsFilePath + $"{Properties.Settings.Default.ActiveProfile}.json"))
                 {
                     updatemystatus("Loading Settings");
                     addOns = DeserializeAddOns();
@@ -552,6 +553,7 @@ namespace Elite_Dangerous_Add_On_Helper
             });
 
             File.WriteAllText(settingsFilePath + $"{filename}.json", Json);
+            Properties.Settings.Default.ActiveProfile  = filename;
         }
         public void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
         {
