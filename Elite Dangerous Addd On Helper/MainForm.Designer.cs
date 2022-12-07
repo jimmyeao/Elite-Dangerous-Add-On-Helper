@@ -47,6 +47,9 @@
             this.Cb_CloseOnExit = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.Cb_Profiles = new System.Windows.Forms.ComboBox();
+            this.Bt_AddProfile = new System.Windows.Forms.Button();
+            this.Bt_RemoveProfile = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -187,7 +190,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(10, 64);
+            this.label1.Location = new System.Drawing.Point(10, 70);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 20);
             this.label1.TabIndex = 36;
@@ -228,7 +231,7 @@
             this.Cb_CloseOnExit.AutoSize = true;
             this.Cb_CloseOnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Cb_CloseOnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 63);
+            this.Cb_CloseOnExit.Location = new System.Drawing.Point(115, 69);
             this.Cb_CloseOnExit.Name = "Cb_CloseOnExit";
             this.Cb_CloseOnExit.Size = new System.Drawing.Size(161, 24);
             this.Cb_CloseOnExit.TabIndex = 39;
@@ -240,7 +243,7 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Location = new System.Drawing.Point(8, 100);
+            this.panel1.Location = new System.Drawing.Point(8, 106);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(0, 0);
             this.panel1.TabIndex = 40;
@@ -249,11 +252,37 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(536, 64);
+            this.label2.Location = new System.Drawing.Point(536, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 20);
             this.label2.TabIndex = 41;
             this.label2.Text = "Delete";
+            // 
+            // Cb_Profiles
+            // 
+            this.Cb_Profiles.FormattingEnabled = true;
+            this.Cb_Profiles.Location = new System.Drawing.Point(293, 67);
+            this.Cb_Profiles.Name = "Cb_Profiles";
+            this.Cb_Profiles.Size = new System.Drawing.Size(237, 28);
+            this.Cb_Profiles.TabIndex = 42;
+            // 
+            // Bt_AddProfile
+            // 
+            this.Bt_AddProfile.Location = new System.Drawing.Point(293, 36);
+            this.Bt_AddProfile.Name = "Bt_AddProfile";
+            this.Bt_AddProfile.Size = new System.Drawing.Size(94, 29);
+            this.Bt_AddProfile.TabIndex = 43;
+            this.Bt_AddProfile.Text = "Add..";
+            this.Bt_AddProfile.UseVisualStyleBackColor = true;
+            // 
+            // Bt_RemoveProfile
+            // 
+            this.Bt_RemoveProfile.Location = new System.Drawing.Point(436, 36);
+            this.Bt_RemoveProfile.Name = "Bt_RemoveProfile";
+            this.Bt_RemoveProfile.Size = new System.Drawing.Size(94, 29);
+            this.Bt_RemoveProfile.TabIndex = 44;
+            this.Bt_RemoveProfile.Text = "Remove";
+            this.Bt_RemoveProfile.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -261,6 +290,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(883, 483);
+            this.Controls.Add(this.Bt_RemoveProfile);
+            this.Controls.Add(this.Bt_AddProfile);
+            this.Controls.Add(this.Cb_Profiles);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Cb_CloseOnExit);
@@ -309,5 +341,8 @@
         private CheckBox Cb_CloseOnExit;
         private Panel panel1;
         private Label label2;
+        private ComboBox Cb_Profiles;
+        private Button Bt_AddProfile;
+        private Button Bt_RemoveProfile;
     }
 }
