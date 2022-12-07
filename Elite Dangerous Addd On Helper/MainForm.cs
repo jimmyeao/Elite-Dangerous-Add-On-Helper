@@ -30,12 +30,12 @@ namespace Elite_Dangerous_Add_On_Helper
         bool loaded = false;
         // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
-     
+
         // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
         public static CancellationToken WebCommsTimeout { get; private set; }       //required for install code
-        
-       
+
+
         public MainForm()
         {
 
@@ -78,7 +78,7 @@ namespace Elite_Dangerous_Add_On_Helper
             catch { }
         }
         #region controls
-        
+
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -117,7 +117,7 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 checkBox.Checked = false;
             }
-            
+
             addOn.EnableCheckbox = checkBox;
             panel1.Controls.Add(checkBox);
             this.Refresh();
@@ -194,6 +194,9 @@ namespace Elite_Dangerous_Add_On_Helper
             panel1.Controls.OfType<Button>().ToList().ForEach(button => button.BackColor = Color.WhiteSmoke);
             currentControlRow++;            //move to the next row
         }
+
+        #endregion
+        #region functions
         private void DeleteAddon(AddOn addOn)
         {
             // delete addon
@@ -231,11 +234,9 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             panel1.Controls.Remove(addOn.DeleteButton);
 
-            this.Refresh(); 
+            this.Refresh();
 
         }
-        #endregion
-        #region functions
         private static DialogResult ShowInputDialog(ref string input)
         {
             System.Drawing.Size size = new System.Drawing.Size(250, 90);
@@ -274,12 +275,12 @@ namespace Elite_Dangerous_Add_On_Helper
             input = textBox.Text;
             return result;
         }
-        private static DialogResult Showdialogue(string message, string caption) 
+        private static DialogResult Showdialogue(string message, string caption)
         {
-            var result = MessageBox.Show(message, caption,MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             return result;
-            
+
         }
         private void Load_prefs()
         {
@@ -294,10 +295,10 @@ namespace Elite_Dangerous_Add_On_Helper
                     var result = System.IO.Path.GetFileNameWithoutExtension(file.Name); //this gets us the filename with no extension
                     if (result != "Default")
                     {
-                        
-                            Cb_Profiles.Items.Add(result);                              //add the filename to the settings..
-                        
-}
+
+                        Cb_Profiles.Items.Add(result);                              //add the filename to the settings..
+
+                    }
                 }
                 if (Properties.Settings.Default.ActiveProfile.Length > 0)               //check for a saved profile
                 {
@@ -310,7 +311,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
             }
             ////////////////
-       
+
             if (!Path.Exists(settingsFilePath))
             {
                 try
@@ -366,8 +367,8 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             this.Refresh();
             this.Size = new Size(this.Width, this.Height + 25);
-            
-           
+
+
             if (Properties.Settings.Default.CLOSE == true)
             {
                 Cb_CloseOnExit.Checked = true;
@@ -419,7 +420,7 @@ namespace Elite_Dangerous_Add_On_Helper
             // where are we going to save it?
             System.IO.Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads\\EliteAddons\\");   //check the folder exists, and create if it doesnt
             string filename = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads\\EliteAddons\\"  + Path.GetFileName(link);
-            
+
             //string requestString = link;
             if (link != string.Empty)
             {
@@ -643,13 +644,13 @@ namespace Elite_Dangerous_Add_On_Helper
                             // Temp is a document which you need to kill.
                             if (process.ProcessName.Contains(p))
                                 process.CloseMainWindow();
-                                
+
                         }
                 }
                 catch
                 {
                     // if something went wrong, I dont want to know about it..
-                   
+
                 }
                 // doesnt seem to want to kill voice attack nicely..
                 try
@@ -672,7 +673,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 //sleep for 5 secondfs then quit
                 for (int i = 5; i != 0; i--)
                 {
-                    
+
                     Thread.Sleep(1000);
                     Environment.Exit(0);
                 }
@@ -831,7 +832,7 @@ namespace Elite_Dangerous_Add_On_Helper
         #endregion
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         public string AssemblyVersion
@@ -861,27 +862,27 @@ namespace Elite_Dangerous_Add_On_Helper
                     Cb_Profiles.Items.Add(input);
 
                     //update the addons
-                    
+
                     Properties.Settings.Default.ActiveProfile = input;
                     Properties.Settings.Default.Save();
 
                     //save the profile
-                    
+
                     SerializeAddons(addOns, input);
                     Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact(input);
                     refreshForm();
-                    
+
                 }
                 else
                 {
                     //whhhooops invalid string!
-                    
+
                 }
             }
             else
             {
                 //user never typed anything..
-                
+
             }
 
         }
@@ -904,23 +905,24 @@ namespace Elite_Dangerous_Add_On_Helper
         private void Cb_Profiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             //logic on change
-            if(loaded == true) { 
-            //clear form
-                foreach(var addOn in addOns) 
-            { 
-                DeleteControls(addOn.Value); 
-              
-            }
-            // remove apps
-            addOns.Clear();
-            // load json
-            addOns = DeserializeAddOns(Cb_Profiles.Text);
-            //recreate form
-            //Load_prefs();
-            foreach (var addOn in addOns)
+            if (loaded == true)
             {
-                CreateControls(addOn.Value);
-            }
+                //clear form
+                foreach (var addOn in addOns)
+                {
+                    DeleteControls(addOn.Value);
+
+                }
+                // remove apps
+                addOns.Clear();
+                // load json
+                addOns = DeserializeAddOns(Cb_Profiles.Text);
+                //recreate form
+                //Load_prefs();
+                foreach (var addOn in addOns)
+                {
+                    CreateControls(addOn.Value);
+                }
             }
 
         }
