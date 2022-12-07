@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>0.35.28</AssemblyVersion>
-    <FileVersion>1.35.28</FileVersion>
+    <AssemblyVersion>0.40.28</AssemblyVersion>
+    <FileVersion>1.40.28</FileVersion>
     <ApplicationIcon>elite-dangerous-icon.ico</ApplicationIcon>
   </PropertyGroup>
 

@@ -2,6 +2,7 @@ using Elite_Dangerous_Add_On_Helper.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 
@@ -186,7 +187,7 @@ namespace Elite_Dangerous_Add_On_Helper
             addOns.Remove(addOn.FriendlyName);
             DeleteControls(addOn);
             //save new list
-            SerializeAddons(addOns);
+            SerializeAddons(addOns, Cb_Profiles.Text);
             //delete controls on form
             foreach (var addon in addOns.Values)
             {
@@ -222,8 +223,66 @@ namespace Elite_Dangerous_Add_On_Helper
         }
         #endregion
         #region functions
-        private void Load_prefs()                                       //load preferences
+        private static DialogResult ShowInputDialog(ref string input)
         {
+            System.Drawing.Size size = new System.Drawing.Size(250, 90);
+            Form inputBox = new Form();
+
+            inputBox.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            inputBox.ClientSize = size;
+            inputBox.Text = "Name";
+
+            System.Windows.Forms.TextBox textBox = new TextBox();
+            textBox.Size = new System.Drawing.Size(size.Width - 10, 23);
+            textBox.Location = new System.Drawing.Point(5, 5);
+            textBox.Text = input;
+            inputBox.Controls.Add(textBox);
+
+            Button okButton = new Button();
+            okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            okButton.Name = "okButton";
+            okButton.Size = new System.Drawing.Size(75, 29);
+            okButton.Text = "&OK";
+            okButton.Location = new System.Drawing.Point(size.Width - 80 - 80, 39);
+            inputBox.Controls.Add(okButton);
+
+            Button cancelButton = new Button();
+            cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new System.Drawing.Size(75, 29);
+            cancelButton.Text = "&Cancel";
+            cancelButton.Location = new System.Drawing.Point(size.Width - 80, 39);
+            inputBox.Controls.Add(cancelButton);
+
+            inputBox.AcceptButton = okButton;
+            inputBox.CancelButton = cancelButton;
+
+            DialogResult result = inputBox.ShowDialog();
+            input = textBox.Text;
+            return result;
+        }
+        private void Load_prefs()
+        {
+            //load preferences
+            ////////////////
+            if (Path.Exists(settingsFilePath))
+            {
+                DirectoryInfo d = new DirectoryInfo(@settingsFilePath);             //which directory do we want to search?
+                FileInfo[] fileArray = d.GetFiles("*.json");                        //Get all json files into array
+                foreach (FileInfo file in fileArray)
+                {
+                    var result = System.IO.Path.GetFileNameWithoutExtension(file.Name); //this gets us the filename with no extension
+                    if (result != "Default")
+                    {
+                        
+                            Cb_Profiles.Items.Add(result);           //add the filename to the settings..
+                        
+}
+                }
+            }
+
+            ////////////////
+       
             if (!Path.Exists(settingsFilePath))
             {
                 try
@@ -297,7 +356,7 @@ namespace Elite_Dangerous_Add_On_Helper
             var EditApp = new EditApp(addOn);
             EditApp.ShowDialog();
             //DeleteControls(addOn);
-            SerializeAddons(addOns);
+            SerializeAddons(addOns, Cb_Profiles.Text);
             if (Path.Exists(addOn.ProgramDirectory) || Path.Exists(addOn.AutoDiscoverPath) || addOn.WebApp != String.Empty)
             {
                 addOn.EnableCheckbox.BackColor = Color.LimeGreen;
@@ -484,7 +543,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 return null;
             }
         }
-        internal static void SerializeAddons(object addOns)             // grabs all objects and saves states in json
+        internal static void SerializeAddons(object addOns, string filename)             // grabs all objects and saves states in json
         {
             var Json = JsonConvert.SerializeObject(addOns, Formatting.Indented, new JsonSerializerSettings
             {
@@ -492,7 +551,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             });
 
-            File.WriteAllText(settingsFilePath + "AddOns.json", Json);
+            File.WriteAllText(settingsFilePath + $"{filename}.json", Json);
         }
         public void HandleSelectPath(string dictKey)                   // browse for an exe and update add on with path and exe name
         {
@@ -596,6 +655,27 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
             }
         }
+        private void refreshForm()
+        {
+            currentControlRow = 0;
+            try
+            {
+                foreach (var addon in addOns.Values)
+                {
+                    DeleteControls(addon);
+                }
+                //recreate controls on form
+                foreach (var addon in addOns.Values)
+                {
+                    CreateControls(addon);
+                }
+            }
+            catch
+            {
+                // oops
+            }
+            this.Refresh();
+        }
         private void Bt_Launch_Click(object sender, EventArgs e)        //launch apps button pressed
         {
 
@@ -621,7 +701,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updatemystatus("Saving Prefs");
-            SerializeAddons(addOns);
+            SerializeAddons(addOns, Cb_Profiles.Text);
             if (Rb_Vr.Checked)
             {
 
@@ -775,6 +855,60 @@ namespace Elite_Dangerous_Add_On_Helper
             {
                 return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
+        }
+
+        private void Bt_AddProfile_Click(object sender, EventArgs e)
+        {
+            //add profile
+
+            //promt for name of profile
+            string input = "Name?";
+
+            ShowInputDialog(ref input);
+            if (input != "Name?")
+            {
+                //ok valid input, lets do some stuff
+                //is it a valid string?
+                if (Regex.Match(input, @"^[a-zA-Z0-9]*$").Success)
+                {
+                    //valid string
+
+                    Cb_Profiles.Items.Add(input);
+
+                    //update the addons
+                    
+                    Properties.Settings.Default.ActiveProfile = input;
+                    Properties.Settings.Default.Save();
+
+                    //save the profile
+                    
+                    SerializeAddons(addOns, input);
+                    Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact(input);
+                    refreshForm();
+                    
+                }
+                else
+                {
+                    //whhhooops invalid string!
+                    
+                }
+            }
+            else
+            {
+                //user never typed anything..
+                
+            }
+
+        }
+
+        private void Bt_RemoveProfile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cb_Profiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

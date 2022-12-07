@@ -265,6 +265,7 @@
             this.Cb_Profiles.Name = "Cb_Profiles";
             this.Cb_Profiles.Size = new System.Drawing.Size(237, 28);
             this.Cb_Profiles.TabIndex = 42;
+            this.Cb_Profiles.SelectedIndexChanged += new System.EventHandler(this.Cb_Profiles_SelectedIndexChanged);
             // 
             // Bt_AddProfile
             // 
@@ -274,6 +275,7 @@
             this.Bt_AddProfile.TabIndex = 43;
             this.Bt_AddProfile.Text = "Add..";
             this.Bt_AddProfile.UseVisualStyleBackColor = true;
+            this.Bt_AddProfile.Click += new System.EventHandler(this.Bt_AddProfile_Click);
             // 
             // Bt_RemoveProfile
             // 
@@ -283,6 +285,7 @@
             this.Bt_RemoveProfile.TabIndex = 44;
             this.Bt_RemoveProfile.Text = "Remove";
             this.Bt_RemoveProfile.UseVisualStyleBackColor = true;
+            this.Bt_RemoveProfile.Click += new System.EventHandler(this.Bt_RemoveProfile_Click);
             // 
             // MainForm
             // 
