@@ -3,7 +3,7 @@ The purpose of this program is to allow you to choose which apps and websites to
 
 First Beta is now available!
 
-![image](https://user-images.githubusercontent.com/5197831/204605658-a024b0c5-5a90-4859-85ea-dfc8cae993dd.png)
+![image](https://user-images.githubusercontent.com/5197831/206279174-bcd98042-9ee2-41f7-81ad-ebdabfc8582f.png)
 
 This should be pretty self-explanatory,
 *If an app is highlighted in red this means its path is not found / its not installed.
@@ -11,18 +11,19 @@ This should be pretty self-explanatory,
 
 # Add App
 
-![image](https://user-images.githubusercontent.com/5197831/204606365-d0ff6603-07ab-43f8-b815-ce60c93eb2c6.png)
+![image](https://user-images.githubusercontent.com/5197831/206279306-e7abf380-59d0-48f4-b096-c8f1320d0369.png)
 
 The add app screen only has a couple of mandatory fields, depending on if you are adding a 3rd party app such as EDMC, or adding a URL like inara
 
 For apps, application name in mandatory and should be unique. Then click the button to browse to the exe file - the next two fields (application path and executable name) will be filled in for you.
-Some apps (TARGET for example) required arguments. This field is here for your convenience, but unless you are running TARGET you probably wont need this
+Some apps (TARGET for example) required arguments. This field is here for your convenience. HINT To launch Elite in vr mode, add /VR as an argument to Edlaunch
+
 Installation URL is for dev purposes really, you can populate it with a link to the apps installer on the web, of limited use and I may remove this in future versions
 WebApp URL - when you type in this, the Application Path, Exe name and buttons are disabled, as they server no purpose when launching a URL. Urls will be opened in your default browser.
 
 # Edit App
 
-![image](https://user-images.githubusercontent.com/5197831/204809831-0a4c6564-60b8-495e-a1be-8d60c64c6407.png)
+![image](https://user-images.githubusercontent.com/5197831/206279617-98671568-dd8d-43a6-96b3-816fb460d672.png)
 
 This is almost identical to the Add App screen, with the exception of the Autodiscver URL, which will be removed in future releases.
 
