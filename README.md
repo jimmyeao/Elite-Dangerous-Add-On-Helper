@@ -1,3 +1,4 @@
+[![Build](https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/actions/workflows/Elite%20Dangerous%20Addd%20On%20Helper.yaml/badge.svg)](https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/actions/workflows/Elite%20Dangerous%20Addd%20On%20Helper.yaml)
 # Elite Dangerous Addd On Helper
 The purpose of this program is to allow you to choose which apps and websites to launch when you run Elite, and optionally close the apps when you close the Elite launcher. Ive included a few common ones as an example, you can delete or edit these as you require, and add new apps or websites.
 
