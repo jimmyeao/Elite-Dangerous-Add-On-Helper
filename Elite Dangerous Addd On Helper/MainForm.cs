@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 
@@ -304,7 +305,8 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
                 else
                 {
-                    Cb_Profiles.SelectedIndex = 0;
+                    //no saved profile, default to the deault!
+                    Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact("AddOns");
                 }
             }
             ////////////////
@@ -340,7 +342,13 @@ namespace Elite_Dangerous_Add_On_Helper
                         File.Copy(sourceFile, destinationFile, true);
                         updatemystatus("Settings copied");
                         updatemystatus("Loading Settings");
-                        addOns = DeserializeAddOns(Properties.Settings.Default.ActiveProfile);
+                        addOns = DeserializeAddOns("AddOns");
+                        Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact("AddOns");
+                        if (Cb_Profiles.SelectedIndex == -1)
+                        {
+                            Cb_Profiles.Items.Add("AddOns");
+                            Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact("AddOns");
+                        }//need to check if its -1 and add an item!
                     }
                     catch (IOException iox)
                     {
