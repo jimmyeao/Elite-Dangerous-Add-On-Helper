@@ -26,7 +26,7 @@ namespace Elite_Dangerous_Add_On_Helper
         private int currentControlRow = 0;                      // used by createitems
         private bool mouseDown;                                 //used by proc to drag app around
         private Point lastLocation;                             //used by proc to drag app around
-        
+        bool loaded = false;
         // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
      
@@ -55,6 +55,7 @@ namespace Elite_Dangerous_Add_On_Helper
             toolTip1.ShowAlways = true;
             Load_prefs();
             updatemystatus("Ready");
+            loaded = true;
             try
             {
                 foreach (string launch in launchargs)   // was the prog run with /auto? if so launch all enabled apps
@@ -107,8 +108,18 @@ namespace Elite_Dangerous_Add_On_Helper
                 checkBox.BackColor = Color.Red;
                 toolTip1.SetToolTip(checkBox, "Path NOT Found");
             }
+            if (addOn.Enabled == true)
+            {
+                checkBox.Checked = true;
+            }
+            else
+            {
+                checkBox.Checked = false;
+            }
+            
             addOn.EnableCheckbox = checkBox;
             panel1.Controls.Add(checkBox);
+            this.Refresh();
             // add a browse button
             Button button = new Button();
             button.Text = "Browse";
@@ -219,7 +230,7 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             panel1.Controls.Remove(addOn.DeleteButton);
 
-
+            this.Refresh(); 
 
         }
         #endregion
@@ -935,20 +946,23 @@ namespace Elite_Dangerous_Add_On_Helper
         private void Cb_Profiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             //logic on change
-
+            if(loaded == true) { 
             //clear form
                 foreach(var addOn in addOns) 
             { 
                 DeleteControls(addOn.Value); 
+              
             }
             // remove apps
-
+            addOns.Clear();
             // load json
-            DeserializeAddOns(Cb_Profiles.Text);
+            addOns = DeserializeAddOns(Cb_Profiles.Text);
             //recreate form
+            //Load_prefs();
             foreach (var addOn in addOns)
             {
                 CreateControls(addOn.Value);
+            }
             }
 
         }
