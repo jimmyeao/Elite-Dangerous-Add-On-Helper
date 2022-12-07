@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 
 
@@ -261,27 +262,40 @@ namespace Elite_Dangerous_Add_On_Helper
             input = textBox.Text;
             return result;
         }
+        private static DialogResult Showdialogue(string message, string caption) 
+        {
+            var result = MessageBox.Show(message, caption,MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+            return result;
+            
+        }
         private void Load_prefs()
         {
             //load preferences
             ////////////////
             if (Path.Exists(settingsFilePath))
             {
-                DirectoryInfo d = new DirectoryInfo(@settingsFilePath);             //which directory do we want to search?
-                FileInfo[] fileArray = d.GetFiles("*.json");                        //Get all json files into array
+                DirectoryInfo d = new DirectoryInfo(@settingsFilePath);                 //which directory do we want to search?
+                FileInfo[] fileArray = d.GetFiles("*.json");                            //Get all json files into array
                 foreach (FileInfo file in fileArray)
                 {
                     var result = System.IO.Path.GetFileNameWithoutExtension(file.Name); //this gets us the filename with no extension
                     if (result != "Default")
                     {
                         
-                            Cb_Profiles.Items.Add(result);           //add the filename to the settings..
+                            Cb_Profiles.Items.Add(result);                              //add the filename to the settings..
                         
 }
                 }
-                Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact(Properties.Settings.Default.ActiveProfile);
+                if (Properties.Settings.Default.ActiveProfile.Length > 0)               //check for a saved profile
+                {
+                    Cb_Profiles.SelectedIndex = Cb_Profiles.FindStringExact(Properties.Settings.Default.ActiveProfile);
+                }
+                else
+                {
+                    Cb_Profiles.SelectedIndex = 0;
+                }
             }
-
             ////////////////
        
             if (!Path.Exists(settingsFilePath))
@@ -296,10 +310,10 @@ namespace Elite_Dangerous_Add_On_Helper
             updatemystatus("Checking file exists");
             if (Path.Exists(settingsFilePath))
             {
-                if (File.Exists(settingsFilePath + $"{Properties.Settings.Default.ActiveProfile}.json"))
+                if (File.Exists(settingsFilePath + $"{Cb_Profiles.Text}.json"))
                 {
                     updatemystatus("Loading Settings");
-                    addOns = DeserializeAddOns();
+                    addOns = DeserializeAddOns(Cb_Profiles.Text);
 
                 }
                 else
@@ -315,7 +329,7 @@ namespace Elite_Dangerous_Add_On_Helper
                         File.Copy(sourceFile, destinationFile, true);
                         updatemystatus("Settings copied");
                         updatemystatus("Loading Settings");
-                        addOns = DeserializeAddOns();
+                        addOns = DeserializeAddOns(Properties.Settings.Default.ActiveProfile);
                     }
                     catch (IOException iox)
                     {
@@ -526,9 +540,9 @@ namespace Elite_Dangerous_Add_On_Helper
 
 
         }
-        internal static Dictionary<string, AddOn> DeserializeAddOns()   //read settings to json and load into objects
+        internal static Dictionary<string, AddOn> DeserializeAddOns(string profile)   //read settings to json and load into objects
         {
-            var Json = File.ReadAllText(settingsFilePath + "AddOns.json");
+            var Json = File.ReadAllText(settingsFilePath + $"{profile}.json");
             try
             {
                 return JsonConvert.DeserializeObject<Dictionary<string, AddOn>>(Json, new JsonSerializerSettings
@@ -905,11 +919,37 @@ namespace Elite_Dangerous_Add_On_Helper
 
         private void Bt_RemoveProfile_Click(object sender, EventArgs e)
         {
+            var result = Showdialogue("Are You sure", "Delete Profile");
+            if (result == DialogResult.Yes)
+            {
+                if (File.Exists($"{settingsFilePath}\\{Cb_Profiles.Text}.json"))
+                {
+                    File.Delete($"{settingsFilePath}\\{Cb_Profiles.Text}.json");
+                }
+                Cb_Profiles.Items.Remove(Cb_Profiles.Text);
+                Cb_Profiles.SelectedIndex = 0;
 
+            }
         }
 
         private void Cb_Profiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //logic on change
+
+            //clear form
+                foreach(var addOn in addOns) 
+            { 
+                DeleteControls(addOn.Value); 
+            }
+            // remove apps
+
+            // load json
+            DeserializeAddOns(Cb_Profiles.Text);
+            //recreate form
+            foreach (var addOn in addOns)
+            {
+                CreateControls(addOn.Value);
+            }
 
         }
     }
