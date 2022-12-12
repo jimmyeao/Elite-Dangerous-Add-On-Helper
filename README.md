@@ -21,7 +21,8 @@ For apps, application name in mandatory and should be unique. Then click the but
 Some apps (TARGET for example) required arguments. This field is here for your convenience. HINT To launch Elite in vr mode, add /VR as an argument to Edlaunch
 
 Installation URL is for dev purposes really, you can populate it with a link to the apps installer on the web, of limited use and I may remove this in future versions
-WebApp URL - when you type in this, the Application Path, Exe name and buttons are disabled, as they server no purpose when launching a URL. Urls will be opened in your default browser; Picture files will be opened in your default picture viewer etc. In fact, anyhing in here will be launced with its associated app!
+
+WebApp URL - when you type in this, the Application Path, Exe name and buttons are disabled, as they server no purpose when launching a URL. Urls will be opened in your default browser; Picture files will be opened in your default picture viewer etc. In fact, anything in here will be launced with its associated app!
 
 # Edit App
 
