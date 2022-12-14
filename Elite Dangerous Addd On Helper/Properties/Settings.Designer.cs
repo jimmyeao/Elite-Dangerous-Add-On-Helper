@@ -58,5 +58,17 @@ namespace Elite_Dangerous_Add_On_Helper.Properties {
                 this["ActiveProfile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShouldUpgrade {
+            get {
+                return ((bool)(this["ShouldUpgrade"]));
+            }
+            set {
+                this["ShouldUpgrade"] = value;
+            }
+        }
     }
 }

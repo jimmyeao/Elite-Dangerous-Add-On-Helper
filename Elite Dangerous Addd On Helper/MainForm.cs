@@ -47,7 +47,14 @@ namespace Elite_Dangerous_Add_On_Helper
             menuStrip1.BackColor = Color.FromArgb(64, 64, 64);
             //string version = System.Windows.Forms.Application.ProductVersion;
             this.Text = String.Format("Elite Dangerous Add On Helper V{0}", AssemblyVersion);
+            if (Properties.Settings.Default.ShouldUpgrade)
+            {
 
+                Properties.Settings.Default.Upgrade();
+
+                Properties.Settings.Default.ShouldUpgrade = false;
+
+            }
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 1000;
