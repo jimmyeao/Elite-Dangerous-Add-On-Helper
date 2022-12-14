@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Bt_Launch = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -48,6 +49,7 @@
             this.Cb_Profiles = new System.Windows.Forms.ComboBox();
             this.Bt_AddProfile = new System.Windows.Forms.Button();
             this.Bt_RemoveProfile = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -255,6 +257,14 @@
             this.Bt_RemoveProfile.UseVisualStyleBackColor = true;
             this.Bt_RemoveProfile.Click += new System.EventHandler(this.Bt_RemoveProfile_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipText = "Elite Dangerous Add On Helper is running";
+            this.notifyIcon1.BalloonTipTitle = "Elite Dangerous Add On Helper";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "EDAH";
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -278,6 +288,7 @@
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Elite Dangerous Addon Helper";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown_1);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp_1);
@@ -311,5 +322,6 @@
         private ComboBox Cb_Profiles;
         private Button Bt_AddProfile;
         private Button Bt_RemoveProfile;
+        private NotifyIcon notifyIcon1;
     }
 }
