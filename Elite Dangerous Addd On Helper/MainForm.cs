@@ -1,11 +1,18 @@
+
 using Elite_Dangerous_Add_On_Helper.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
+using System.Security.Policy;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using Octokit;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Windows.Forms;
+
+
+
 
 
 
@@ -27,12 +34,16 @@ namespace Elite_Dangerous_Add_On_Helper
         private int currentControlRow = 0;                      // used by createitems
         private bool mouseDown;                                 //used by proc to drag app around
         private Point lastLocation;                             //used by proc to drag app around
+        private bool needsupdate = false;
+        
         bool loaded = false;
         // i need to know what the below is actually doing... not got my head around it yet
         public Dictionary<string, AddOn> addOns = new Dictionary<string, AddOn>();
 
         // Create the ToolTip for use in createitems.
         ToolTip toolTip1 = new ToolTip();
+        private Task<string> webresult;
+
         public static CancellationToken WebCommsTimeout { get; private set; }       //required for install code
 
 
@@ -60,9 +71,16 @@ namespace Elite_Dangerous_Add_On_Helper
             toolTip1.InitialDelay = 1000;
             toolTip1.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
+            //check for a new release..
+            // url for latest release
+            // https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/latest/download/Elite.Add.On.Helper.msi
+            //url to check version https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/latest
+            // < a href = "/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/tag/V1.88.28.0" data - view - component = "true" class="Link--primary" data-turbo-frame="repo-content-turbo-frame">V1.88.28.0</a>
+            CheckGitHubNewerVersion();
+
             toolTip1.ShowAlways = true;
             Load_prefs();
-            updatemystatus("Ready");
+        updatemystatus("Ready");
             loaded = true;
             try
             {
@@ -85,7 +103,7 @@ namespace Elite_Dangerous_Add_On_Helper
             catch { }
         }
         #region controls
-
+   
         private void CreateControls(AddOn addOn)
         {
             //Sets the y position of the controls based on how many rows (addons) there are
@@ -204,6 +222,58 @@ namespace Elite_Dangerous_Add_On_Helper
 
         #endregion
         #region functions
+        #region autoupdate
+        // Code for Autoupdate check
+        private async System.Threading.Tasks.Task CheckGitHubNewerVersion()
+        {
+            //Get all releases from GitHub
+            //Source: https://octokitnet.readthedocs.io/en/latest/getting-started/
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("Elite-Dangerous-Add-On-Helper"));
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("jimmyeao", "Elite-Dangerous-Add-On-Helper");
+
+            //Setup the versions
+            Version latestGitHubVersion = new Version(releases[0].TagName);
+            Version localVersion = new Version(AssemblyVersion); 
+                                                         //Only tested with numeric values.
+
+            //Compare the Versions
+            //Source: https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function
+            int versionComparison = localVersion.CompareTo(latestGitHubVersion);
+            if (versionComparison < 0)
+            {
+                //The version on GitHub is more up to date than this local release. - need to prompt for download
+                needsupdate = true;  //remove after testing!!!
+                var result = MessageBox.Show("A new version is availabe, Do you want to update?", "Update Available",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                // If the yes button was pressed ...
+                if (result == DialogResult.Yes)
+                {
+
+                    //do somenthing
+                    //C
+                    DownloadFileAndExecute("https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/latest/download/Elite.Add.On.Helper.msi");
+
+                    
+
+                }
+
+            }
+            else if (versionComparison > 0)
+            {
+                //This local version is greater than the release version on GitHub.
+                needsupdate = false;
+            
+            }
+            else
+            {
+                //This local Version and the Version on GitHub are equal.
+                needsupdate = false;
+            }
+        }
+
+        #endregion autoupdate
         private void DeleteAddon(AddOn addOn)
         {
             // delete addon
@@ -442,7 +512,7 @@ namespace Elite_Dangerous_Add_On_Helper
                 }
                 if (!File.Exists(filename))
                 {
-                    using (var fs = new FileStream(filename, FileMode.CreateNew))
+                    using (var fs = new FileStream(filename, System.IO.FileMode.CreateNew))
                     {
                         var ResponseTask = GetTask.Result.Content.CopyToAsync(fs);
                         ResponseTask.Wait(WebCommsTimeout);
@@ -454,6 +524,10 @@ namespace Elite_Dangerous_Add_On_Helper
                             UseShellExecute = true
                         };
                         p.Start();
+                        if(link == "https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/latest/download/Elite.Add.On.Helper.msi")
+                        {
+                            System.Windows.Forms.Application.Exit();
+                        }
                     }
                 }
                 else
@@ -477,6 +551,10 @@ namespace Elite_Dangerous_Add_On_Helper
                             UseShellExecute = true
                         };
                         p.Start();
+                        if (link == "https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper/releases/latest/download/Elite.Add.On.Helper.msi")
+                        {
+                            System.Windows.Forms.Application.Exit();
+                        }
 
                     }
                 }
@@ -730,8 +808,6 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             this.Close();
         }
-        
-
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updatemystatus("Saving Prefs");
