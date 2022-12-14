@@ -544,6 +544,8 @@ namespace Elite_Dangerous_Add_On_Helper
 
             }
             updatemystatus("All apps launched, waiting for EDLaunch Exit..");
+            notifyIcon1.BalloonTipText = "All Apps running, waiting for exit";
+            this.WindowState = FormWindowState.Minimized;
 
 
         }
@@ -720,6 +722,7 @@ namespace Elite_Dangerous_Add_On_Helper
         {
             this.Close();
         }
+        
 
         private void savePreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -923,6 +926,30 @@ namespace Elite_Dangerous_Add_On_Helper
             }
             }
 
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+           
+                //if the form is minimized  
+                //hide it from the task bar  
+                //and show the system tray icon (represented by the NotifyIcon control)  
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    Hide();
+                    notifyIcon1.Visible = true;
+
+                notifyIcon1.ShowBalloonTip(1000);
+            }
+            
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+            notifyIcon1.BalloonTipText = "Ready";
         }
     }
 
