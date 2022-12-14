@@ -7,13 +7,24 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.87.28</AssemblyVersion>
-    <FileVersion>2.87.28</FileVersion>
+    <AssemblyVersion>1.89.29</AssemblyVersion>
+    <FileVersion>1.89.29</FileVersion>
     <ApplicationIcon>elite-dangerous-icon.ico</ApplicationIcon>
+    <PackageProjectUrl>https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper</PackageProjectUrl>
+    <PackageIcon>pngaaa.com-4116972.png</PackageIcon>
+    <RepositoryUrl>https://github.com/jimmyeao/Elite-Dangerous-Add-On-Helper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="elite-dangerous-icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Downloads\pngaaa.com-4116972.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Octokit" Version="4.0.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
   </ItemGroup>
 
