@@ -57,6 +57,7 @@
             // 
             // Bt_Launch
             // 
+            this.Bt_Launch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Bt_Launch.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Bt_Launch.Location = new System.Drawing.Point(770, 154);
             this.Bt_Launch.Name = "Bt_Launch";
